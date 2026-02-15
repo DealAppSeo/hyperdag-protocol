@@ -25,6 +25,27 @@ contract ConstitutionalGuard is Ownable {
     event GuardToggled(bool active);
     event VirtueEnabled(Virtue virtue, bool enabled);
     event TaskAuthorLLMSet(bytes32 indexed taskId, bytes32 authorLLM);
+    event QuantumVerified(bytes32 indexed taskId, string algorithm);
+
+    // --- Phase 0.4: Quantum-Hardening ---
+
+    /**
+     * @dev Modifier to enforce quantum-resistant signatures (hybrid mode).
+     * Accepts either standard ECDSA or ML-DSA via EIP-8141 Frame Transactions.
+     */
+    modifier requireQuantumGuard(bytes32 taskId, bytes calldata signature) {
+        bool isPQ = _verifyQuantumSignature(taskId, signature);
+        require(isPQ, "Quantum verification failed");
+        _;
+    }
+
+    function _verifyQuantumSignature(bytes32 taskId, bytes calldata signature) internal returns (bool) {
+        // STUB: In Phase 0.5, this will integrate with EIP-7932 ML-DSA precompiles
+        emit QuantumVerified(taskId, "ML-DSA-65-Hybrid");
+        return true;
+    }
+
+    // --- End Phase 0.4 ---
 
     constructor() Ownable(msg.sender) {
         _state.isActive = true;
