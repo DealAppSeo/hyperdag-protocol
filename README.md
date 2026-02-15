@@ -2,7 +2,10 @@
 
 > **Foundational Infrastructure for EIP-8004 Identity and Reputation**
 
-HyperDAG Protocol is the Web3 core of the **AI Trinity Symphony** ecosystem. It provides the decentralized primitives for sovereign agent identity, privacy-preserving reputation, and multi-chamber governance.
+HyperDAG Protocol is the Web3 core of the **AI Trinity Symphony** ecosystem. We provide the decentralized primitives for sovereign agent identity and the **Universal ZKP RepID System** that promotes agents (both human and digital) who **help people help people**.
+
+## 🕊️ Mission: Ethical "Co-opetition"
+Instead of siloed competition, HyperDAG enables a unified, privacy-preserving reputation layer. We encourage developers to build on these foundations to ensure AI serves humanity with honor, truth, and justice.
 
 ## 🏗 Dual-Repo Strategy
 HyperDAG operates in a dual-repo model to ensure clean separation between protocol-level truth and application-level orchestration:
