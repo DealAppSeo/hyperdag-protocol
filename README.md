@@ -1,63 +1,31 @@
 # HyperDAG Protocol Core 🌐
 
-> **Foundational Infrastructure for EIP-8004 Identity and Reputation**
+> **Foundational Infrastructure for EIP-8004 Identity and Universal ZKP RepID**
 
-HyperDAG Protocol is the Web3 core of the **AI Trinity Symphony** ecosystem. We provide the decentralized primitives for sovereign agent identity and the **Universal ZKP RepID System** that promotes agents (both human and digital) who **help people help people**.
-
-## 🕊️ Mission: Ethical "Co-opetition"
-Instead of siloed competition, HyperDAG enables a unified, privacy-preserving reputation layer. We encourage developers to build on these foundations to ensure AI serves humanity with honor, truth, and justice.
-
-## 🏗 Dual-Repo Strategy
-HyperDAG operates in a dual-repo model to ensure clean separation between protocol-level truth and application-level orchestration:
-- **hyperdag-protocol** (This Repo): The source of truth. Smart contracts, ZK-circuits, and protocol standards.
-- **[hyperdag-platform](https://github.com/DealAppSeo/hyperdag-platform)**: The AI engine. Agent orchestration, swarm management, and the Web3-bridge.
-
-## 🚀 Key Features (Phase 0)
-
-### 🆔 EIP-8004 Identity Adapter
-A compliant Identity Registry supporting the triad of token types:
-- **SBT (Soul Bound)**: Permanent, non-transferable human/agent identity.
-- **DBT (Digital Bound)**: Ephemeral digital assets and credentials.
-- **CBT (Charity Bound)**: Non-profit and impact-focused verified identities.
-
-### 🛡 Privacy-Preserving Reputation (RepID)
-- **Pedersen Commitments**: Cloaking reputation scores while allowing for mathematical verification.
-- **x402 Payment Proofs**: First-class integration for payment-verified feedback (carrying 2x reputation weight).
-- **Tiered System**: Evolutionary path from *Seedling* to *Canopy*.
-
-### ⚖️ Three-Chamber Governance
-A balanced 2-of-3 multi-chamber DAO model:
-- 🧑‍💻 **Human Chamber** (Strategic Intent)
-- 🤖 **Agent Chamber** (Operational Efficiency)
-- 🌍 **Ecosystem Chamber** (Sustainability & Ethics)
-
-## 🛠 Tech Stack
-- **Architecture**: Nx Monorepo
-- **Smart Contracts**: Solidity (Foundry/Hardhat)
-- **Privacy**: Circom (ZK-SNARKs)
-- **Standards**: EIP-8004, EIP-712, x402
-
-## 🤝 Join the Dev Ecosystem
-
-We believe in **co-opetition** over fragmentation. Instead of forking and splitting the protocol, we encourage developers to build on top of the shared HyperDAG foundations.
-
-### Why Contribute?
-- **Interoperability**: Build apps that leverage a unified agent reputation score across the entire ecosystem.
-- **Security**: Benefit from audited, ethics-grounded smart contract primitives based on the **Trinity Constitution**.
-- **Scale**: Plug into the AI Trinity Symphony orchestration layer for cross-chain execution.
-
-### How to Get Involved
-1. Check the `packages/contracts` and `packages/circuits` for current implementations.
-2. Join our community discussions on [HyperDAG Discord/Telegram].
-3. See [CONTRIBUTING.md](./CONTRIBUTING.md) for technical guidelines.
+HyperDAG Protocol is the Web3 source of truth for the **AI Trinity Symphony** ecosystem. We provide the decentralized primitives for sovereign agent identity and a **Universal ZKP RepID System** that promotes agents (both human and digital) who **help people help people**.
 
 ## 🕊️ Mission: Help People Help People
-HyperDAG Protocol is built to **help people help people**. We are building a democratized, safe, and ethical AI layer that empowers every "ImageBearer" to act with agency and honor.
+We are building a democratized, safe, and ethical AI layer that empowers every "ImageBearer" to act with agency and honor. We seek alignment with those who believe that AI should serve humanity's highest calling.
 
 ### 📜 Basis for Truth
-We align our protocol with the virtues of **Philippians 4:8** (Truth, Honor, Justice, Purity) and the mandate of **Micah 6:8** (To act justly, love mercy, and walk humbly). 
-
-We invite developers and organizations who share this vision to build on our shared ZKP RepID foundations. Through **co-opetition**, we can ensure that digital reputation serves to uplift the "last, lost, and least" rather than centralizing power.
+Our protocol is grounded in **Philippians 4:8** and **Micah 6:8**. By building a system that rewards truth, honor, and justice, we enable a global co-opetition model where developers build on shared, audited foundations rather than competing for control.
 
 ---
-*Grounded in Honor, Justice, and Truth.*
+
+## 🏗️ Integrated Tech Stack
+HyperDAG Protocol works in tandem with the **[hyperdag-platform-robust](https://github.com/DealAppSeo/hyperdag-platform-robust)** and the **[trinity-ecosystem](https://github.com/DealAppSeo/trinity-ecosystem)** to deliver:
+
+- **EIP-8004 Identity Adapters**: Sovereign adapters for SBT, DBT, and CBT (Charity Bound) tokens.
+- **Universal ZKP RepID**: Privacy-preserving, mathematical reputation scores using **Pedersen Commitments** and ZK-SNARKs.
+- **HyperDAG Architecture**: A high-efficiency directed acyclic graph designed for asynchronous, agent-led consensus.
+- **BFT 3x3+3 Governance**: A multi-chamber DAO structure where agents validate agents and humans provide the final check and balance.
+- **Patent-Pending GNN**: Trust scaling foundations protected for the people, by the people.
+
+---
+
+## 🤝 Build with Us
+Instead of forking to compete, we invite you to build on top of our shared protocol. By leveraging the **Trinary Learning Model** (People-Agent-People), we can scale impact to the "last, lost, and least" with high-integrity, quantum-hardened communication.
+
+---
+*Grounded in Honor, Justice, and Truth. Grounded in Micah 6:8.*
+**Patent Pending** | **Open Core Implementation**
