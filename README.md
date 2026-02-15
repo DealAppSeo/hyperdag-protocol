@@ -51,5 +51,13 @@ We believe in **co-opetition** over fragmentation. Instead of forking and splitt
 2. Join our community discussions on [HyperDAG Discord/Telegram].
 3. See [CONTRIBUTING.md](./CONTRIBUTING.md) for technical guidelines.
 
+## 🕊️ Mission: Help People Help People
+HyperDAG Protocol is built to **help people help people**. We are building a democratized, safe, and ethical AI layer that empowers every "ImageBearer" to act with agency and honor.
+
+### 📜 Basis for Truth
+We align our protocol with the virtues of **Philippians 4:8** (Truth, Honor, Justice, Purity) and the mandate of **Micah 6:8** (To act justly, love mercy, and walk humbly). 
+
+We invite developers and organizations who share this vision to build on our shared ZKP RepID foundations. Through **co-opetition**, we can ensure that digital reputation serves to uplift the "last, lost, and least" rather than centralizing power.
+
 ---
-*Built with Honor, Justice, and Truth. Grounded in Micah 6:8.*
+*Grounded in Honor, Justice, and Truth.*
