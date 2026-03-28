@@ -58,4 +58,56 @@ HyperDAG is a community-owned protocol. We seek alignment with researchers and d
 
 ---
 
+## Ecosystem
+
+HyperDAG Protocol is the identity and reputation infrastructure layer beneath a growing ecosystem of trust products.
+
+### Infrastructure Repos
+
+| System | Public Repo | Private Repo |
+|---|---|---|
+| HyperDAG Protocol | This repo | `hyperdag-platform` (private) |
+| AI Trinity Symphony | [trinity-symphony-shared](https://github.com/DealAppSeo/trinity-symphony-shared) | `trinity-ecosystem` (private) |
+
+### Products Built on HyperDAG
+
+| Product | Link | Description |
+|---|---|---|
+| **TrustRails** | [trustrails.dev](https://trustrails.dev) | KYA infrastructure for institutional AI agent finance |
+| **TrustShell** | Coming soon | Safety and security wrapper for developers building autonomous agents |
+| **TrustSquad** | Coming soon | A consumer app helping people access the benefits of safe and ethical AI agents |
+
+### Technology Roadmap
+
+**Performance (Q2 2026)**
+- Core consensus and cryptographic operations migrated to Rust via WebAssembly
+- ANFIS routing engine rewritten in Rust for 10-100x throughput improvement
+- ZKP circuit compilation targeting Rust-based proving systems (Halo2, Groth16)
+
+**LLM expansion (Q2 2026)**
+- Add Qwen 3, Llama (direct Meta), MiMo, Gemma 3 to LiteLLM config
+- HuggingFace Inference API as fallback provider
+- MoE architecture review for ANFIS routing layer
+
+**Agent interoperability (Q3 2026)**
+- Google A2A protocol integration
+- CrewAI and AutoGen interop layer
+- Full x402 agent-to-agent payment mesh
+
+**Identity and privacy (Q3 2026)**
+- Real ZK circuits replacing stub proofs (Groth16 production deployment)
+- Full ERC-8004 ValidationRegistry with on-chain proof verification
+- Syndicated custodianship pools (multi-Human SBT co-guarantee)
+
+**Scale (Q4 2026)**
+- Solana mainnet migration
+- Fireblocks production API integration
+- ISO 20022 compliance receipt export for enterprise reporting
+
+---
+
+*"It shall not return void." — Micah 6:8*
+
+---
+
 **Mission: Help People Help People (Micah 6:8 | Philippians 4:8)**
