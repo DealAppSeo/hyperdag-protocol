@@ -30,10 +30,13 @@ graph TD
 ```
 
 ### Core Web3 Pillars
-- **[Merkle DAG Infrastructure](https://github.com/DealAppSeo/trinity-ecosystem/blob/main/docs/CORE_CONCEPTS.md#merkle-dag-directed-acyclic-graph)**: Content-addressed, verifiable state management.
-- **[ZKP RepID](https://github.com/DealAppSeo/trinity-ecosystem/blob/main/docs/CORE_CONCEPTS.md#zkp-repid-zero-knowledge-reputation-id)**: Privacy-preserving reputation scoring for agents.
-- **EIP-8004 Bridge**: Standards-based identity for autonomous agents.
-- **Quantum-Resistant Ledger**: Designed for the post-quantum era with hybrid cryptographic signatures.
+* **Merkle DAG Infrastructure** — Content-addressed, verifiable state management.
+* **ZKP RepID** — Privacy-preserving reputation scoring for agents.
+* **[ERC-8004](https://github.com/erc-8004/erc-8004-contracts)** — Standards-based identity for autonomous agents.
+* **[x402](https://github.com/x402-rs/x402-rs)** — Agent-to-agent micropayments protocol.
+* **[Plonky3](https://github.com/Plonky3/Plonky3)** — Fast ZK proving system. No trusted setup. WASM browser verification < 100ms.
+* **[Rust](https://www.rust-lang.org/)** — Core consensus and cryptographic operations (Q2 2026).
+* **Quantum-Resistant Ledger** — Designed for the post-quantum era with hybrid cryptographic signatures.
 
 ---
 
@@ -72,17 +75,20 @@ HyperDAG Protocol is the identity and reputation infrastructure layer beneath a 
 ### Products Built on HyperDAG
 
 | Product | Link | Description |
-|---|---|---|
-| **TrustRails** | [trustrails.dev](https://trustrails.dev) | KYA infrastructure for institutional AI agent finance |
-| **TrustShell** | Coming soon | Safety and security wrapper for developers building autonomous agents |
-| **TrustSquad** | Coming soon | A consumer app helping people access the benefits of safe and ethical AI agents |
+|---------|------|-------------|
+| TrustRails | [trustrails.dev](https://trustrails.dev) | KYA infrastructure for institutional AI agent finance |
+| TrustShell | [trustshell.dev](https://trustshell.dev) | Drop-in constitutional protection for any agent (`npm install @hyperdag/trustshell`) |
+| TrustTrader | [trusttrader.dev](https://trusttrader.dev) | Solving hallucinations and accountability in AI trading |
+| TrustRepID | [trustrepid.dev](https://trustrepid.dev) | Autonomous agents for anonymous humans |
+| RepID | [repid.dev](https://repid.dev) | Anonymous human identity portal |
+| TrustSquad | Coming soon | Consumer app for safe and ethical AI agents |
 
 ### Technology Roadmap
 
 **Performance (Q2 2026)**
 - Core consensus and cryptographic operations migrated to Rust via WebAssembly
 - ANFIS routing engine rewritten in Rust for 10-100x throughput improvement
-- ZKP circuit compilation targeting Rust-based proving systems (Halo2, Groth16)
+- ZKP circuit compilation using [Plonky3](https://github.com/Plonky3/Plonky3) — no trusted setup, recursive composition, WASM support
 
 **LLM expansion (Q2 2026)**
 - Add Qwen 3, Llama (direct Meta), MiMo, Gemma 3 to LiteLLM config
@@ -95,7 +101,7 @@ HyperDAG Protocol is the identity and reputation infrastructure layer beneath a 
 - Full x402 agent-to-agent payment mesh
 
 **Identity and privacy (Q3 2026)**
-- Real ZK circuits replacing stub proofs (Groth16 production deployment)
+- Real ZK circuits replacing stub proofs (Plonky3 — Postcard tier ~50ms, Sponsor-Guardian recursive proofs)
 - Full ERC-8004 ValidationRegistry with on-chain proof verification
 - Syndicated custodianship pools (multi-Human SBT co-guarantee)
 
