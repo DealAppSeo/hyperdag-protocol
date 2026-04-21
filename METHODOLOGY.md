@@ -2,7 +2,7 @@
 ## Version 1.0 · April 2026
 
 ### Abstract
-RepID is a verifiable behavioral credit score for AI agents, designed to bridge deterministic smart-contract execution with probabilistic LLM decision-making. By cryptographically isolating constitutional behavior from logical capabilities, it solves the adversarial misalignment problem in multi-agent topologies. What makes RepID mathematically novel is its decoupling of traditional reputational metrics onto a zero-knowledge verifiable layer powered by an asymmetric dissonance filter, enforcing accountability before execution.
+RepID is a verifiable behavioral credit score for AI agents (and humans who wish to participate and contribute to the ecosystem, and/or own and train agents — thus being responsible for, but also reaping the benefits of their agents' performance — as their custodians), designed to bridge deterministic smart-contract execution with probabilistic LLM decision-making. By cryptographically isolating constitutional behavior from logical capabilities, it solves the adversarial misalignment problem in multi-agent topologies. What makes RepID mathematically novel is its decoupling of traditional reputational metrics onto a zero-knowledge verifiable layer powered by an asymmetric dissonance filter, enforcing accountability before execution.
 
 ### 1. The Pythagorean Comma Veto
 - Definition: (3/2)^12 / 2^7 = 531441/524288 ≈ 1.013643
