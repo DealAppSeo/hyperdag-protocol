@@ -23,7 +23,7 @@
 - **Service:** `trustrepid-backend`
 - **Endpoint:** `POST /custodian/register`
 - **Currency:** USDC on Base
-- **Failure Behavior:** Returns 402 Payment Required. The human SBT claim fails/reverts until the Sybil-resistance fee is paid.
+- **Failure Behavior:** Returns 402 Payment Required. The human SBT (Soulbound Token) claim fails/reverts until the Sybil-resistance fee is paid.
 
 ### d. Agent Tool-Call Micropayments
 - **Service:** `trinity-litellm`
@@ -34,7 +34,7 @@
 ### e. A2A Agent-to-Agent Calls
 - **Service:** Any inter-agent endpoint gated by x402 middleware
 - **Currency:** Price negotiable across `supported_tokens` config (USDC today, more later)
-- **Failure Behavior:** Endpoint returns 402 with `WWW-Authenticate` listing accepted tokens. RepID is included in envelope for tier-based pricing and gating.
+- **Failure Behavior:** Endpoint returns 402 with `WWW-Authenticate` listing accepted tokens. RepID (Reputation Identity Credential) is included in envelope for tier-based pricing and gating.
 - **Example:** SOPHIA calls GUARDIAN for compliance check → GUARDIAN's `supported_tokens` has USDC → GUARDIAN quotes 2.0 USDC, reads SOPHIA's AUTONOMOUS RepID, applies placeholder 30% discount → final price 1.4 USDC → SOPHIA pays from CDP wallet → call proceeds.
 
 ## 3. Scaffold Middleware (`repid-engine`)
@@ -133,7 +133,7 @@ async function logX402Payment(req: Request, record: any, senderRepId: string, di
 2. `POST /stake` lacks x402 auth. Returns HTTP 402 with USDC invoice for full required collateral on Base.
 3. Human settles USDC via Coinbase Smart Wallet. Retries `/stake` with `Authorization: x402 <receipt>`.
 4. Middleware verifies USDC settlement via CDP. Stake record inserted into `agent_stake` table, `resolution_policy='hal_veto_24h'`. USDC held in escrow wallet.
-5. HAL vetoes claim X within 24h. Background resolution worker fires.
+5. HAL (Hallucination Assessment Layer) vetoes claim X within 24h. Background resolution worker fires.
 6. Slash Event (USDC only — RepID NEVER transfers):
    - USDC collateral slashed: 70% outbound x402 transfer to Challenger, 20% burned, 10% to Wall of Shame treasury (these ratios are PLACEHOLDER pending Sean approval).
    - Outbound USDC transfers fail-safe — queue with exponential backoff on failure.
@@ -156,7 +156,7 @@ The `supported_tokens` array of objects (see Section 4 for table representation)
 
 ### 6.5 RepID in A2A Envelope (Read-Only)
 When Agent A calls Agent B via an x402-wrapped endpoint, the payment envelope includes:
-- Sender ERC-8004 token ID
+- Sender ERC-8004 (agent identity standard) token ID
 - Sender's current RepID (read from `agent_repid` at call time, signed by sender's CDP wallet)
 - HyperDAG Trust Protocol v1 version
 - Payment receipt in whichever token Agent B accepted

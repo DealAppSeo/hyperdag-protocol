@@ -1,10 +1,10 @@
 # Agent Custodianship Design Document
 
 ## Section 1: Existing Identity Primitives
-*   **Human SBT**: Uses `IdentitySBT` and `CredentialSBT` contracts. Issued by `repid.dev`. Supabase storage structure blocked from verification due to credential restrictions, assumed to be in `sbt_claims` or `users`. Chain is assumed to be Base Sepolia.
-*   **Agent ERC-8004 Token**: IdentityRegistry deployed at `0x8004A818BFB912233c491871b3d84c89A494BD9e` on Base Sepolia. ReputationRegistry deployed at `0x8004B663056A597Dffe9eCcC1965A193B7388713` on Base Sepolia.
-*   **RepID Scoring**: Stored in `repid_score_events` via the `repid-engine` pipeline.
-*   **Plonky3 ZKP**: Verified against `zkp-postcard-production.up.railway.app`. Proof format `plonky3_range_check`. Commitment format is 32-byte keccak-sized (0x + 64 hex characters). Standalone verification post-tonight gap.
+*   **Human SBT (Soulbound Token)**: Uses `IdentitySBT` and `CredentialSBT` contracts. Issued by `repid.dev`. Supabase storage structure blocked from verification due to credential restrictions, assumed to be in `sbt_claims` or `users`. Chain is assumed to be Base Sepolia.
+*   **Agent ERC-8004 (agent identity standard) Token**: IdentityRegistry deployed at `0x8004A818BFB912233c491871b3d84c89A494BD9e` on Base Sepolia. ReputationRegistry deployed at `0x8004B663056A597Dffe9eCcC1965A193B7388713` on Base Sepolia.
+*   **RepID (Reputation Identity Credential) Scoring**: Stored in `repid_score_events` via the `repid-engine` pipeline.
+*   **Plonky3 ZKP (Zero-Knowledge Proof)**: Verified against `zkp-postcard-production.up.railway.app`. Proof format `plonky3_range_check`. Commitment format is 32-byte keccak-sized (0x + 64 hex characters). Standalone verification post-tonight gap.
 
 ## Section 2: Custodianship Data Model
 A new table `agent_custodianship` has been designed (see migration file `202604232359_agent_custodianship.sql`) that joins human SBT tokens to agent ERC-8004 tokens via ZKP commitments. 
