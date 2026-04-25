@@ -72,21 +72,17 @@ HyperDAG Protocol is the identity and reputation infrastructure layer beneath a 
 | HyperDAG Protocol | This repo | `hyperdag-platform` (private) |
 | AI Trinity Symphony | [trinity-symphony-shared](https://github.com/DealAppSeo/trinity-symphony-shared) | `trinity-ecosystem` (private) |
 
-### Products Built on HyperDAG
+### Idea's Being Built on HyperDAG
 
-| Product | Link | Description |
+|  Idea   | Link | Description |
 |---------|------|-------------|
-| TrustRails | [trustrails.dev](https://trustrails.dev) | KYA infrastructure for institutional AI agent finance |
+
 | TrustShell | [trustshell.dev](https://trustshell.dev) | Drop-in constitutional protection for any agent (`npm install @hyperdag/trustshell`) |
-| TrustTrader | [trusttrader.dev](https://trusttrader.dev) | Solving hallucinations and accountability in AI trading |
-| TrustRepID | [trustrepid.dev](https://trustrepid.dev) | Autonomous agents for anonymous humans |
-| RepID | [repid.dev](https://repid.dev) | Anonymous human identity portal |
-| TrustSquad | Coming soon | Consumer app for safe and ethical AI agents |
 
 ### Technology Roadmap
 
 **Performance (Q2 2026)**
-- Core consensus and cryptographic operations migrated to Rust via WebAssembly
+- Core consensus and cryptographic operations migrated to Rust via WebAssembly -Done
 - ANFIS routing engine rewritten in Rust for 10-100x throughput improvement
 - ZKP circuit compilation using [Plonky3](https://github.com/Plonky3/Plonky3) — no trusted setup, recursive composition, WASM support
 
@@ -98,10 +94,10 @@ HyperDAG Protocol is the identity and reputation infrastructure layer beneath a 
 **Agent interoperability (Q3 2026)**
 - Google A2A protocol integration
 - CrewAI and AutoGen interop layer
-- Full x402 agent-to-agent payment mesh
+- Full x402 agent-to-agent payment mesh - Done Early
 
 **Identity and privacy (Q3 2026)**
-- Real ZK circuits replacing stub proofs (Plonky3 — Postcard tier ~50ms, Sponsor-Guardian recursive proofs)
+- Real ZK circuits replacing stub proofs (Plonky3 — Postcard tier ~50ms, Sponsor-Guardian recursive proofs) - Done Early
 - Full ERC-8004 ValidationRegistry with on-chain proof verification
 - Syndicated custodianship pools (multi-Human SBT co-guarantee)
 
