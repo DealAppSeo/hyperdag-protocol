@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Solidity](https://img.shields.io/badge/Solidity-%5E0.8.20-lightgrey)](https://soliditylang.org)
 [![ZK-Proof](https://img.shields.io/badge/ZK--Proof-Ready-success)](https://iden3.io)
-[![BFT](https://img.shields.io/badge/Consensus-3--Ply_BFT-green)](https://github.com/DealAppSeo/trinity-ecosystem/blob/main/docs/CORE_CONCEPTS.md#byzantine-fault-tolerance-bft)
+![BFT](https://img.shields.io/badge/Consensus-3--Ply_BFT-green)
 
 **Foundational Web3 Infrastructure for EIP-8004 Identity and Universal ZKP RepID.**
 
@@ -44,10 +44,10 @@ graph TD
 
 | Repository | Role | Vision |
 | :--- | :--- | :--- |
-| **[trinity-ecosystem](https://github.com/DealAppSeo/trinity-ecosystem)** | The Conductor | Visual UI, Pulse Dashboard, & Swarm Control |
+| **trinity-ecosystem** (private repository) | The Conductor | Visual UI, Pulse Dashboard, & Swarm Control |
 | **[hyperdag-protocol](https://github.com/DealAppSeo/hyperdag-protocol)** | The Truth | Decentralized Ledger, ZKP RepID, & BFT Gov |
-| **[hyperdag-platform](https://github.com/DealAppSeo/hyperdag-platform)** | The Bridge | GNN Coordination, SDK, & Algorithmic Engine |
-| **[trinity-symphony-shared](https://github.com/DealAppSeo/trinity-symphony-shared)** | The Soul | Constitutional Logic & Core BFT Primitives |
+| **hyperdag-platform** (private repository) | The Bridge | GNN Coordination, SDK, & Algorithmic Engine |
+| **trinity-symphony-shared** (private repository) | The Soul | Constitutional Logic & Core BFT Primitives |
 
 ---
 
@@ -55,7 +55,7 @@ graph TD
 
 HyperDAG is a community-owned protocol. We seek alignment with researchers and developers who believe that decentralized truth is the only way to safeguard the future of agentic AI.
 
-- **[Technical Glossary](https://github.com/DealAppSeo/trinity-ecosystem/blob/main/docs/CORE_CONCEPTS.md)**
+- **Technical Glossary** (private repository)
 - **[Contributing Guide](CONTRIBUTING.md)**
 - **[Security Policy](SECURITY.md)**
 
@@ -70,7 +70,7 @@ HyperDAG Protocol is the identity and reputation infrastructure layer beneath a 
 | System | Public Repo | Private Repo |
 |---|---|---|
 | HyperDAG Protocol | This repo | `hyperdag-platform` (private) |
-| AI Trinity Symphony | [trinity-symphony-shared](https://github.com/DealAppSeo/trinity-symphony-shared) | `trinity-ecosystem` (private) |
+| AI Trinity Symphony | `trinity-symphony-shared` (private repository) | `trinity-ecosystem` (private repository) |
 
 ### Idea's Being Built on HyperDAG
 
