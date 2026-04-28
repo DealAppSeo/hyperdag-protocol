@@ -1,0 +1,4 @@
+[
+  "function submitValidationTask(uint256 agentId, bytes32 taskHash, uint256 timeout, bytes calldata taskData) external returns (uint256 taskId)",
+  "function resolveTask(uint256 taskId, bool success, bytes calldata resolutionData) external"
+]
