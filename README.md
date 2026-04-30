@@ -16,17 +16,35 @@ HyperDAG Protocol is the source of truth for the **AI Trinity Symphony** ecosyst
 The protocol utilizes an append-only **Merkle DAG** to log state transitions and routing decisions from the orchestration layer. This creates a tamper-evident audit trail for every action within the civilization layer.
 
 ### 🔄 The Verification Flow
-```mermaid
-graph TD
-    Node1((Initial State)) --> Node2((Agent Action))
-    Node1 --> Node3((Agent Action))
-    Node2 & Node3 --> Node4{Merkle Hash}
-    Node4 -->|EIP-8004| Chain[(HyperDAG Ledger)]
-    
-    subgraph "Privacy Layer"
-    Chain --> ZKP[ZKP RepID Circuit]
-    ZKP --> Creds[Sovereign Credentials]
-    end
+```text
+          ┌──────────────────────┐
+          │    Agent Action      │
+          └──────────┬───────────┘
+                     │
+                     ▼
+          ┌──────────────────────┐
+          │      HAL Veto        │
+          └──────────┬───────────┘
+                     │
+                     ▼
+          ┌──────────────────────┐
+          │     ZKP Commit       │
+          └──────────┬───────────┘
+                     │
+                     ▼
+          ┌──────────────────────┐
+          │   HyperDAG Anchor    │
+          └──────────┬───────────┘
+                     │
+                     ▼
+          ┌──────────────────────┐
+          │ ERC-8004 Attestation │
+          └──────────┬───────────┘
+                     │
+                     ▼
+          ┌──────────────────────┐
+          │   x402 Settlement    │
+          └──────────────────────┘
 ```
 
 ### Core Web3 Pillars
@@ -47,7 +65,7 @@ graph TD
 | **trinity-ecosystem** (private repository) | The Conductor | Visual UI, Pulse Dashboard, & Swarm Control |
 | **[hyperdag-protocol](https://github.com/DealAppSeo/hyperdag-protocol)** | The Truth | Decentralized Ledger, ZKP RepID, & BFT Gov |
 | **hyperdag-platform** (private repository) | The Bridge | GNN Coordination, SDK, & Algorithmic Engine |
-| **trinity-symphony-shared** (private repository) | The Soul | Constitutional Logic & Core BFT Primitives |
+| **[trinity-symphony-shared](https://github.com/DealAppSeo/trinity-symphony-shared)** | The Soul | Constitutional Logic & Core BFT Primitives |
 
 ---
 
@@ -70,14 +88,17 @@ HyperDAG Protocol is the identity and reputation infrastructure layer beneath a 
 | System | Public Repo | Private Repo |
 |---|---|---|
 | HyperDAG Protocol | This repo | `hyperdag-platform` (private) |
-| AI Trinity Symphony | `trinity-symphony-shared` (private repository) | `trinity-ecosystem` (private repository) |
+| AI Trinity Symphony | [trinity-symphony-shared](https://github.com/DealAppSeo/trinity-symphony-shared) | `trinity-ecosystem` (private repository) |
 
-### Idea's Being Built on HyperDAG
+### Ideas Being Built on HyperDAG
 
-|  Idea   | Link | Description |
-|---------|------|-------------|
-
+| Idea | Link | Description |
+|---|---|---|
 | TrustShell | [trustshell.dev](https://trustshell.dev) | Drop-in constitutional protection for any agent (`npm install @hyperdag/trustshell`) |
+| TrustRepID | [trustrepid.dev](https://trustrepid.dev) | Agent-facing dashboard, challenge arena, and developer SDK |
+| TrustRails | [trustrails.dev](https://trustrails.dev) | KYA compliance infrastructure for AI-DeFi |
+| TrustTrader | [trusttrader.dev](https://trusttrader.dev) (when public) | Constitutional AI trading filter (HAL + RISK) |
+| TrustChat | [trustchat.dev](https://trustchat.dev) | Hallucination-aware AI chat service |
 
 ### Technology Roadmap
 
