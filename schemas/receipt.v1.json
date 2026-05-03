@@ -1,0 +1,198 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hyperdag.dev/schemas/receipt.v1.json",
+  "title": "HyperDAG RepID Trust Receipt v1.0",
+  "description": "Off-chain receipt format produced by repid-engine and committed/revealed via HyperDAGReceiptAdapter on Base Sepolia. Binds an ERC-8004 agentId to an x402 payment hash, the task/result that was paid for, the HAL constitutional output, and a RepID commitment. v1.0 ships commitment-only privacy; v1.1 adds selective disclosure; v2 adds full ZK.",
+  "type": "object",
+  "required": ["type", "receiptId", "agent", "payment", "work", "identity", "hal", "validators", "reputation", "privacy", "timestamps"],
+  "additionalProperties": false,
+  "properties": {
+    "type": { "const": "hyperdag.repid.receipt.v1" },
+    "receiptId": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{64}$",
+      "description": "keccak256 of the canonical receipt-reveal params + reveal block.timestamp; assigned by HyperDAGReceiptAdapter.revealReceipt."
+    },
+    "agent": {
+      "type": "object",
+      "required": ["standard", "agentRegistry", "agentId", "agentWallet"],
+      "additionalProperties": false,
+      "properties": {
+        "standard": { "const": "ERC-8004" },
+        "agentRegistry": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]{40}$",
+          "description": "ERC-8004 IdentityRegistry contract address. Base Sepolia canonical: 0x8004A818BFB912233c491871b3d84c89A494BD9e"
+        },
+        "agentId": {
+          "type": "string",
+          "pattern": "^[0-9]+$",
+          "description": "ERC-8004 agentId (uint256, decimal string)"
+        },
+        "agentWallet": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]{40}$",
+          "description": "Address that owns agentId at the time of receipt reveal (per IdentityRegistry.ownerOf)"
+        }
+      }
+    },
+    "payment": {
+      "type": "object",
+      "required": ["standard", "paymentHash", "network", "currency", "amount", "resourceHash"],
+      "additionalProperties": false,
+      "properties": {
+        "standard": { "const": "x402" },
+        "paymentHash": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]{64}$",
+          "description": "keccak256 of canonical-JSON x402 payment payload"
+        },
+        "network": { "type": "string", "description": "e.g. base-sepolia, base-mainnet" },
+        "currency": { "type": "string", "description": "ERC-20 symbol or 'native'" },
+        "amount": { "type": "string", "description": "amount in atomic units (decimal string)" },
+        "resourceHash": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]{64}$",
+          "description": "keccak256 of the resource URI being paid for"
+        }
+      }
+    },
+    "work": {
+      "type": "object",
+      "required": ["taskHash", "resultHash"],
+      "additionalProperties": false,
+      "properties": {
+        "taskHash": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]{64}$",
+          "description": "keccak256 of canonical-JSON task input"
+        },
+        "resultHash": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]{64}$",
+          "description": "keccak256 of canonical-JSON task result"
+        },
+        "artifactHash": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]{64}$",
+          "description": "Optional hash of large artifact stored externally (e.g. file/IPFS)"
+        }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "required": ["repIdCommitment"],
+      "additionalProperties": false,
+      "properties": {
+        "repIdCommitment": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]{64}$",
+          "description": "Pedersen-style commitment to the agent's RepID at receipt time. v1.0 may use keccak256(repid || nonce); v1.1 swaps in Pedersen."
+        },
+        "humanIdentityRoot": {
+          "type": ["string", "null"],
+          "pattern": "^(0x[a-fA-F0-9]{64})?$",
+          "description": "Reserved for v1.1 (ERC-7231). bytes32(0) / null in v1.0."
+        }
+      }
+    },
+    "hal": {
+      "type": "object",
+      "required": ["dofVersion", "boundedScore", "commaBftVerdict", "dimensionsHash", "outputHash"],
+      "additionalProperties": false,
+      "description": "HAL constitutional-audit output. Mandatory in v1.0 — this is the patent moat. Bound from the existing /hal/signals pipeline output in repid-engine.",
+      "properties": {
+        "dofVersion": {
+          "type": "integer",
+          "enum": [5, 6],
+          "description": "5 = pre-cross-LLM (harm/epistemic/evidence/scope/certainty). 6 = with cross-LLM agreement_score."
+        },
+        "boundedScore": {
+          "type": "number",
+          "description": "HAL combiner output (already × Pythagorean Comma). Range [0, 1.014]."
+        },
+        "commaBftVerdict": {
+          "type": "string",
+          "enum": ["pass", "veto", "indeterminate"],
+          "description": "Pythagorean Comma BFT (P-003). 'veto' = critical severity hard constitutional block. 'indeterminate' = fewer than 3 providers responded."
+        },
+        "dimensionsHash": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]{64}$",
+          "description": "keccak256 of canonical-JSON of HAL dimension breakdown (harm/epistemic/evidence/scope/certainty/agreement)"
+        },
+        "outputHash": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]{64}$",
+          "description": "keccak256 of full HAL output JSON (signals + score + veto fields + formula string)"
+        },
+        "pythagoreanCommaConstant": {
+          "const": "531441/524288",
+          "description": "Documents the multiplier used. Constant — included for self-describing receipts."
+        }
+      }
+    },
+    "validators": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Attestors. v1.0 requires the primary attestor (typically 'self' or 'zk-stub'). Secondary attestors are recorded but not enforced on-chain in v1.0; v1.1 adds Trinity BFT validators (per Gemini parallel sprint).",
+      "items": {
+        "type": "object",
+        "required": ["role", "type", "attestationHash"],
+        "additionalProperties": false,
+        "properties": {
+          "role": { "type": "string", "enum": ["primary", "secondary"] },
+          "type": { "type": "string", "enum": ["self", "human", "validator", "zk-stub", "trinity-bft"] },
+          "attestationHash": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{64}$"
+          },
+          "signature": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]+$",
+            "description": "EIP-191 / EIP-1271 signature over attestationHash by the validator's address"
+          }
+        }
+      }
+    },
+    "reputation": {
+      "type": "object",
+      "required": ["score", "scoreVersion", "formulaVersion"],
+      "additionalProperties": false,
+      "properties": {
+        "score": { "type": "number", "description": "RepID at receipt time (committed in identity.repIdCommitment, exposed here for off-chain consumers when privacy.mode = 'commitment-only' is being relaxed for known consumers)" },
+        "scoreVersion": { "type": "integer", "description": "HAL DOF version 5 or 6" },
+        "formulaVersion": { "type": "string", "description": "Semver/tag of the RepID formula in use, e.g. 'repid-2026-04-17'" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "required": ["mode"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["commitment-only", "selective-disclosure", "full-zk"],
+          "description": "v1.0 ships only 'commitment-only'. 'selective-disclosure' is v1.1, 'full-zk' is v2."
+        },
+        "zkProofType": {
+          "type": "string",
+          "description": "e.g. 'plonky3-stub-v1' in v1.0, 'plonky3-v1' in v1.1"
+        }
+      }
+    },
+    "timestamps": {
+      "type": "object",
+      "required": ["createdAt"],
+      "additionalProperties": false,
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO-8601 UTC of receipt issuance (off-chain). On-chain createdAt is block.timestamp at reveal."
+        }
+      }
+    }
+  }
+}
