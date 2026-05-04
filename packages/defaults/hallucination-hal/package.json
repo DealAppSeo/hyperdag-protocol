@@ -1,0 +1,25 @@
+{
+  "name": "@hyperdag/hallucination-hal",
+  "version": "0.1.0-alpha.1",
+  "description": "HAL default implementation of @hyperdag/interfaces#IHallucination. Pythagorean Comma BFT veto threshold (P-003). Thin client over the proprietary HAL service.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DealAppSeo/hyperdag-protocol.git",
+    "directory": "packages/defaults/hallucination-hal"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "src", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "@hyperdag/interfaces": "0.1.0-alpha.1"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.0"
+  }
+}

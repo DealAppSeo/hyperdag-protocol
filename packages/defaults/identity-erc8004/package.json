@@ -1,0 +1,25 @@
+{
+  "name": "@hyperdag/identity-erc8004",
+  "version": "0.1.0-alpha.1",
+  "description": "ERC-8004 IdentityRegistry default implementation of @hyperdag/interfaces#IIdentity. Thin viem-based client over the deployed registry.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DealAppSeo/hyperdag-protocol.git",
+    "directory": "packages/defaults/identity-erc8004"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "src", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "@hyperdag/interfaces": "0.1.0-alpha.1"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.0"
+  }
+}

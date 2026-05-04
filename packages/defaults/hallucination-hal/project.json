@@ -1,0 +1,15 @@
+{
+  "name": "hallucination-hal",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/defaults/hallucination-hal/src",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsc -p tsconfig.json",
+        "cwd": "packages/defaults/hallucination-hal"
+      }
+    }
+  }
+}

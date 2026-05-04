@@ -1,0 +1,25 @@
+{
+  "name": "@hyperdag/payment-x402",
+  "version": "0.1.0-alpha.1",
+  "description": "x402 default implementation of @hyperdag/interfaces#IPayment. HTTP 402 Payment Required envelope construction and proof verification.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DealAppSeo/hyperdag-protocol.git",
+    "directory": "packages/defaults/payment-x402"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "src", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "@hyperdag/interfaces": "0.1.0-alpha.1"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.0"
+  }
+}
