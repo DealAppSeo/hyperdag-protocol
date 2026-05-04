@@ -1,0 +1,38 @@
+{
+  "name": "@hyperdag/interfaces",
+  "version": "0.1.0-alpha.1",
+  "description": "TypeScript interface contracts for the HyperDAG Protocol modular trust kernel — IIdentity, IReputation, IValidation, IPayment, ILinkage, IHallucination.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DealAppSeo/hyperdag-protocol.git",
+    "directory": "packages/interfaces"
+  },
+  "keywords": [
+    "erc-8004",
+    "x402",
+    "ai-agents",
+    "trust",
+    "reputation",
+    "zkp",
+    "hallucination",
+    "trustless-agents",
+    "interfaces"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.0"
+  }
+}
