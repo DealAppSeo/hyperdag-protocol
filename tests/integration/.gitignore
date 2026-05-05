@@ -1,0 +1,5 @@
+.env.local
+.env
+results/*.json
+results/*.md
+!results/.gitkeep

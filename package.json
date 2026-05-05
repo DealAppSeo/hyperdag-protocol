@@ -4,7 +4,9 @@
     "license": "MIT",
     "scripts": {
         "build:kernel": "npm run build --workspace=@hyperdag/interfaces && npm run build --workspaces --if-present --include-workspace-root=false",
-        "test:kernel": "npm test --workspace=@hyperdag/protocol"
+        "test:kernel": "npm test --workspace=@hyperdag/protocol",
+        "test:integration": "node --experimental-strip-types --no-warnings --test tests/integration/*.test.ts",
+        "test:integration:phase": "node --experimental-strip-types --no-warnings --test"
     },
     "private": true,
     "dependencies": {},
