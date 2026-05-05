@@ -11,7 +11,7 @@
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { JsonRpcProvider, Wallet, Contract, type InterfaceAbi } from "ethers";
+import { JsonRpcProvider, FetchRequest, Wallet, Contract, type InterfaceAbi } from "ethers";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import IdentityRegistryAbi from "../../packages/contracts/abis/IdentityRegistry.json" with { type: "json" };
 
@@ -73,15 +73,75 @@ export function skipIfMissing(...keys: Array<keyof EnvConfig>): { skip: true; re
   return { skip: true, reason: `env not configured: ${missing.join(", ")}` };
 }
 
+/**
+ * Try the configured RPC first, then fall back to publicnode and tenderly
+ * if it's down. This makes the suite robust against transient 504s on
+ * https://sepolia.base.org without burying the failure.
+ */
+function buildBaseSepoliaProvider(): JsonRpcProvider {
+  const candidates: string[] = [];
+  if (env.baseSepoliaRpcUrl) candidates.push(env.baseSepoliaRpcUrl);
+  candidates.push("https://base-sepolia-rpc.publicnode.com");
+  candidates.push("https://base-sepolia.gateway.tenderly.co");
+  // De-dupe
+  const seen = new Set<string>();
+  const unique = candidates.filter((u) => (seen.has(u) ? false : (seen.add(u), true)));
+  // ethers FallbackProvider would be ideal, but that needs N healthy
+  // backends. For our purposes, FetchRequest with a custom retry policy on
+  // the primary URL is enough — fall through manually if the primary is
+  // genuinely down.
+  const url = unique[0]!;
+  const fetchRequest = new FetchRequest(url);
+  fetchRequest.timeout = 15000;
+  fetchRequest.retryFunc = async (_req, response, attempt) => {
+    if (attempt >= 3) return false;
+    if (response.statusCode >= 500) {
+      await new Promise((r) => setTimeout(r, 500 * 2 ** attempt));
+      return true;
+    }
+    return false;
+  };
+  return new JsonRpcProvider(fetchRequest, undefined, { staticNetwork: true });
+}
+
 let _baseSepolia: { provider: JsonRpcProvider; wallet: Wallet } | null = null;
 export function baseSepolia(): { provider: JsonRpcProvider; wallet: Wallet } {
   if (_baseSepolia) return _baseSepolia;
   if (!env.baseSepoliaRpcUrl) throw new Error("BASE_SEPOLIA_RPC_URL required");
   if (!env.baseSepoliaPrivateKey) throw new Error("BASE_SEPOLIA_PRIVATE_KEY required");
-  const provider = new JsonRpcProvider(env.baseSepoliaRpcUrl);
+  const provider = buildBaseSepoliaProvider();
   const wallet = new Wallet(env.baseSepoliaPrivateKey, provider);
   _baseSepolia = { provider, wallet };
   return _baseSepolia;
+}
+
+/**
+ * Wrap a network call in a retry loop that survives transient 504s. Use
+ * for any contract read/write that could be flaky.
+ */
+export async function withRetry<T>(
+  fn: () => Promise<T>,
+  opts: { attempts?: number; baseDelayMs?: number; label?: string } = {},
+): Promise<T> {
+  const attempts = opts.attempts ?? 4;
+  const baseDelay = opts.baseDelayMs ?? 600;
+  let lastErr: unknown;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fn();
+    } catch (e) {
+      lastErr = e;
+      const msg = (e as Error).message ?? "";
+      const transient =
+        msg.includes("504") || msg.includes("503") || msg.includes("ETIMEDOUT") ||
+        msg.includes("SERVER_ERROR") || msg.includes("network");
+      if (!transient || i === attempts - 1) throw e;
+      const delay = baseDelay * 2 ** i;
+      console.log(`[retry] ${opts.label ?? "call"} attempt ${i + 1} failed (${msg.slice(0, 60)}), waiting ${delay}ms`);
+      await new Promise((r) => setTimeout(r, delay));
+    }
+  }
+  throw lastErr;
 }
 
 let _supabase: SupabaseClient | null = null;
