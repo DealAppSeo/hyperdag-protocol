@@ -1,6 +1,8 @@
 # 🌐 HyperDAG Protocol: The Decentralized Truth Layer
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![npm](https://img.shields.io/npm/v/@hyperdag/protocol.svg?label=%40hyperdag%2Fprotocol)](https://www.npmjs.com/package/@hyperdag/protocol)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Solidity](https://img.shields.io/badge/Solidity-%5E0.8.20-lightgrey)](https://soliditylang.org)
 [![ZK-Proof](https://img.shields.io/badge/ZK--Proof-Ready-success)](https://iden3.io)
 ![BFT](https://img.shields.io/badge/Consensus-3--Ply_BFT-green)
