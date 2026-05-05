@@ -1,0 +1,51 @@
+{
+  "name": "@hyperdag/protocol",
+  "version": "0.1.0-alpha.1",
+  "description": "Modular trust kernel for AI agents — six composable interface contracts with curated default implementations. Wraps ERC-8004 + x402 + ERC-5192 + ERC-7231 with HAL hallucination filtering and ZKP RepID.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DealAppSeo/hyperdag-protocol.git",
+    "directory": "packages/protocol"
+  },
+  "homepage": "https://github.com/DealAppSeo/hyperdag-protocol#readme",
+  "keywords": [
+    "erc-8004",
+    "x402",
+    "erc-5192",
+    "erc-7231",
+    "ai-agents",
+    "trust",
+    "reputation",
+    "zkp",
+    "hallucination",
+    "trustless-agents",
+    "trust-kernel"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "test": "node --experimental-strip-types --no-warnings --test test/smoke.test.ts"
+  },
+  "peerDependencies": {
+    "@hyperdag/interfaces": "0.1.0-alpha.1",
+    "@hyperdag/identity-erc8004": "0.1.0-alpha.1",
+    "@hyperdag/reputation-zkp": "0.1.0-alpha.1",
+    "@hyperdag/validation-trinity": "0.1.0-alpha.1",
+    "@hyperdag/payment-x402": "0.1.0-alpha.1",
+    "@hyperdag/linkage-registry": "0.1.0-alpha.1",
+    "@hyperdag/hallucination-hal": "0.1.0-alpha.1"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.0"
+  }
+}

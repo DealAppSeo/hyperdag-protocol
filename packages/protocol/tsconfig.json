@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "lib": ["es2023"],
+    "module": "node16",
+    "target": "es2022",
+    "moduleResolution": "node16",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@hyperdag/interfaces": ["../interfaces/dist/index.d.ts"],
+      "@hyperdag/interfaces/*": ["../interfaces/dist/*"],
+      "@hyperdag/identity-erc8004": ["../defaults/identity-erc8004/dist/index.d.ts"],
+      "@hyperdag/reputation-zkp": ["../defaults/reputation-zkp/dist/index.d.ts"],
+      "@hyperdag/validation-trinity": ["../defaults/validation-trinity/dist/index.d.ts"],
+      "@hyperdag/payment-x402": ["../defaults/payment-x402/dist/index.d.ts"],
+      "@hyperdag/linkage-registry": ["../defaults/linkage-registry/dist/index.d.ts"],
+      "@hyperdag/hallucination-hal": ["../defaults/hallucination-hal/dist/index.d.ts"]
+    }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist", "node_modules", "test"]
+}

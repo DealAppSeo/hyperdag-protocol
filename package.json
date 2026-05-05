@@ -6,7 +6,8 @@
     "private": true,
     "dependencies": {},
     "workspaces": [
-        "packages/*"
+        "packages/*",
+        "packages/defaults/*"
     ],
     "devDependencies": {
         "nx": "22.5.1"
