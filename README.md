@@ -9,6 +9,40 @@
 
 HyperDAG Protocol is the source of truth for the **AI Trinity Symphony** ecosystem. We provide the decentralized primitives for sovereign agent identity and a **Universal ZKP RepID System** that ensures accountability and truth across the multi-agent swarm.
 
+HyperDAG Protocol ships as a **modular trust kernel** — six composable interface contracts with curated default implementations — so developers can adopt only the layers they need.
+
+---
+
+## 🚀 Quick Start
+
+```bash
+npm install @hyperdag/protocol
+```
+
+```typescript
+import { createHDP } from '@hyperdag/protocol';
+
+const hdp = createHDP({
+  network: 'base-sepolia',
+  // sensible defaults for everything else
+});
+
+// Evaluate an agent output through HAL
+const result = await hdp.hallucination.evaluate({
+  prompt: "What's the capital of France?",
+  output: "Paris.",
+  context: { agentId: 3749 }
+});
+
+if (result.vetoed) {
+  console.log('HAL vetoed this output:', result.veto_reason);
+} else {
+  console.log('HAL score:', result.hal_score);
+}
+```
+
+See [`packages/protocol/README.md`](packages/protocol/README.md) for the full quick start.
+
 ---
 
 ## 🏗️ Technical Architecture: Merkle DAG Consensus
@@ -29,6 +63,27 @@ graph TD
     end
 ```
 
+---
+
+## 🔧 Modular Trust Kernel with Composition Interfaces
+
+HDP is not a heavy wrapper. It is a lightweight trust kernel that defines clean, versioned interfaces for six layers, with curated default implementations that work out of the box and can be replaced piece-by-piece.
+
+| Interface | Default | Wraps |
+| :--- | :--- | :--- |
+| `IIdentity` | `@hyperdag/identity-erc8004` | ERC-8004 IdentityRegistry |
+| `IReputation` | `@hyperdag/reputation-zkp` | ZKP RepID |
+| `IValidation` | `@hyperdag/validation-trinity` | Trinity Symphony BFT validators (with HITL graduation) |
+| `IPayment` | `@hyperdag/payment-x402` | x402 |
+| `ILinkage` | `@hyperdag/linkage-registry` | HDP Linkage Registry (inverse-stake curve) |
+| `IHallucination` | `@hyperdag/hallucination-hal` | HAL (Pythagorean Comma BFT veto) |
+
+> *"Stay light as long as you can. Adopt only the layers you need."*
+
+Replace any default at install time by passing your own implementation to `createHDP({ overrides: { ... } })`.
+
+For the full architectural picture — including the six architectural principles (Adaptive, Antifragile, Recursive, HITL-graduating, ZKP federated learning with bilateral benefit, hybrid Telegram+PWA) — see [ARCHITECTURE.md](ARCHITECTURE.md).
+
 ### Core Web3 Pillars
 * **Merkle DAG Infrastructure** — Content-addressed, verifiable state management.
 * **ZKP RepID** — Privacy-preserving reputation scoring for agents.
@@ -37,6 +92,19 @@ graph TD
 * **[Plonky3](https://github.com/Plonky3/Plonky3)** — Fast ZK proving system. No trusted setup. WASM browser verification < 100ms.
 * **[Rust](https://www.rust-lang.org/)** — Core consensus and cryptographic operations (Q2 2026).
 * **Quantum-Resistant Ledger** — Designed for the post-quantum era with hybrid cryptographic signatures.
+
+---
+
+## 📋 Phased Release Plan
+
+| Version | Target | Highlights |
+| :--- | :--- | :--- |
+| **v0.1** | May 2026 (shipping this week) | Six interfaces + six curated defaults. `npm install @hyperdag/protocol@0.1.0-alpha`. Trinity Symphony as reference impl. Founder-bootstrapped governance. |
+| **v0.2–0.3** | Q2 2026 | Community PRs for additional implementations (e.g., ERC-5192/ERC-7231 native defaults). Receipt-Bridge mainnet expansion. DoraHacks Turing Test submission (June 16). |
+| **v0.5** | Q3 2026 | Reputation-weighted snapshot governance votes. ZKP federated learning protocol live. ABL/ABI nightly validation operating publicly with verifiable benchmarks. |
+| **v1.0** | Q4 2026 | Three-branch DAO + full community handover. RetroPGF-style rewards from slashing pool. Hybrid Telegram + PWA interaction surfaces. |
+
+See [GOVERNANCE_ROADMAP.md](GOVERNANCE_ROADMAP.md) for the bootstrap-to-community handover timeline.
 
 ---
 
@@ -57,66 +125,56 @@ graph TD
 HyperDAG is a community-owned protocol. We seek alignment with researchers and developers who believe that decentralized truth is the only way to safeguard the future of agentic AI.
 
 - **Technical Glossary** (private repository)
+- **[Architecture](ARCHITECTURE.md)**
+- **[Governance Roadmap](GOVERNANCE_ROADMAP.md)**
 - **[Contributing Guide](CONTRIBUTING.md)**
 - **[Security Policy](SECURITY.md)**
 
 ---
 
-## Ecosystem
+## Ideas Being Built on HyperDAG
 
-HyperDAG Protocol is the identity and reputation infrastructure layer beneath a growing ecosystem of trust products.
-
-### Infrastructure Repos
-
-| System | Public Repo | Private Repo |
+| Idea | Repo | Description |
 |---|---|---|
-| HyperDAG Protocol | This repo | `hyperdag-platform` (private) |
-| HyperDAG Core | [hyperdag-core](https://github.com/DealAppSeo/hyperdag-core) | |
-| AI Trinity Symphony | [trinity-symphony-shared](https://github.com/DealAppSeo/trinity-symphony-shared) | `trinity-ecosystem` (private repository) |
+| TrustShell | [DealAppSeo/trustshell](https://github.com/DealAppSeo/trustshell) | Drop-in constitutional protection for any agent (`npm install @hyperdag/trustshell`) |
+| TrustRepID | [DealAppSeo/trustrepid](https://github.com/DealAppSeo/trustrepid) | Agent-facing dashboard, challenge arena, and developer SDK |
+| TrustRails | [DealAppSeo/trustrails-dev](https://github.com/DealAppSeo/trustrails-dev) | KYA compliance infrastructure for AI-DeFi |
+| TrustTrader | [DealAppSeo/trusttrader](https://github.com/DealAppSeo/trusttrader) (when public) | Constitutional AI trading filter (HAL + RISK) |
+| TrustChat | [DealAppSeo/trustchat-frontend](https://github.com/DealAppSeo/trustchat-frontend) | Hallucination-aware AI chat with RepID session tracking |
 
-### Ideas Being Built on HyperDAG
-
-| Idea | Link | Description |
-|---|---|---|
-| TrustShell | [trustshell.dev](https://trustshell.dev) | Drop-in constitutional protection for any agent (`npm install @hyperdag/trustshell`) |
-| TrustRepID | [trustrepid.dev](https://trustrepid.dev) | Agent-facing dashboard, challenge arena, and developer SDK |
-| TrustRails | [trustrails.dev](https://trustrails.dev) | KYA compliance infrastructure for AI-DeFi |
-| TrustTrader | [trusttrader.dev](https://trusttrader.dev) (when public) | Constitutional AI trading filter (HAL + RISK) |
-| TrustChat | [trustchat.dev](https://trustchat.dev) | Hallucination-aware AI chat with RepID session tracking |
-
-## 🔗 Related Projects in the Ecosystem
-
-- [hyperdag-protocol](https://github.com/DealAppSeo/hyperdag-protocol) — The L1 specification.
-- [hyperdag-core](https://github.com/DealAppSeo/hyperdag-core) — ZKP primitives.
-- [trinity-symphony-shared](https://github.com/DealAppSeo/trinity-symphony-shared) — Agent infrastructure.
-- [repid](https://github.com/DealAppSeo/repid) — The reputation engine.
-- [trustrepid](https://github.com/DealAppSeo/trustrepid) — SDK and integration layer.
+---
 
 ### Technology Roadmap
 
-**Performance (Q2 2026)**
-- Core consensus and cryptographic operations migrated to Rust via WebAssembly -Done
-- ANFIS routing engine rewritten in Rust for 10-100x throughput improvement
-- ZKP circuit compilation using [Plonky3](https://github.com/Plonky3/Plonky3) — no trusted setup, recursive composition, WASM support
+**v0.1 — May 2026 (this week)**
+- Modular trust kernel with six interface contracts ✅
+- Six wired default implementations ✅
+- `@hyperdag/protocol` v0.1.0-alpha published to npm
 
-**LLM expansion (Q2 2026)**
-- Add Qwen 3, Llama (direct Meta), MiMo, Gemma 3 to LiteLLM config
-- HuggingFace Inference API as fallback provider
-- MoE architecture review for ANFIS routing layer
+**v0.2–0.3 — Q2 2026**
+- Community PRs for additional ERC-5192 / ERC-7231 native default implementations
+- Receipt-Bridge mainnet expansion
+- DoraHacks Turing Test submission (June 16 deadline)
+- ANFIS routing engine rewritten in Rust for 10–100x throughput improvement
+- Add Qwen 3, Llama (direct Meta), MiMo, Gemma 3 to LiteLLM config; HuggingFace Inference API as fallback
+- Google A2A protocol integration; CrewAI and AutoGen interop layer
+- Full x402 agent-to-agent payment mesh ✅ (Done early)
+- Real ZK circuits replacing stub proofs (Plonky3 — Postcard tier ~50ms, Sponsor-Guardian recursive proofs) ✅ (Done early)
+- Cross-LLM verification layer ✅ (Done early)
 
-**Agent interoperability (Q3 2026)**
-- Google A2A protocol integration
-- CrewAI and AutoGen interop layer
-- Full x402 agent-to-agent payment mesh - Done Early
-
-**Identity and privacy (Q3 2026)**
-- Real ZK circuits replacing stub proofs (Plonky3 — Postcard tier ~50ms, Sponsor-Guardian recursive proofs) - Done Early
+**v0.5 — Q3 2026**
+- Reputation-weighted snapshot governance votes (non-critical decisions)
+- ZKP federated learning protocol live
+- ABL/ABI (Always Be Learning / Always Be Improving) nightly validation operating publicly with verifiable benchmarks
 - Full ERC-8004 ValidationRegistry with on-chain proof verification
 - Syndicated custodianship pools (multi-Human SBT co-guarantee)
 
-**Scale (Q4 2026)**
+**v1.0 — Q4 2026**
+- Three-branch DAO (sortition users, devs, stakeholders) live
+- Full community handover; founder retains advisory + patent-defensive role only
+- RetroPGF-style rewards from slashing pool
+- Hybrid Telegram + PWA interaction surfaces (`app.aitrinitysymphony.com`)
 - Solana mainnet migration
-- Fireblocks production API integration
 - ISO 20022 compliance receipt export for enterprise reporting
 
 ---
