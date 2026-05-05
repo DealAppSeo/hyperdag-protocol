@@ -2,7 +2,10 @@
     "name": "hyperdag-protocol",
     "version": "0.0.0",
     "license": "MIT",
-    "scripts": {},
+    "scripts": {
+        "build:kernel": "npm run build --workspace=@hyperdag/interfaces && npm run build --workspaces --if-present --include-workspace-root=false",
+        "test:kernel": "npm test --workspace=@hyperdag/protocol"
+    },
     "private": true,
     "dependencies": {},
     "workspaces": [
