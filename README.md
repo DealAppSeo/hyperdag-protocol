@@ -1,19 +1,21 @@
-# 🌐 HyperDAG Protocol: The Decentralized Truth Layer
+# 🌐 HyperDAG Protocol
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Solidity](https://img.shields.io/badge/Solidity-%5E0.8.20-lightgrey)](https://soliditylang.org)
 [![ZK-Proof](https://img.shields.io/badge/ZK--Proof-Ready-success)](https://iden3.io)
 ![BFT](https://img.shields.io/badge/Consensus-3--Ply_BFT-green)
 
-**Foundational Web3 Infrastructure for EIP-8004 Identity and Universal ZKP RepID.**
+**A modular trust kernel for ERC-8004 agent identity and ZKP reputation.**
 
-HyperDAG Protocol is the source of truth for the **AI Trinity Symphony** ecosystem. We provide the decentralized primitives for sovereign agent identity and a **Universal ZKP RepID System** that ensures accountability and truth across the multi-agent swarm.
+HyperDAG Protocol provides the decentralized primitives for agent identity and a ZKP-based RepID system
+in the **AI Trinity Symphony** ecosystem.
 
 ---
 
 ## 🏗️ Technical Architecture: Merkle DAG Consensus
 
-The protocol utilizes an append-only **Merkle DAG** to log state transitions and routing decisions from the orchestration layer. This creates a tamper-evident audit trail for every action within the civilization layer.
+The protocol uses an append-only **Merkle DAG** to log state transitions and routing decisions from the
+orchestration layer, producing a tamper-evident audit trail for each action.
 
 ### 🔄 The Verification Flow
 ```mermaid
@@ -21,7 +23,7 @@ graph TD
     Node1((Initial State)) --> Node2((Agent Action))
     Node1 --> Node3((Agent Action))
     Node2 & Node3 --> Node4{Merkle Hash}
-    Node4 -->|EIP-8004| Chain[(HyperDAG Ledger)]
+    Node4 -->|ERC-8004| Chain[(HyperDAG Ledger)]
     
     subgraph "Privacy Layer"
     Chain --> ZKP[ZKP RepID Circuit]
@@ -34,27 +36,26 @@ graph TD
 * **ZKP RepID** — Privacy-preserving reputation scoring for agents.
 * **[ERC-8004](https://github.com/erc-8004/erc-8004-contracts)** — Standards-based identity for autonomous agents.
 * **[x402](https://github.com/x402-rs/x402-rs)** — Agent-to-agent micropayments protocol.
-* **[Plonky3](https://github.com/Plonky3/Plonky3)** — Fast ZK proving system. No trusted setup. WASM browser verification < 100ms.
-* **[Rust](https://www.rust-lang.org/)** — Core consensus and cryptographic operations (Q2 2026).
-* **Quantum-Resistant Ledger** — Designed for the post-quantum era with hybrid cryptographic signatures.
+* **[Plonky3](https://github.com/Plonky3/Plonky3)** — ZK proving system. No trusted setup. WASM browser verification < 100ms.
+* **[Rust](https://www.rust-lang.org/)** — Core consensus and cryptographic operations (planned, Q2 2026).
 
 ---
 
 ## 🏛️ Ecosystem Orchestration
 
-| Repository | Role | Vision |
-| :--- | :--- | :--- |
-| **trinity-ecosystem** (private repository) | The Conductor | Visual UI, Pulse Dashboard, & Swarm Control |
-| **[hyperdag-protocol](https://github.com/DealAppSeo/hyperdag-protocol)** | The Truth | Decentralized Ledger, ZKP RepID, & BFT Gov |
-| **[hyperdag-core](https://github.com/DealAppSeo/hyperdag-core)** | The Engine | Rust + Plonky3 STARK proving service, ZKP circuits |
-| **hyperdag-platform** (private repository) | The Bridge | GNN Coordination, SDK, & Algorithmic Engine |
-| **[trinity-symphony-shared](https://github.com/DealAppSeo/trinity-symphony-shared)** | The Soul | Constitutional Logic & Core BFT Primitives |
+| Repository | Role |
+| :--- | :--- |
+| **trinity-ecosystem** (private repository) | Visual UI, dashboard, and swarm control |
+| **[hyperdag-protocol](https://github.com/DealAppSeo/hyperdag-protocol)** | Decentralized ledger, ZKP RepID, and BFT governance |
+| **[hyperdag-core](https://github.com/DealAppSeo/hyperdag-core)** | Rust + Plonky3 STARK proving service, ZKP circuits |
+| **hyperdag-platform** (private repository) | GNN coordination, SDK, and routing engine |
+| **[trinity-symphony-shared](https://github.com/DealAppSeo/trinity-symphony-shared)** | Constitutional logic & core BFT primitives |
 
 ---
 
-## 🤝 Join the Protocol
+## 🤝 Contributing
 
-HyperDAG is a community-owned protocol. We seek alignment with researchers and developers who believe that decentralized truth is the only way to safeguard the future of agentic AI.
+HyperDAG is an open, community-oriented protocol. Contributions from researchers and developers are welcome.
 
 - **Technical Glossary** (private repository)
 - **[Contributing Guide](CONTRIBUTING.md)**
@@ -94,30 +95,23 @@ HyperDAG Protocol is the identity and reputation infrastructure layer beneath a 
 
 ### Technology Roadmap
 
-**Performance (Q2 2026)**
-- Core consensus and cryptographic operations migrated to Rust via WebAssembly -Done
-- ANFIS routing engine rewritten in Rust for 10-100x throughput improvement
+**Performance (Q2 2026, planned)**
+- ANFIS routing engine rewritten in Rust for higher throughput
 - ZKP circuit compilation using [Plonky3](https://github.com/Plonky3/Plonky3) — no trusted setup, recursive composition, WASM support
 
-**LLM expansion (Q2 2026)**
-- Add Qwen 3, Llama (direct Meta), MiMo, Gemma 3 to LiteLLM config
+**LLM expansion (Q2 2026, planned)**
+- Additional models in the LiteLLM config (e.g. Qwen 3, Llama, Gemma 3)
 - HuggingFace Inference API as fallback provider
-- MoE architecture review for ANFIS routing layer
 
-**Agent interoperability (Q3 2026)**
+**Agent interoperability (Q3 2026, planned)**
 - Google A2A protocol integration
 - CrewAI and AutoGen interop layer
-- Full x402 agent-to-agent payment mesh - Done Early
+- Full x402 agent-to-agent payment mesh ✅ (shipped)
 
-**Identity and privacy (Q3 2026)**
-- Real ZK circuits replacing stub proofs (Plonky3 — Postcard tier ~50ms, Sponsor-Guardian recursive proofs) - Done Early
+**Identity and privacy (Q3 2026, planned)**
+- Real ZK circuits replacing stub proofs (Plonky3) ✅ (shipped)
 - Full ERC-8004 ValidationRegistry with on-chain proof verification
 - Syndicated custodianship pools (multi-Human SBT co-guarantee)
-
-**Scale (Q4 2026)**
-- Solana mainnet migration
-- Fireblocks production API integration
-- ISO 20022 compliance receipt export for enterprise reporting
 
 ---
 
