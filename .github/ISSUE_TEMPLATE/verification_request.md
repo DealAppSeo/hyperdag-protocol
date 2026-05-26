@@ -56,7 +56,7 @@ python -m pytest
 
 ### Author's Stack
 - **LLM Used:** <!-- Claude / Gemini / Grok -->
-- **Data Sources:** <!-- e.g., EIP-8004 docs, Supabase schema -->
+- **Data Sources:** <!-- e.g., ERC-8004 docs, Supabase schema -->
 
 ### Verifier Requirements
 - [ ] Use DIFFERENT LLM than author

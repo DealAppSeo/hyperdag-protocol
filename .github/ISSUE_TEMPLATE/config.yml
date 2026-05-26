@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 📖 AI_CONTEXT.md
-    url: https://github.com/DealAppSeo/trinity-ecosystem/blob/main/AI_CONTEXT.md
-    about: Read the current project context before creating issues
-  - name: 📋 EIP-8004 Specification
+  - name: 📋 ERC-8004 Specification
     url: https://eips.ethereum.org/EIPS/eip-8004
     about: Reference the Trustless Agents standard
   - name: 🔧 8004.org Build Guide
     url: https://www.8004.org/build
-    about: Implementation guide for EIP-8004
+    about: Implementation guide for ERC-8004
+  - name: 💬 HyperDAG Protocol Discussions
+    url: https://github.com/DealAppSeo/hyperdag-protocol/discussions
+    about: Open-ended questions, ideas, and integration help
