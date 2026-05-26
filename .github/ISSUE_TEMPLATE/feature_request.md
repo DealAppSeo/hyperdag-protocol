@@ -73,5 +73,5 @@ assignees: ''
 
 ## 🔗 Related
 <!-- Link to related issues, discussions, or documentation -->
-- EIP-8004 Spec: https://eips.ethereum.org/EIPS/eip-8004
+- ERC-8004 Spec: https://eips.ethereum.org/EIPS/eip-8004
 - Related Issue: #
