@@ -158,13 +158,9 @@ All Apache 2.0; all open:
 
 ## Contributors
 
-Thanks to everyone who has shipped commits to this repository — including external collaborators from the ERC-8004 community:
+Maintained by **Sean Goodwin**. The full contributor list — including everyone whose commits appear in this repository's history — is authoritatively the [GitHub contributors page](https://github.com/DealAppSeo/hyperdag-protocol/graphs/contributors), not this README. We do not list individuals here to avoid implying endorsement.
 
-- **Leonard Tan** *(maintainer, lead implementation)*
-- **Sean Goodwin** *(maintainer)*
-- **Vitto Rivabella** *(ERC-8004 author, reviewer/contributor)*
-- **Marco De Rossi** *(ERC-8004 author, reviewer/contributor)*
-- TheGreatAxios · kevzzsk · Li He
+This implementation builds on the **ERC-8004 standard** (Trustless Agents). The standard's authors are public on the EIP and its reference repos; we cite them factually in [METHODOLOGY.md](METHODOLOGY.md), not as contributors to this fork.
 
 PRs welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). For governance, see [GOVERNANCE_ROADMAP.md](GOVERNANCE_ROADMAP.md).
 
