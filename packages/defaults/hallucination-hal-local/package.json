@@ -1,0 +1,39 @@
+{
+  "name": "@hyperdag/hallucination-hal-local",
+  "version": "0.1.0-internal",
+  "private": true,
+  "description": "Local HAL provider — deterministic 5-signal extraction + canonical combiner. Internal-only. Public npm publish requires Sean's explicit approval per CLAUDE.md hard-stop on HAL signal-extraction formula + weighting (HAEE / ANFIS / P-003 patent portfolio).",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test --import tsx tests/*.test.ts"
+  },
+  "peerDependencies": {
+    "@hyperdag/interfaces": "*",
+    "@hyperdag/hallucination-hal": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "tsx": "^4.0.0"
+  },
+  "keywords": [
+    "hyperdag",
+    "hal",
+    "hallucination",
+    "internal"
+  ]
+}
