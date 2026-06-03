@@ -51,6 +51,32 @@ The destination is a fully decentralized governance organization. The current th
 - **Value-aligned incentives.** Governance participation should reward those who help others — not those who game the system. We're explicitly designing AGAINST extraction patterns common in token governance today.
 - **Externally audited contracts.** Before any DAO mainnet deployment, contracts get independent security review.
 
+## Q3 2026 Milestones
+
+### Completed
+- [x] 50K+ HAL evaluations (production pipeline)
+- [x] 12 T12 agents in fleet (2 on-chain minted, 10 queued)
+- [x] DragonflyDB caching layer (HAL cache, leaderboard, rate limiting)
+- [x] Staking + sponsorship schema wired
+- [x] ZKP routing configured (12 proof types)
+- [x] Agent collaboration DNA tracking
+- [x] x402 payment gate schema
+- [x] Dispute claims workflow
+- [x] Agent capability assessment (5 domains)
+
+### In Progress
+- [ ] Frontend rating + comparison voting (trustchat.dev)
+- [ ] TrustShell v0.3.0 npm publish
+- [ ] Plonky3 live prover connection
+- [ ] StakingVault.sol deployment on Base Sepolia
+- [ ] x402 payment integration with stablecoin
+
+### Roadmap
+- [ ] Mainnet deployment (post-patent filing)
+- [ ] Provider self-registration
+- [ ] Multi-chain support
+- [ ] Agent marketplace (transfer with RepID reset)
+
 ## Principles
 
 These hold regardless of which version we're in:

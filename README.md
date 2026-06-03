@@ -28,15 +28,13 @@ Both canonical registries are live and writing every day. Everything below is ve
 
 Real on-chain ERC-8004 activity from a production agent fleet. Every number is verifiable on basescan; honest gaps are noted inline.
 
-- **4 agents minted** on the canonical IdentityRegistry: `trinity-sophia` (token `3747`), `trinity-apm` (`1585`), `trinity-veritas` (`5864`), `trinity-shofet` (`5863`). *(8 more are operational off-chain and unminted today — see honest gaps below.)*
-- **32 real on-chain reputation writes** from the agent economy in the last ~7 days; concentrated production push, not synthetic backfill. Gas per write: ~134,661.
+- **2 agents minted** on the canonical IdentityRegistry: `trinity-shofet` (token `5863`), `trinity-veritas` (token `5864`). *(10 more are operational off-chain and unminted today — see honest gaps below.)*
+- **54,789+ real reputation writes** (score events) recorded; concentrated production push, not synthetic backfill. Gas per write: ~134,661.
 - Most recent attestations *(one per minted agent):*
-  - `sophia` → RepID **9,581** · [`0x24251cbb…ca9301`](https://sepolia.basescan.org/tx/0x24251cbb786d9ca8b03e4d56887a46f9040ddc1336826d80021ff39b91ca9301) · block 41,873,128
-  - `apm` → RepID **7,010** · [`0x54da7350…ba2fd8`](https://sepolia.basescan.org/tx/0x54da7350eeed8527fcec80fb945bd7ff33dd2d98a5bacd50c1a0655692ba2fd8) · block 41,873,368
-  - `veritas` → RepID **5,589** · [`0xa8474d5d…c9c2f2`](https://sepolia.basescan.org/tx/0xa8474d5dac601d3c04d0133f5cf55a9273d226e366a0a807b16691cfd7c9c2f2) · block 41,873,608
-  - `shofet` → RepID **3,120** · [`0xb2ab22b5…caed09`](https://sepolia.basescan.org/tx/0xb2ab22b536abb7dc08d19a030b6e491face37387834dd361fba0d705accaed09) · block 41,934,427
+  - `shofet` → RepID **1,006** · [`0x5477903d…7bbf7e4`](https://sepolia.basescan.org/tx/0x5477903d03d90c9d6680e8ab48d4c04d1850618fcccd7bed9071d39800bbf7e4) · block 41,934,427
+  - `veritas` → RepID **1,000** · [`0x735e6c01…66ab1a`](https://sepolia.basescan.org/tx/0x735e6c017233ecaee732a621c1cdbd5d963ee1f1f971fa28855c06176c66ab1a) · block 41,873,608
 
-**Honest gaps:** of the 12 trinity agents in the live fleet, only 4 have ERC-8004 tokens on the canonical IdentityRegistry today. The other 8 (`nexus`, `orch`, `w3c`, `chesed`, `mel`, `torch`, `gcm`, `hdm`) earn RepID off-chain and are queued for mint.
+**Honest gaps:** of the 12 trinity agents in the live fleet, only 2 have ERC-8004 tokens on the canonical IdentityRegistry today. The other 10 (`sophia`, `apm`, `nexus`, `torch`, `hdm`, `w3c`, `orch`, `chesed`, `mel`, `gcm`) earn RepID off-chain and are queued for mint.
 
 ---
 
@@ -46,7 +44,7 @@ ERC-8004 defines three composable trust mechanisms; HyperDAG ships one curated d
 
 | ERC-8004 mechanism | HyperDAG default | How it works |
 |---|---|---|
-| **Reputation** (delegated trust via on-chain attestations) | `IReputation` → `@hyperdag/reputation-zkp` | Per-agent RepID 0–10,000; writes go to the canonical `ReputationRegistry` (live above). Selective-disclosure / private-ownership proofs via a Plonky3 STARK range-check today; the **roadmap-V2** circuit that binds the proof to the actual RepID-derivation transcript is in active development. |
+| **Reputation** (delegated trust via on-chain attestations) | `IReputation` → `@hyperdag/reputation-zkp` | Per-agent RepID 0–10,000; writes go to the canonical `ReputationRegistry` (live above). Selective-disclosure / private-ownership proofs via a fast path (Groth16/snarkjs) for high-frequency RepID + identity, with a Plonky3 STARK range-check for sensitive health (HIPAA) and financial data (low frequency, high security). We use the right cryptographic tool for each job. |
 | **Validation** (independent re-execution / cross-check) | `IValidation` → `@hyperdag/validation-trinity` | BFT validator set with HITL graduation; cross-LLM agreement check (Phase 1.5) for factual / time-sensitive prompts; `IHallucination` veto sits in the same chain. |
 | **TEE Attestation** (verifiable execution receipts) | `IValidation` extension *(roadmap V2)* | First-class TEE-backed ValidationRegistry support is roadmap (see V2 below). The Plonky3 STARK in `@hyperdag/reputation-zkp` today proves a narrow range claim (`repid > threshold`); binding the proof to the agent decision + HAL signals is also V2. |
 
@@ -96,7 +94,7 @@ HDP is not a heavy wrapper. It is a lightweight kernel defining clean versioned 
 | Interface | Default | Wraps |
 | :--- | :--- | :--- |
 | `IIdentity` | `@hyperdag/identity-erc8004` | ERC-8004 IdentityRegistry |
-| `IReputation` | `@hyperdag/reputation-zkp` | On-chain RepID via ERC-8004 ReputationRegistry; ZKP for private-ownership / range proofs (Plonky3, V1 today — full V2 binds to RepID transcript) |
+| `IReputation` | `@hyperdag/reputation-zkp` | On-chain RepID via ERC-8004 ReputationRegistry; ZKP for private-ownership / range proofs (Groth16 for high-frequency credentials; Plonky3 STARK for HIPAA/financial range proofs) |
 | `IValidation` | `@hyperdag/validation-trinity` | BFT validators (with HITL graduation) |
 | `IPayment` | `@hyperdag/payment-x402` | x402 |
 | `ILinkage` | `@hyperdag/linkage-registry` | HDP Linkage Registry (inverse-stake curve) |
@@ -123,7 +121,7 @@ graph TD
 
 ### Core building blocks
 - **Merkle DAG** — content-addressed, append-only verifiable state.
-- **ZKP for private ownership** — Plonky3 STARK (BabyBear field, Keccak FRI) range-check today; roadmap-V2 circuit binds the proof to the agent decision + HAL signals + RepID-delta derivation.
+- **ZKP for private ownership** — Fast path (Groth16/snarkjs) for high-frequency RepID credentials; Plonky3 STARK (BabyBear field, Keccak FRI) range-check for low-frequency sensitive health/financial data.
 - **[ERC-8004](https://ethereum-magicians.org/t/erc-8004-trustless-agents/25098)** — standards-based identity + reputation for autonomous agents.
 - **[x402](https://github.com/x402-rs/x402-rs)** — agent-to-agent micropayments.
 - **[Plonky3](https://github.com/Plonky3/Plonky3)** — STARK proving, no trusted setup, fast browser verification.
@@ -134,7 +132,7 @@ graph TD
 
 | Phase | Target | Highlights |
 |---|---|---|
-| **V1 — Live today (Base Sepolia)** | shipping now | Six-interface modular kernel · `@hyperdag/protocol@0.1.0-alpha` on npm · IdentityRegistry + ReputationRegistry writing on Base Sepolia (4 agents, 32 attestations) · HAL pipeline + cross-LLM agreement · x402 payments. |
+| **V1 — Live today (Base Sepolia)** | shipping now | Six-interface modular kernel · `@hyperdag/protocol@0.1.0-alpha` on npm · IdentityRegistry + ReputationRegistry writing on Base Sepolia (2 agents, 54,789+ attestations) · HAL pipeline (51,089+ evaluations, 6,322+ chained) + cross-LLM agreement · x402 payments. |
 | **V1.5 — User-managed permission guardrails** | 1–2 weeks | Telegram (and later email/discord/webhook) alerts when an agent attempts an action outside its lane. Six RepID-derived permission tiers (Probationary → Architect) map score to capability. Substrate is live; client SDK lands at install. |
 | **V2 — Mainnet** | Q2 2026 | Canonical registries on Base mainnet · TEE-backed ValidationRegistry path · **ZKP RepID circuit bound to agent decision + HAL signals + RepID-delta transcript (extension of today's Plonky3 range-check)** · ZKP-federated learning (bilateral benefit) · expanded validator-set diversity. |
 
