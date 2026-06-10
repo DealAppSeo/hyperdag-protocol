@@ -46,9 +46,9 @@ ERC-8004 defines three composable trust mechanisms; HyperDAG ships one curated d
 
 | ERC-8004 mechanism | HyperDAG default | How it works |
 |---|---|---|
-| **Reputation** (delegated trust via on-chain attestations) | `IReputation` → `@hyperdag/reputation-zkp` | Per-agent RepID 0–10,000; writes go to the canonical `ReputationRegistry` (live above). Optional ZKP RepID circuit (Plonky3) for privacy-preserving score proofs. |
+| **Reputation** (delegated trust via on-chain attestations) | `IReputation` → `@hyperdag/reputation-zkp` | Per-agent RepID 0–10,000; writes go to the canonical `ReputationRegistry` (live above). Selective-disclosure / private-ownership proofs via a Plonky3 STARK range-check today; the **roadmap-V2** circuit that binds the proof to the actual RepID-derivation transcript is in active development. |
 | **Validation** (independent re-execution / cross-check) | `IValidation` → `@hyperdag/validation-trinity` | BFT validator set with HITL graduation; cross-LLM agreement check (Phase 1.5) for factual / time-sensitive prompts; `IHallucination` veto sits in the same chain. |
-| **TEE Attestation** (verifiable execution receipts) | `IValidation` extension *(roadmap V2)* | The ZKP RepID circuit provides a verifiable-attestation flavor today; first-class TEE-backed ValidationRegistry support is roadmap (see V2 below). |
+| **TEE Attestation** (verifiable execution receipts) | `IValidation` extension *(roadmap V2)* | First-class TEE-backed ValidationRegistry support is roadmap (see V2 below). The Plonky3 STARK in `@hyperdag/reputation-zkp` today proves a narrow range claim (`repid > threshold`); binding the proof to the agent decision + HAL signals is also V2. |
 
 ---
 
@@ -96,7 +96,7 @@ HDP is not a heavy wrapper. It is a lightweight kernel defining clean versioned 
 | Interface | Default | Wraps |
 | :--- | :--- | :--- |
 | `IIdentity` | `@hyperdag/identity-erc8004` | ERC-8004 IdentityRegistry |
-| `IReputation` | `@hyperdag/reputation-zkp` | ZKP RepID |
+| `IReputation` | `@hyperdag/reputation-zkp` | On-chain RepID via ERC-8004 ReputationRegistry; ZKP for private-ownership / range proofs (Plonky3, V1 today — full V2 binds to RepID transcript) |
 | `IValidation` | `@hyperdag/validation-trinity` | BFT validators (with HITL graduation) |
 | `IPayment` | `@hyperdag/payment-x402` | x402 |
 | `ILinkage` | `@hyperdag/linkage-registry` | HDP Linkage Registry (inverse-stake curve) |
@@ -115,15 +115,15 @@ graph TD
     Node2 & Node3 --> Node4{Merkle Hash}
     Node4 -->|ERC-8004| Chain[(HyperDAG Ledger)]
 
-    subgraph "Privacy Layer"
-    Chain --> ZKP[ZKP RepID Circuit]
-    ZKP --> Creds[Sovereign Credentials]
+    subgraph "Privacy Layer (V1: range-check today; V2: bound to RepID transcript)"
+    Chain --> ZKP[Plonky3 STARK Circuit]
+    ZKP --> Creds[Selective-disclosure proofs]
     end
 ```
 
 ### Core building blocks
 - **Merkle DAG** — content-addressed, append-only verifiable state.
-- **ZKP RepID** — privacy-preserving reputation proofs (Plonky3, BabyBear field, Poseidon2).
+- **ZKP for private ownership** — Plonky3 STARK (BabyBear field, Keccak FRI) range-check today; roadmap-V2 circuit binds the proof to the agent decision + HAL signals + RepID-delta derivation.
 - **[ERC-8004](https://ethereum-magicians.org/t/erc-8004-trustless-agents/25098)** — standards-based identity + reputation for autonomous agents.
 - **[x402](https://github.com/x402-rs/x402-rs)** — agent-to-agent micropayments.
 - **[Plonky3](https://github.com/Plonky3/Plonky3)** — STARK proving, no trusted setup, fast browser verification.
@@ -136,7 +136,7 @@ graph TD
 |---|---|---|
 | **V1 — Live today (Base Sepolia)** | shipping now | Six-interface modular kernel · `@hyperdag/protocol@0.1.0-alpha` on npm · IdentityRegistry + ReputationRegistry writing on Base Sepolia (4 agents, 32 attestations) · HAL pipeline + cross-LLM agreement · x402 payments. |
 | **V1.5 — User-managed permission guardrails** | 1–2 weeks | Telegram (and later email/discord/webhook) alerts when an agent attempts an action outside its lane. Six RepID-derived permission tiers (Probationary → Architect) map score to capability. Substrate is live; client SDK lands at install. |
-| **V2 — Mainnet** | Q2 2026 | Canonical registries on Base mainnet · TEE-backed ValidationRegistry path · ZKP-federated learning (bilateral benefit) · expanded validator-set diversity. |
+| **V2 — Mainnet** | Q2 2026 | Canonical registries on Base mainnet · TEE-backed ValidationRegistry path · **ZKP RepID circuit bound to agent decision + HAL signals + RepID-delta transcript (extension of today's Plonky3 range-check)** · ZKP-federated learning (bilateral benefit) · expanded validator-set diversity. |
 
 See [GOVERNANCE_ROADMAP.md](GOVERNANCE_ROADMAP.md) for the bootstrap-to-community handover timeline.
 

@@ -1,0 +1,36 @@
+{
+  "name": "@hyperdag/identity-erc8004-viem",
+  "version": "0.1.0-alpha",
+  "description": "Zero-config viem-backed ERC-8004 identity provider for Base Sepolia (read works out of the box; signed-write requires explicit signer).",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "peerDependencies": {
+    "@hyperdag/interfaces": "*",
+    "@hyperdag/identity-erc8004": "*",
+    "viem": "^2.21.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  },
+  "keywords": [
+    "hyperdag",
+    "erc-8004",
+    "identity",
+    "viem"
+  ]
+}
