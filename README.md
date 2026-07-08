@@ -103,6 +103,18 @@ This package gives you the **protocol interfaces + curated defaults** — build 
 
 *(Installing the SDK straight from GitHub — `github:DealAppSeo/trustshell` — is coming.)*
 
+### Which package do I install?
+
+| If you're… | Install | What you get |
+|---|---|---|
+| A developer building an agent/app **in code** | `npm install @hyperdag/trustshell` | The SDK — HAL verification + ERC-8004 RepID + x402 payments, in your TypeScript/JS |
+| Using an **AI tool** (Claude Desktop, Cursor, Windsurf), **no code** | `npx @hyperdag/trustshell-mcp` | The same three protocols as AI-callable tools — zero terminal |
+| Only verifying **ZK proofs** client-side | `npm install @hyperdag/proof-verifier` | Standalone Plonky3 proof checking (usually bundled with trustshell — rarely installed directly) |
+
+**Most people want `@hyperdag/trustshell` (building in code) or `@hyperdag/trustshell-mcp` (adding trust to your AI, no code). `proof-verifier` is a building block that ships inside trustshell.**
+
+*(This `@hyperdag/protocol` package itself is the interface kernel — install it only if you're building your own trust layer on the six interfaces.)*
+
 ```typescript
 import { createHDP } from '@hyperdag/protocol';
 
