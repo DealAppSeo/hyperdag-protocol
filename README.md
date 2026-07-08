@@ -93,7 +93,15 @@ ERC-8004 defines three composable trust mechanisms; HyperDAG ships one curated d
 npm install @hyperdag/protocol
 ```
 
-This package gives you the **protocol interfaces + curated defaults** — build your own trust layer on the six interfaces. If you'd rather install a ready-made developer SDK that bundles HAL hallucination filtering, portable ERC-8004 RepID, and x402 payments in one install, reach for **[`@hyperdag/trustshell`](https://github.com/DealAppSeo/trustshell)** — see the [Public ecosystem](#public-ecosystem) table below. *(Additional install paths — the SDK straight from GitHub, and an MCP server that exposes the same three protocols as AI-callable tools for Claude Desktop / Cursor — are rolling out and publishing soon.)*
+This package gives you the **protocol interfaces + curated defaults** — build your own trust layer on the six interfaces. If you'd rather install a ready-made developer SDK that bundles HAL hallucination filtering, portable ERC-8004 RepID, and x402 payments in one install, reach for **[`@hyperdag/trustshell`](https://github.com/DealAppSeo/trustshell)** — see the [Public ecosystem](#public-ecosystem) table below.
+
+**AI-native install (no terminal).** The same three protocols — HAL verification, ERC-8004 RepID, and x402 payments — are also live as an MCP server that an AI (Claude Desktop / Cursor) can call directly as tools: **[`@hyperdag/trustshell-mcp`](https://www.npmjs.com/package/@hyperdag/trustshell-mcp)**. Run it with `npx @hyperdag/trustshell-mcp`, or add it to your Claude Desktop / Cursor config:
+
+```json
+{"mcpServers":{"trustshell":{"command":"npx","args":["-y","@hyperdag/trustshell-mcp"]}}}
+```
+
+*(Installing the SDK straight from GitHub — `github:DealAppSeo/trustshell` — is coming.)*
 
 ```typescript
 import { createHDP } from '@hyperdag/protocol';
