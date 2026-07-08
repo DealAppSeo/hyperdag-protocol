@@ -15,7 +15,7 @@ HyperDAG is a lightweight, composable trust kernel for autonomous agents: six ve
 
 ## Live on Base Sepolia (chain ID 84532)
 
-Both canonical registries are live and writing every day. Everything below is verifiable from any RPC client or basescan:
+Both canonical registries are live on-chain, holding real minted identities and reputation writes. Everything below is verifiable from any RPC client or basescan. *(On-chain reputation writes are currently paused while the anchor/drain worker is restarted — see the honest note under Receipts. Reads and identity lookups are unaffected.)*
 
 | Contract | Address |
 |---|---|
@@ -28,19 +28,43 @@ Both canonical registries are live and writing every day. Everything below is ve
 
 Real on-chain ERC-8004 activity from a production agent fleet. Every number is verifiable on basescan; honest gaps are noted inline.
 
-- **4 agents minted** on the canonical IdentityRegistry: `trinity-sophia` (token `3747`), `trinity-apm` (`1585`), `trinity-veritas` (`5864`), `trinity-shofet` (`5863`). *(8 more are operational off-chain and unminted today — see honest gaps below.)*
-- **32 real on-chain reputation writes** from the agent economy in the last ~7 days; concentrated production push, not synthetic backfill. Gas per write: ~134,661.
-- Most recent attestations *(one per minted agent):*
-  - `sophia` → RepID **9,581** · [`0x24251cbb…ca9301`](https://sepolia.basescan.org/tx/0x24251cbb786d9ca8b03e4d56887a46f9040ddc1336826d80021ff39b91ca9301) · block 41,873,128
-  - `apm` → RepID **7,010** · [`0x54da7350…ba2fd8`](https://sepolia.basescan.org/tx/0x54da7350eeed8527fcec80fb945bd7ff33dd2d98a5bacd50c1a0655692ba2fd8) · block 41,873,368
-  - `veritas` → RepID **5,589** · [`0xa8474d5d…c9c2f2`](https://sepolia.basescan.org/tx/0xa8474d5dac601d3c04d0133f5cf55a9273d226e366a0a807b16691cfd7c9c2f2) · block 41,873,608
-  - `shofet` → RepID **3,120** · [`0xb2ab22b5…caed09`](https://sepolia.basescan.org/tx/0xb2ab22b536abb7dc08d19a030b6e491face37387834dd361fba0d705accaed09) · block 41,934,427
+- **All 12 trinity agents minted** on the canonical IdentityRegistry — the whole core fleet now holds ERC-8004 tokens (the earlier "4 minted, 8 queued" gap is closed):
 
-**Honest gaps:** of the 12 trinity agents in the live fleet, only 4 have ERC-8004 tokens on the canonical IdentityRegistry today. The other 8 (`nexus`, `orch`, `w3c`, `chesed`, `mel`, `torch`, `gcm`, `hdm`) earn RepID off-chain and are queued for mint.
+  | Agent | Token ID | Agent | Token ID |
+  |---|---|---|---|
+  | `trinity-apm` | `1585` | `trinity-w3c` | `6706` |
+  | `trinity-sophia` | `3747` | `trinity-torch` | `6707` |
+  | `trinity-shofet` | `5863` | `trinity-gcm` | `6708` |
+  | `trinity-veritas` | `5864` | `trinity-chesed` | `6709` |
+  | `trinity-orch` | `6705` | `trinity-mel` | `6710` |
+  | `trinity-nexus` | `6711` | `trinity-hdm` | `6712` |
+
+- **46 lifetime on-chain reputation writes** from the agent economy — real production activity, not synthetic backfill. Gas per write: ~134,661. **Honest currency note:** the most recent write landed **2026-06-22**; writes are **currently paused** while the anchor/drain worker is restarted. The reputation *history* on-chain remains fully verifiable; new writes resume once the worker is back.
+
+- **Epoch-1 reset:** RepID was reset to a neutral **1,000 baseline** for a clean start. Core agents now range **~1,000–1,520** (ESTABLISHED tier) as they re-earn from a level field.
+
+- **Historical attestations (pre-reset — real, verifiable, but predate the Epoch-1 reset above; not current values):**
+  - `sophia` → RepID **9,581** *(historical)* · [`0x24251cbb…ca9301`](https://sepolia.basescan.org/tx/0x24251cbb786d9ca8b03e4d56887a46f9040ddc1336826d80021ff39b91ca9301) · block 41,873,128
+  - `apm` → RepID **7,010** *(historical)* · [`0x54da7350…ba2fd8`](https://sepolia.basescan.org/tx/0x54da7350eeed8527fcec80fb945bd7ff33dd2d98a5bacd50c1a0655692ba2fd8) · block 41,873,368
+  - `veritas` → RepID **5,589** *(historical)* · [`0xa8474d5d…c9c2f2`](https://sepolia.basescan.org/tx/0xa8474d5dac601d3c04d0133f5cf55a9273d226e366a0a807b16691cfd7c9c2f2) · block 41,873,608
+  - `shofet` → RepID **3,120** *(historical)* · [`0xb2ab22b5…caed09`](https://sepolia.basescan.org/tx/0xb2ab22b536abb7dc08d19a030b6e491face37387834dd361fba0d705accaed09) · block 41,934,427
 
 ---
 
 ## Three Trust Models — ERC-8004 → HyperDAG mapping
+
+The trust promise is one flow across three protocols — **HAL** verifies behavior, **ERC-8004** anchors the earned reputation on-chain, **x402** settles agent-to-agent value — so trust is delivered as verifiable evidence, not a claim:
+
+```mermaid
+graph LR
+    A([Agent output]) --> HAL[["HAL<br/>hallucination / behavioral<br/>integrity check"]]
+    HAL -->|pass| REP[["ERC-8004<br/>RepID reputation<br/>write on-chain"]]
+    HAL -->|veto| STOP([Blocked · no write])
+    REP --> LEDGER[("Base Sepolia<br/>Identity + Reputation<br/>registries")]
+    REP --> PAY[["x402<br/>agent-to-agent<br/>payment"]]
+    LEDGER --> EV([Trust as verifiable<br/>evidence, not claim])
+    PAY --> EV
+```
 
 ERC-8004 defines three composable trust mechanisms; HyperDAG ships one curated default for each, all swappable via the corresponding interfaces:
 
@@ -68,6 +92,28 @@ ERC-8004 defines three composable trust mechanisms; HyperDAG ships one curated d
 ```bash
 npm install @hyperdag/protocol
 ```
+
+This package gives you the **protocol interfaces + curated defaults** — build your own trust layer on the six interfaces. If you'd rather install a ready-made developer SDK that bundles HAL hallucination filtering, portable ERC-8004 RepID, and x402 payments in one install, reach for **[`@hyperdag/trustshell`](https://github.com/DealAppSeo/trustshell)** — see the [Public ecosystem](#public-ecosystem) table below.
+
+**AI-native install (no terminal).** The same three protocols — HAL verification, ERC-8004 RepID, and x402 payments — are also live as an MCP server that an AI (Claude Desktop / Cursor) can call directly as tools: **[`@hyperdag/trustshell-mcp`](https://www.npmjs.com/package/@hyperdag/trustshell-mcp)**. Run it with `npx @hyperdag/trustshell-mcp`, or add it to your Claude Desktop / Cursor config:
+
+```json
+{"mcpServers":{"trustshell":{"command":"npx","args":["-y","@hyperdag/trustshell-mcp"]}}}
+```
+
+*(Installing the SDK straight from GitHub — `github:DealAppSeo/trustshell` — is coming.)*
+
+### Which package do I install?
+
+| If you're… | Install | What you get |
+|---|---|---|
+| A developer building an agent/app **in code** | `npm install @hyperdag/trustshell` | The SDK — HAL verification + ERC-8004 RepID + x402 payments, in your TypeScript/JS |
+| Using an **AI tool** (Claude Desktop, Cursor, Windsurf), **no code** | `npx @hyperdag/trustshell-mcp` | The same three protocols as AI-callable tools — zero terminal |
+| Only verifying **ZK proofs** client-side | `npm install @hyperdag/proof-verifier` | Standalone Plonky3 proof checking (usually bundled with trustshell — rarely installed directly) |
+
+**Most people want `@hyperdag/trustshell` (building in code) or `@hyperdag/trustshell-mcp` (adding trust to your AI, no code). `proof-verifier` is a building block that ships inside trustshell.**
+
+*(This `@hyperdag/protocol` package itself is the interface kernel — install it only if you're building your own trust layer on the six interfaces.)*
 
 ```typescript
 import { createHDP } from '@hyperdag/protocol';
@@ -134,7 +180,7 @@ graph TD
 
 | Phase | Target | Highlights |
 |---|---|---|
-| **V1 — Live today (Base Sepolia)** | shipping now | Six-interface modular kernel · `@hyperdag/protocol@0.1.0-alpha` on npm · IdentityRegistry + ReputationRegistry writing on Base Sepolia (4 agents, 32 attestations) · HAL pipeline + cross-LLM agreement · x402 payments. |
+| **V1 — Live today (Base Sepolia)** | shipping now | Six-interface modular kernel · `@hyperdag/protocol@0.1.0-alpha` on npm · IdentityRegistry + ReputationRegistry live on Base Sepolia (all 12 core agents minted, 46 lifetime reputation writes) · HAL pipeline + cross-LLM agreement · x402 payments. |
 | **V1.5 — User-managed permission guardrails** | 1–2 weeks | Telegram (and later email/discord/webhook) alerts when an agent attempts an action outside its lane. Six RepID-derived permission tiers (Probationary → Architect) map score to capability. Substrate is live; client SDK lands at install. |
 | **V2 — Mainnet** | Q2 2026 | Canonical registries on Base mainnet · TEE-backed ValidationRegistry path · **ZKP RepID circuit bound to agent decision + HAL signals + RepID-delta transcript (extension of today's Plonky3 range-check)** · ZKP-federated learning (bilateral benefit) · expanded validator-set diversity. |
 
