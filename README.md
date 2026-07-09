@@ -28,13 +28,13 @@ Both canonical registries are live and writing every day. Everything below is ve
 
 Real on-chain ERC-8004 activity from a production agent fleet. Every number is verifiable on basescan; honest gaps are noted inline.
 
-- **2 agents minted** on the canonical IdentityRegistry: `trinity-shofet` (token `5863`), `trinity-veritas` (token `5864`). *(10 more are operational off-chain and unminted today — see honest gaps below.)*
+- **12 agents minted** on the canonical IdentityRegistry — the full trinity fleet now holds ERC-8004 tokens (verified live via `/api/v1/agents/minted`, 2026-07-08). Earliest mints: `trinity-shofet` (token `5863`), `trinity-veritas` (token `5864`).
 - **54,789+ real reputation writes** (score events) recorded; concentrated production push, not synthetic backfill. Gas per write: ~134,661.
-- Most recent attestations *(one per minted agent):*
+- Sample recent attestations:
   - `shofet` → RepID **1,006** · [`0x5477903d…7bbf7e4`](https://sepolia.basescan.org/tx/0x5477903d03d90c9d6680e8ab48d4c04d1850618fcccd7bed9071d39800bbf7e4) · block 41,934,427
   - `veritas` → RepID **1,000** · [`0x735e6c01…66ab1a`](https://sepolia.basescan.org/tx/0x735e6c017233ecaee732a621c1cdbd5d963ee1f1f971fa28855c06176c66ab1a) · block 41,873,608
 
-**Honest gaps:** of the 12 trinity agents in the live fleet, only 2 have ERC-8004 tokens on the canonical IdentityRegistry today. The other 10 (`sophia`, `apm`, `nexus`, `torch`, `hdm`, `w3c`, `orch`, `chesed`, `mel`, `gcm`) earn RepID off-chain and are queued for mint.
+**Fleet status:** all 12 trinity agents in the live fleet now hold ERC-8004 tokens on the canonical IdentityRegistry (verified via `/api/v1/agents/minted`, 2026-07-08) — the earlier 2-minted / 10-queued gap is now closed.
 
 ---
 
@@ -132,7 +132,7 @@ graph TD
 
 | Phase | Target | Highlights |
 |---|---|---|
-| **V1 — Live today (Base Sepolia)** | shipping now | Six-interface modular kernel · `@hyperdag/protocol@0.1.0-alpha` on npm · IdentityRegistry + ReputationRegistry writing on Base Sepolia (2 agents, 54,789+ attestations) · HAL pipeline (51,089+ evaluations, 6,322+ chained) + cross-LLM agreement · x402 payments. |
+| **V1 — Live today (Base Sepolia)** | shipping now | Six-interface modular kernel · `@hyperdag/protocol@0.1.0-alpha` on npm · IdentityRegistry + ReputationRegistry writing on Base Sepolia (12 agents, 54,789+ attestations) · HAL pipeline (51,089+ evaluations, 6,322+ chained) + cross-LLM agreement · x402 payments. |
 | **V1.5 — User-managed permission guardrails** | 1–2 weeks | Telegram (and later email/discord/webhook) alerts when an agent attempts an action outside its lane. Six RepID-derived permission tiers (Probationary → Architect) map score to capability. Substrate is live; client SDK lands at install. |
 | **V2 — Mainnet** | Q2 2026 | Canonical registries on Base mainnet · TEE-backed ValidationRegistry path · **ZKP RepID circuit bound to agent decision + HAL signals + RepID-delta transcript (extension of today's Plonky3 range-check)** · ZKP-federated learning (bilateral benefit) · expanded validator-set diversity. |
 
