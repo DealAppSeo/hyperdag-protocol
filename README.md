@@ -15,7 +15,7 @@ HyperDAG is a lightweight, composable trust kernel for autonomous agents: six ve
 
 ## Live on Base Sepolia (chain ID 84532)
 
-Both canonical registries are live on-chain, holding real minted identities and reputation writes. Everything below is verifiable from any RPC client or basescan. *(On-chain reputation writes are currently paused while the anchor/drain worker is restarted — see the honest note under Receipts. Reads and identity lookups are unaffected.)*
+Both canonical registries are live on-chain, holding real minted identities and reputation writes. Everything below is verifiable from any RPC client or basescan. *(On-chain reputation writes resumed 2026-07-08 — 70 lifetime, verified via `/api/v1/observability/onchain-stats` — after a pause following 2026-06-22; cadence is being restored. See the honest note under Receipts. Reads and identity lookups are unaffected.)*
 
 | Contract | Address |
 |---|---|
@@ -39,7 +39,7 @@ Real on-chain ERC-8004 activity from a production agent fleet. Every number is v
   | `trinity-orch` | `6705` | `trinity-mel` | `6710` |
   | `trinity-nexus` | `6711` | `trinity-hdm` | `6712` |
 
-- **46 lifetime on-chain reputation writes** from the agent economy — real production activity, not synthetic backfill. Gas per write: ~134,661. **Honest currency note:** the most recent write landed **2026-06-22**; writes are **currently paused** while the anchor/drain worker is restarted. The reputation *history* on-chain remains fully verifiable; new writes resume once the worker is back.
+- **70 lifetime on-chain reputation writes** from the agent economy — real production activity, not synthetic backfill (verified 2026-07-08 via `/api/v1/observability/onchain-stats`). Gas per write: ~134,661. **Honest currency note:** writes paused after **2026-06-22** and **resumed 2026-07-08** as the settlement path was re-wired; cadence is still being restored. The reputation *history* on-chain remains fully verifiable — treat the count as a dated snapshot, not a fixed constant.
 
 - **Epoch-1 reset:** RepID was reset to a neutral **1,000 baseline** for a clean start. Core agents now range **~1,000–1,520** (ESTABLISHED tier) as they re-earn from a level field.
 
@@ -180,7 +180,7 @@ graph TD
 
 | Phase | Target | Highlights |
 |---|---|---|
-| **V1 — Live today (Base Sepolia)** | shipping now | Six-interface modular kernel · `@hyperdag/protocol@0.1.0-alpha` on npm · IdentityRegistry + ReputationRegistry live on Base Sepolia (all 12 core agents minted, 46 lifetime reputation writes) · HAL pipeline + cross-LLM agreement · x402 payments. |
+| **V1 — Live today (Base Sepolia)** | shipping now | Six-interface modular kernel · `@hyperdag/protocol@0.1.0-alpha` on npm · IdentityRegistry + ReputationRegistry live on Base Sepolia (all 12 core agents minted, 70 lifetime reputation writes) · HAL pipeline + cross-LLM agreement · x402 payments. |
 | **V1.5 — User-managed permission guardrails** | 1–2 weeks | Telegram (and later email/discord/webhook) alerts when an agent attempts an action outside its lane. Six RepID-derived permission tiers (Probationary → Architect) map score to capability. Substrate is live; client SDK lands at install. |
 | **V2 — Mainnet** | Q2 2026 | Canonical registries on Base mainnet · TEE-backed ValidationRegistry path · **ZKP RepID circuit bound to agent decision + HAL signals + RepID-delta transcript (extension of today's Plonky3 range-check)** · ZKP-federated learning (bilateral benefit) · expanded validator-set diversity. |
 
