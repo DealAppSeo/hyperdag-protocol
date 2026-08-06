@@ -1,0 +1,44 @@
+# Dependencies — restored by `npm ci` from the committed lockfiles, never committed.
+# This file did not exist, which is why 4,526 vendored files (98% of the tracked
+# tree) were in git. The lockfiles are the reproducible record; node_modules is
+# build output.
+node_modules/
+
+# Build output
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Solidity / Hardhat toolchain artifacts (packages/contracts)
+artifacts/
+cache/
+typechain/
+typechain-types/
+
+# Nx
+.nx/cache
+.nx/workspace-data
+
+# Environment + secrets. Never commit a real one; .env.example is the template.
+.env
+.env.*
+!.env.example
+
+# Coverage + test output
+coverage/
+*.lcov
+.nyc_output/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*

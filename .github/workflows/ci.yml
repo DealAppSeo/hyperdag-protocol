@@ -1,0 +1,111 @@
+# CI for hyperdag-protocol.
+#
+# This repository had no CI at all, and 98% of its tracked files were vendored
+# node_modules. The first thing an external reviewer does is clone and install,
+# and until now that failed — so the most valuable check here is the boring one:
+# `npm ci` from the committed lockfile has to work.
+#
+# DESIGN RULE: no vacuous green. Four of five packages have no tests. A single
+# green tick across the repo would claim coverage that does not exist, so the
+# `coverage-map` job prints the real per-package state and the contract tests
+# report their true tally rather than being hidden.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # The gate that actually regressed. Blocking on purpose: if a clean clone
+  # cannot install from the lockfile, nothing else in this file means anything.
+  install:
+    name: clean install from lockfile
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: npm ci (root workspace)
+        run: npm ci
+      - name: assert node_modules is not tracked
+        # The regression this repo actually had. Cheap to check, and it fails
+        # the moment someone commits a dependency tree again.
+        run: |
+          count=$(git ls-files | grep -c '^node_modules/' || true)
+          echo "tracked node_modules files: $count"
+          if [ "$count" -ne 0 ]; then
+            echo "::error::node_modules is tracked again ($count files). It is build output; the lockfile is the record."
+            exit 1
+          fi
+
+  # Marco's ERC-8004 contract tests. NON-BLOCKING and reported honestly:
+  # 26 of 61 currently fail on a drift between the tests and the contract ABI
+  # ("Event NewFeedback with argument count 11 not found in the contract ABI").
+  # That failure PRE-DATES this workflow — verified by running the suite against
+  # the original committed dependency tree, which produces the identical 35/26.
+  # It is surfaced, not fixed: packages/contracts is owned elsewhere.
+  contracts:
+    name: contracts tests (known 26/61 failing — reported, not gating)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: run contract tests
+        # hardhat.config.ts requires these to be present or the config itself is
+        # rejected (HHE15) before a single test runs. Public read-only endpoints:
+        # the suite under test is local, so this makes an ENV failure impossible
+        # to mistake for a TEST failure.
+        env:
+          SEPOLIA_RPC_URL: https://ethereum-sepolia-rpc.publicnode.com
+          MAINNET_RPC_URL: https://ethereum-rpc.publicnode.com
+        working-directory: packages/contracts
+        run: npm test 2>&1 | tee ../../contracts-test.log || true
+      - name: report the real tally
+        run: |
+          pass=$(grep -oP '^# pass \K\d+' contracts-test.log | head -1 || echo "?")
+          fail=$(grep -oP '^# fail \K\d+' contracts-test.log | head -1 || echo "?")
+          echo "### Contract tests: $pass passing, $fail failing" >> "$GITHUB_STEP_SUMMARY"
+          echo "Baseline at the time this workflow was added: 35 passing, 26 failing." >> "$GITHUB_STEP_SUMMARY"
+          if [ "$fail" != "?" ] && [ "$fail" -gt 26 ]; then
+            echo "::warning::contract failures increased beyond the 26 baseline (now $fail)"
+          fi
+
+  # Makes absence of tests VISIBLE. An unwired safeguard is worse than an absent
+  # one because it converts a known gap into false coverage; the same is true of
+  # a package that silently has no tests at all.
+  coverage-map:
+    name: per-package test coverage map
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: enumerate
+        run: |
+          {
+            echo "### Which packages actually have tests"
+            echo ""
+            echo "| package | test script | test files |"
+            echo "|---|---|---|"
+            for p in packages/*/; do
+              name=$(basename "$p")
+              if [ -f "$p/package.json" ] && grep -q '"test"' "$p/package.json"; then
+                script="yes"
+              else
+                script="**none**"
+              fi
+              files=$(find "$p" -path '*/node_modules' -prune -o \
+                        \( -name '*.test.*' -o -name '*.spec.*' -o -path '*/tests/*' -o -path '*/test/*' \) -type f -print 2>/dev/null | wc -l)
+              echo "| $name | $script | $files |"
+            done
+          } >> "$GITHUB_STEP_SUMMARY"
