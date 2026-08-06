@@ -95,17 +95,46 @@ jobs:
           {
             echo "### Which packages actually have tests"
             echo ""
-            echo "| package | test script | test files |"
-            echo "|---|---|---|"
-            for p in packages/*/; do
-              name=$(basename "$p")
-              if [ -f "$p/package.json" ] && grep -q '"test"' "$p/package.json"; then
-                script="yes"
-              else
-                script="**none**"
-              fi
-              files=$(find "$p" -path '*/node_modules' -prune -o \
-                        \( -name '*.test.*' -o -name '*.spec.*' -o -path '*/tests/*' -o -path '*/test/*' \) -type f -print 2>/dev/null | wc -l)
-              echo "| $name | $script | $files |"
-            done
+            echo "| package | test script | script matches files | test files |"
+            echo "|---|---|---|---|"
+            # Enumerate by MANIFEST, not by directory depth.
+            #
+            # The first version of this loop globbed `packages/*/` — one level —
+            # and so reported on circuits/contracts/defaults/interfaces/protocol
+            # while the only real packages live one level deeper at
+            # packages/defaults/*/. It also credited `packages/defaults` with a
+            # test-file count gathered by a `find` that DID recurse, so a
+            # directory with no manifest appeared to have tests. A job whose
+            # stated purpose is making absent tests visible was itself reporting
+            # a status it had no means to determine. Finding a package is now
+            # done the only way that cannot drift: locate its package.json.
+            git ls-files '*package.json' \
+              | grep -v node_modules \
+              | grep -v '^package.json$' \
+              | sort \
+              | while read -r manifest; do
+                  dir=$(dirname "$manifest")
+                  name=${dir#packages/}
+                  script=$(node -e "try{const s=require('./$manifest').scripts||{};process.stdout.write(s.test||'')}catch(e){}" 2>/dev/null)
+                  if [ -n "$script" ]; then
+                    has="\`$script\`"
+                    # A declared script proves nothing if its glob matches no file.
+                    # hallucination-hal-local declares `node --test tests/*.test.ts`
+                    # and ships only .mjs smoke files, so it greens over an empty set.
+                    pattern=$(echo "$script" | grep -oE '[A-Za-z0-9_./*-]+\.(test|spec)\.[a-z]+' | head -1)
+                    if [ -n "$pattern" ]; then
+                      # shellcheck disable=SC2086
+                      matched=$(ls $dir/$pattern 2>/dev/null | wc -l)
+                      [ "$matched" -gt 0 ] && matches="$matched" || matches="**0 — greens over an empty set**"
+                    else
+                      matches="n/a"
+                    fi
+                  else
+                    has="**none**"
+                    matches="—"
+                  fi
+                  files=$(find "$dir" -path '*/node_modules' -prune -o \
+                            \( -name '*.test.*' -o -name '*.spec.*' -o -path '*/tests/*' -o -path '*/test/*' \) -type f -print 2>/dev/null | wc -l)
+                  echo "| $name | $has | $matches | $files |"
+                done
           } >> "$GITHUB_STEP_SUMMARY"
