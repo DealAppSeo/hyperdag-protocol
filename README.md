@@ -89,11 +89,21 @@ ERC-8004 defines three composable trust mechanisms; HyperDAG ships one curated d
 
 ## Quick start
 
+> **⚠ `@hyperdag/protocol` is not published yet.** `npm view @hyperdag/protocol` returns 404, and
+> the kernel source is not on `main` — it lives on `feat/modular-kernel-interfaces-2026-05-04`.
+> The interface design is real and the contracts are live on Base Sepolia, but there is nothing to
+> install from *this* repo today. This section previously opened with
+> `npm install @hyperdag/protocol` as though it shipped.
+
+**To use the trust layer right now**, install the SDK that is published and working:
+
 ```bash
-npm install @hyperdag/protocol
+npm install @hyperdag/trustshell
 ```
 
-This package gives you the **protocol interfaces + curated defaults** — build your own trust layer on the six interfaces. If you'd rather install a ready-made developer SDK that bundles HAL hallucination filtering, portable ERC-8004 RepID, and x402 payments in one install, reach for **[`@hyperdag/trustshell`](https://github.com/DealAppSeo/trustshell)** — see the [Public ecosystem](#public-ecosystem) table below.
+That bundles HAL hallucination filtering, portable ERC-8004 RepID, and x402 payments in one
+install — see **[`@hyperdag/trustshell`](https://github.com/DealAppSeo/trustshell)** and the
+[Public ecosystem](#public-ecosystem) table below.
 
 **AI-native install (no terminal).** The same three protocols — HAL verification, ERC-8004 RepID, and x402 payments — are also live as an MCP server that an AI (Claude Desktop / Cursor) can call directly as tools: **[`@hyperdag/trustshell-mcp`](https://www.npmjs.com/package/@hyperdag/trustshell-mcp)**. Run it with `npx @hyperdag/trustshell-mcp`, or add it to your Claude Desktop / Cursor config:
 
@@ -113,25 +123,32 @@ This package gives you the **protocol interfaces + curated defaults** — build 
 
 **Most people want `@hyperdag/trustshell` (building in code) or `@hyperdag/trustshell-mcp` (adding trust to your AI, no code). `proof-verifier` is a building block that ships inside trustshell.**
 
-*(This `@hyperdag/protocol` package itself is the interface kernel — install it only if you're building your own trust layer on the six interfaces.)*
+*(This `@hyperdag/protocol` package is the interface kernel. It is not on npm yet — see the notice above.)*
+
+Working SDK call, against the published package:
 
 ```typescript
-import { createHDP } from '@hyperdag/protocol';
+import { TrustShell } from '@hyperdag/trustshell';
+
+const shell = new TrustShell();                    // keyless for scoring
+const r = await shell.verifyOutput('Paris is the capital of France.');
+
+if (!r.ok) console.log('HAL vetoed:', r.decisionReason);
+else       console.log('trust', r.trustScore, '/ 100');
+```
+
+The kernel API **once published** — shown as a design target, not a shipped surface:
+
+```typescript
+import { createHDP } from '@hyperdag/protocol';   // not on npm yet
 
 const hdp = createHDP({ network: 'base-sepolia' });
-
-// Evaluate an agent output through the HAL pipeline
 const result = await hdp.hallucination.evaluate({
   prompt: "What's the capital of France?",
   output: "Paris.",
   context: { agentId: 3749 }
 });
-
-if (result.vetoed) console.log('HAL vetoed:', result.veto_reason);
-else                console.log('HAL score:', result.hal_score);
 ```
-
-See [`packages/protocol/README.md`](packages/protocol/README.md) for the full quick start.
 
 ---
 
@@ -139,18 +156,26 @@ See [`packages/protocol/README.md`](packages/protocol/README.md) for the full qu
 
 HDP is not a heavy wrapper. It is a lightweight kernel defining clean versioned interfaces; the curated defaults work out of the box and can be replaced piece-by-piece.
 
-| Interface | Default | Wraps |
-| :--- | :--- | :--- |
-| `IIdentity` | `@hyperdag/identity-erc8004` | ERC-8004 IdentityRegistry |
-| `IReputation` | `@hyperdag/reputation-zkp` | On-chain RepID via ERC-8004 ReputationRegistry; ZKP for private-ownership / range proofs (Plonky3, V1 today — full V2 binds to RepID transcript) |
-| `IValidation` | `@hyperdag/validation-trinity` | BFT validators (with HITL graduation) |
-| `IPayment` | `@hyperdag/payment-x402` | x402 |
-| `ILinkage` | `@hyperdag/linkage-registry` | HDP Linkage Registry (inverse-stake curve) |
-| `IHallucination` | `@hyperdag/hallucination-hal` | HAL (Pythagorean Comma BFT veto) |
+**None of the six default packages are on npm yet** (`npm view` returns 404 for each), and the
+interface source is on a feature branch rather than `main`. The `status` column is the honest
+state, not a roadmap — the design is settled, the packaging is not.
+
+| Interface | Default | Wraps | Status |
+| :--- | :--- | :--- | :--- |
+| `IIdentity` | `@hyperdag/identity-erc8004` | ERC-8004 IdentityRegistry | contracts live on Base Sepolia; package unpublished |
+| `IReputation` | `@hyperdag/reputation-zkp` | On-chain RepID via ERC-8004 ReputationRegistry; ZKP for private-ownership / range proofs (Plonky3 range-check today — V2 binds to the RepID transcript) | contracts + proofs live; package unpublished |
+| `IValidation` | `@hyperdag/validation-trinity` | BFT validators (with HITL graduation) | running in the engine; package unpublished |
+| `IPayment` | `@hyperdag/payment-x402` | x402 | settlements live on Base Sepolia; package unpublished |
+| `ILinkage` | `@hyperdag/linkage-registry` | HDP Linkage Registry (inverse-stake curve) | design only |
+| `IHallucination` | `@hyperdag/hallucination-hal` | HAL (Pythagorean Comma BFT veto) | running in the engine + shipped inside `@hyperdag/trustshell`; standalone package unpublished |
+
+The two packages that **do** exist in this repo are `packages/defaults/hallucination-hal-local`
+(`private`, `0.1.0-internal`) and `packages/defaults/identity-erc8004-viem` (`0.1.0-alpha`) —
+neither is one of the six names above.
 
 > *"Stay light as long as you can. Adopt only the layers you need."*
 
-Replace any default at install time: `createHDP({ overrides: { ... } })`. For the full architectural picture see [ARCHITECTURE.md](ARCHITECTURE.md).
+Replace any default at install time: `createHDP({ overrides: { ... } })`.
 
 ### Verification flow
 
@@ -180,7 +205,7 @@ graph TD
 
 | Phase | Target | Highlights |
 |---|---|---|
-| **V1 — Live today (Base Sepolia)** | shipping now | Six-interface modular kernel · `@hyperdag/protocol@0.1.0-alpha` on npm · IdentityRegistry + ReputationRegistry live on Base Sepolia (all 12 core agents minted, 70 lifetime reputation writes) · HAL pipeline + cross-LLM agreement · x402 payments. |
+| **V1 — Live today (Base Sepolia)** | shipping now | IdentityRegistry + ReputationRegistry live on Base Sepolia (all 12 core agents minted, 70+ lifetime reputation writes) · HAL pipeline + cross-LLM agreement · x402 settlements · all reachable today through **[`@hyperdag/trustshell`](https://www.npmjs.com/package/@hyperdag/trustshell)**, which is published. The six-interface kernel is **designed and branch-only**; `@hyperdag/protocol` is **not on npm** (this row previously claimed `@hyperdag/protocol@0.1.0-alpha` was published). |
 | **V1.5 — User-managed permission guardrails** | 1–2 weeks | Telegram (and later email/discord/webhook) alerts when an agent attempts an action outside its lane. Six RepID-derived permission tiers (Probationary → Architect) map score to capability. Substrate is live; client SDK lands at install. |
 | **V2 — Mainnet** | Q2 2026 | Canonical registries on Base mainnet · TEE-backed ValidationRegistry path · **ZKP RepID circuit bound to agent decision + HAL signals + RepID-delta transcript (extension of today's Plonky3 range-check)** · ZKP-federated learning (bilateral benefit) · expanded validator-set diversity. |
 
