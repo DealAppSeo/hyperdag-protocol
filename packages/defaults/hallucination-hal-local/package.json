@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "node --test --import tsx tests/*.test.ts"
+    "test": "node --test --import tsx tests/parity.test.mjs"
   },
   "peerDependencies": {
     "@hyperdag/interfaces": "*",

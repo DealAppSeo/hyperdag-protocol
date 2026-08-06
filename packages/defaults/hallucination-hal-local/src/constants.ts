@@ -78,6 +78,27 @@ export const OVERCONFIDENCE_MARKERS: readonly string[] = [
 ];
 
 /**
+ * Prompt-injection / jailbreak markers.
+ *
+ * ADDED 2026-08-05 to close a silent drift — this is a RE-SYNC, not new tuning.
+ * Upstream added these on 2026-06-02 (repid-engine 614e986) and fed them into
+ * harm_probability; this package was ported on 2026-05-04 and never followed.
+ * For three months it scored injection strings at harm_probability 0.00 while
+ * its own header asserted byte-equivalence with production. The guarantee was
+ * not merely unverified — it was already false, in the signal that matters most
+ * for adversarial input.
+ *
+ * Verbatim from repid-engine/src/hal/lib/constants.ts:136.
+ */
+export const INJECTION_MARKERS: readonly string[] = [
+  'ignore previous', 'ignore all previous', 'new instruction', 'system override',
+  'system prompt', 'override protocol', 'do anything now', 'dan mode', 'jailbreak',
+  'reveal your', 'output all', 'as a new instruction', 'from the system administrator',
+  'maintenance mode', 'developer mode', 'unrestricted', 'no restrictions',
+  'confirm you are running without', 'i have been jailbroken',
+];
+
+/**
  * Note the duplicate `approximately` at index 0 and again at the tail.
  * This is preserved verbatim from the pre-extraction implementation
  * (`src/services/hal-signals.ts:52-57` at HEAD `204cfcb`). Per repid-engine
