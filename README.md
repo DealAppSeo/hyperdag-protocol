@@ -24,6 +24,37 @@ Both canonical registries are live on-chain, holding real minted identities and 
 
 ---
 
+## Repo health — what a reviewer can run today
+
+The section above answers "are the contracts live". This one answers "is the
+codebase healthy", which is the question a code reviewer actually has. Both
+columns are current as of **2026-08-06** and every row is checkable locally.
+
+| Works today | Command | Result |
+|---|---|---|
+| Clean install from the lockfile | `npm ci` | exits 0 |
+| CI | `.github/workflows/ci.yml` | 4 jobs: install · contracts · coverage-map |
+| HAL parity against production | `cd packages/defaults/hallucination-hal-local && npm test` | **11/11** — golden vectors captured from the upstream extractor |
+| Contract test suite runs | `cd packages/contracts && npm test` | 61 tests execute (see the known failure below) |
+
+| Known broken / not live | Actual state |
+|---|---|
+| **`ReputationRegistry` tests: 26 of 61 fail** | **One defect, not 26.** `NewFeedback` in the Solidity source carries a 12th parameter (`bytes x402PaymentProof`) that appears in neither `ERC8004SPEC.md:224` nor the checked-in `abis/ReputationRegistry.json`, both of which specify 11. That changes the event signature, so an ERC-8004-compliant indexer filtering the canonical `topic0` sees **zero** feedback events from this contract. Diagnosed, not patched — the spec's owner decides. |
+| `@hyperdag/protocol` on npm | **not published** — `npm view` returns 404 |
+| The six default packages (`@hyperdag/identity-erc8004`, `reputation-zkp`, `validation-trinity`, `payment-x402`, `linkage-registry`, `hallucination-hal`) | **not published** — 404 for all six |
+| Six-interface kernel source | on `feat/modular-kernel-interfaces-2026-05-04`, **not on `main`** |
+| `packages/protocol`, `packages/interfaces` | untracked `dist` output only; no rebuildable source |
+
+**To use the trust layer today, install [`@hyperdag/trustshell`](https://www.npmjs.com/package/@hyperdag/trustshell)** — it is published, keyless for HAL scoring, RepID reads and ZK proofs, and it reaches the same contracts listed above.
+
+> `hallucination-hal-local` and `identity-erc8004-viem` are the two packages that
+> actually exist in this repo. Neither is one of the six names above. Until
+> 2026-08-05 the HAL copy asserted byte-equivalence with production while being
+> blind to prompt injection for three months; that is fixed and now held by the
+> parity test in the table.
+
+---
+
 ## Receipts
 
 Real on-chain ERC-8004 activity from a production agent fleet. Every number is verifiable on basescan; honest gaps are noted inline.
