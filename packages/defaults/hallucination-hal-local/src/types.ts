@@ -2,8 +2,8 @@
  * Local HAL native types — the canonical 5-signal shape ported from
  * repid-engine/src/hal/lib/types.ts.
  *
- * Field names patent-load-bearing per HAL_LIBRARY_API.md. The repid-engine
- * names are preserved here for byte-equivalence with production HAL.
+ * Field names are load-bearing per HAL_LIBRARY_API.md — never rename. The
+ * repid-engine names are preserved here for byte-equivalence with production HAL.
  *
  * Note: this is DIFFERENT from the 6-DOF `HALSignals` shape in
  * `@hyperdag/interfaces` (faithfulness, contradiction, calibration, …).
