@@ -6,12 +6,12 @@ Local-first implementation of the `IHallucination` slot. Bundles the determinist
 
 ## Why private
 
-The HAL signal-extraction formula and weighting are part of HDP's patent portfolio (P-003 — Pythagorean Comma Dissonance Detection). Per CLAUDE.md hard-stop:
+The HAL signal-extraction formula and weighting are proprietary internals (P-003 — Pythagorean Comma Dissonance Detection). Per CLAUDE.md hard-stop:
 
 > RepID scoring formula T=floor(2000×log₁₀…) — never appear in public docs
 > ANFIS parameters — never in public docs
 
-This package contains the canonical 5-signal extraction formula AND the canonical combiner (Pythagorean Comma at 531441/524288). It is **safe for trinity-internal consumers** (the agents and services already inside the patent-aware codebase). It is **not** safe for public npm publication.
+This package contains the canonical 5-signal extraction formula AND the canonical combiner (Pythagorean Comma at 531441/524288). It is **safe for trinity-internal consumers** (the agents and services already inside the proprietary codebase). It is **not** safe for public npm publication.
 
 The PUBLIC slot remains `@hyperdag/hallucination-hal`, which ships as an HTTP client + stub fallback. External consumers of `createHDP({})` continue to see that public package.
 

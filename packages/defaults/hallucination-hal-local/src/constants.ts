@@ -3,11 +3,11 @@
  *
  * SACRED CONSTANTS — DO NOT MUTATE.
  *
- * Patent-load-bearing — this file is the reason the entire package is marked
- * `private: true` in package.json. The HAL_PYTHAGOREAN_COMMA ratio, the
- * formula weights, and the canonical signal field names are all part of
- * HDP's patent portfolio (P-003). Public npm publish requires Sean's
- * explicit approval per CLAUDE.md hard-stop.
+ * Proprietary and load-bearing — this file is the reason the entire package is
+ * marked `private: true` in package.json. The HAL_PYTHAGOREAN_COMMA ratio, the
+ * formula weights, and the canonical signal field names are all proprietary
+ * internals (P-003). Public npm publish requires Sean's explicit approval per
+ * CLAUDE.md hard-stop.
  *
  * To preserve byte-equivalence with the production HAL, every constant here
  * is a verbatim copy of the repid-engine source. Future drift between

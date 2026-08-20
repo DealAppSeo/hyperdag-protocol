@@ -2,8 +2,8 @@
  * HAL score computation — the canonical Path A formula. Pure function,
  * dependency-free.
  *
- * Ported verbatim from repid-engine/src/hal/lib/score.ts. Patent-load-bearing
- * per HAL_LIBRARY_API.md.
+ * Ported verbatim from repid-engine/src/hal/lib/score.ts. Proprietary and
+ * load-bearing per HAL_LIBRARY_API.md.
  *
  *   hal_score = (
  *       0.4 * harm_probability
