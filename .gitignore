@@ -42,3 +42,8 @@ Thumbs.db
 *.log
 npm-debug.log*
 yarn-error.log*
+
+# CodeGraph local index (SQLite of the whole tree, tens of MB).
+# The tool ships its own .codegraph/.gitignore covering the DB, but pin the
+# directory here too so a `git add -A` cannot stage even the stub.
+.codegraph/
