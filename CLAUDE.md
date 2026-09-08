@@ -19,20 +19,50 @@ confidently with less context than it thinks it has.
 operating rules every agent works under and is the one file injected verbatim into
 every XC/GA dispatch. Read it before you plan anything here.
 
-Per surface, read yours first:
+**That is the whole pointer. This file deliberately does NOT list the other repos.**
 
-| surface | read first |
-|---|---|
-| `repid-engine` | `LESSONS.md`, then `CLAUDE.md` |
-| `trinity-ecosystem` | `CLAUDE.md`, then `docs/PRIOR-WORK-INDEX.md` |
-| `trustshell` | `AGENTS.md` (`CLAUDE.md` is a one-line `@AGENTS.md` include) |
-| `trinity-symphony-shared` | `CLAUDE.md` — lane rules; take a lane before touching a repo |
-| **`hyperdag-protocol`** | **this file** |
+It used to. A five-row table of sibling entry points shipped here on 2026-09-08 and was
+already wrong when it merged — `DealAppSeo/trustrails-dev` is live and was not in it. The
+shape was the defect, not the missing row: the Trust\* ecosystem is TrustShell, TrustMarket,
+TrustRepID, TrustRails, TrustTrader, TrustCRE, TrustEscrow and TrustMedical on this same
+HAL / RepID / ERC-8004 / x402 harness, plus whatever third parties build via TrustMarket.
+A per-repo list of all siblings is N tables of N rows — adding a surface means editing every
+other repo, and forgetting fails **silently**: the new surface simply is not listed, nothing
+breaks, and an agent landing there sees no pointer. That is the exact defect the table was
+added to fix, one level up. Same lesson as the hand-maintained jest `roots` list in
+`repid-engine`: *prefer a discovery rule to a list.*
+
+**So: a star, not a mesh.** Every repo names true north and nothing else. One line per repo,
+a new surface touches only itself, and no table exists to go stale. If you need to know which
+repos exist, ask the person who gave you the assignment or read the session's own source
+list — do not trust a checked-in inventory.
+
+## Two tiers, and you are reading the internal one
+
+| tier | who | where |
+|---|---|---|
+| **Internal** — operating log, dated, changes without notice | our agents (CC, XC, GA, the swarm) | `repid-engine/LESSONS.md`, then this file |
+| **Published** — the contract we keep | outside developers building on the ecosystem | **[`BUILDERS.md`](BUILDERS.md)** |
+
+The two are not interchangeable. The internal tier is capped at 6000 characters because it is
+a dispatch payload, and much of it is corrections that exist to stop one specific past mistake
+recurring. **It is readable — these repos are public — but it is not a promise.** If you are
+answering an outside builder, answer from `BUILDERS.md`; if it does not cover their question,
+that is a gap in `BUILDERS.md` to fix, not a licence to quote the internal file at them.
 
 ## ⚠ THIS REPOSITORY IS PUBLIC
 
-Apache 2.0, published as `@hyperdag/protocol` on npm. Every commit message, PR title,
-PR body and comment is world-readable and permanent.
+Apache 2.0. Every commit message, PR title, PR body and comment is world-readable and
+permanent.
+
+**Correction, MEASURED 2026-09-08.** This line first said *"published as `@hyperdag/protocol`
+on npm"*. It is **not published** — `npm view @hyperdag/protocol` returns 404, as do
+`@hyperdag/identity-erc8004` and `@hyperdag/reputation-zkp`. I read that off the npm badge at
+the top of `README.md` without running the query, while the README's own *"Known broken / not
+live"* table three screens below said plainly that it 404s. **A badge is a link, not a
+measurement** — same class as reading `-stub` in a filename as evidence about production.
+The one package that IS published is **`@hyperdag/trustshell@1.3.0`**, and it is what an
+outside builder should install. See `BUILDERS.md`.
 
 State FINDINGS, not inventories. *"A production key was committed and must be
 rotated"* is actionable; the key, the project id, the row counts and the service names

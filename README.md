@@ -45,6 +45,8 @@ columns are current as of **2026-08-06** and every row is checkable locally.
 | Six-interface kernel source | on `feat/modular-kernel-interfaces-2026-05-04`, **not on `main`** |
 | `packages/protocol`, `packages/interfaces` | untracked `dist` output only; no rebuildable source |
 
+**Building on this? Start with [`BUILDERS.md`](BUILDERS.md)** — what is actually published today, what is stable versus what will move, and the reporting rule the reputation layer depends on.
+
 **To use the trust layer today, install [`@hyperdag/trustshell`](https://www.npmjs.com/package/@hyperdag/trustshell)** — it is published, keyless for HAL scoring, RepID reads and ZK proofs, and it reaches the same contracts listed above.
 
 > `hallucination-hal-local` and `identity-erc8004-viem` are the two packages that
