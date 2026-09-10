@@ -1,14 +1,30 @@
-# 21-unclaimed diagnosis — 2026-09-10 (Grok, after ENGINE_HAL_DEPLOY verify)
+# UNCLAIMED_DIAGNOSIS — 22 NULL open-pool sit unclaimed
+**2026-09-10. XC. No UPDATE. Original 5 untouched.**
 
-Anon SELECT `trinity_tasks` `status=pending` `claimed_by IS NULL`.
+## Root cause (one)
+**Concurrency cap: `claim_count` already at `MAX_TASK_CLAIMS` (12).** CLAIM_SQL will not serve them. Claim path is healthy; these 22 are exhausted, not missing.
 
-**27 pending unclaimed.** Split:
+## Query
+```sql
+SELECT id, claim_count, task_type, title
+FROM trinity_tasks
+WHERE status = 'pending'
+  AND claimed_by IS NULL
+  AND assigned_to IS NULL;
+```
+Live 2026-09-10: **n=22, all `claim_count=12`, `claim_count<12` = 0.**
 
-| bucket | n | what |
-|---|---|---|
-| `assigned_to` NULL (open pool) | **22** | HAL-verify / tombstone / README-vs-1.3.0 / presentProof / leftover VERIFY (435123–435146 except done rows) |
-| `assigned_to` dead CLI names | **5** | original 5 — grok-code, gemini-antigravity, cowork-executor. Not claimable by fleet. **No UPDATE.** |
+## Code
+`lib/ConstitutionalAgentV4.js` `CLAIM_SQL`:
+```
+AND COALESCE(claim_count, 0) < $6
+```
+`$6` = `ConstitutionalAgentV4.maxTaskClaims()` default **12** (`DEFAULT_MAX_TASK_CLAIMS`). Comment at getNextTask: exhausted task stays `pending` but stops being served; recovery is `scripts/ops/claim-exhausted.js` (not run here).
 
-The “21 unclaimed” figure is the open-pool pile (22 now; 435124 left the pile when veritas completed it after 20:59Z). Claim path is healthy; these sit because (a) HAL-verify/reasoning still hits fleet `callLLM` (post-#52 Groq should work; model id not in logs) or (b) they are the original 5.
+## Not the cause
+Predicate `assigned_to IS NULL` matches. Types `research|review|meta|critique` are in default `AGENT_TASK_TYPES`. `v_agent_liveness`: 12/12 responding, loop_count ~73. Original 5 are a **different** pile (`assigned_to` dead names).
 
-Not a new hose. ASSIGNER.md: last dead-name insert 2026-09-02.
+## One-line default (inserts, not these 22)
+`assigned_to` must stay **NULL** (or a live `v_agent_liveness` name). These 22 already are NULL; the cap is why they sit.
+
+Do not raise the cap. Do not run claim-exhausted.js unless Sean says so.

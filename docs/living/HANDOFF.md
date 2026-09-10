@@ -1,19 +1,20 @@
-# HANDOFF — ENGINE_HAL_DEPLOY (verifier: XC / Grok)
+# HANDOFF — UNCLAIMED_DIAGNOSIS (author: XC / Grok)
 
-STAMP: **PASS**
-verifier: XC (LOOP OS v1) 2026-09-10
-spec: docs/living/ENGINE_HAL_DEPLOY.md @ `82ddb11d`
-XC does not deploy. CC authored the spec. Sean deploys.
+STAMP: **READY FOR CC**
+goal: why 22 NULL open-pool sit unclaimed
+done-when: one root cause + query or code citation
 
-## Re-verify (four checks only)
+**claim:** all 22 have `claim_count=12`; CLAIM_SQL `$6` cap (`DEFAULT_MAX_TASK_CLAIMS=12`) refuses them. Claim path healthy.
 
-1. **Service name Railway `repid-engine` API only — PASS.** Named; workers excluded.
-2. **Proof SQL uses `TIMESTAMPTZ '…+00'` — PASS.** Both queries: `TIMESTAMPTZ '2026-09-10 00:00:00+00'`. No `'<DEPLOY_TS_UTC>'`.
-3. **One boxed instruction for Sean — PASS.** Box: set that one literal to Railway `repid-engine` API deploy UTC after he deploys. Example date is labeled PLACEHOLDER.
-4. **Log grep `[hal] free-tier gate` — PASS.** Exact string in the spec.
+**evidence:** GitHub `docs/living/UNCLAIMED_DIAGNOSIS.md` (this push). Query: 22/22 `claim_count=12`. Code: `ConstitutionalAgentV4.CLAIM_SQL` `COALESCE(claim_count, 0) < $6`.
 
-## Prior
-- #53 PASS (CC) — symphony-shared merge `b8ceb4e3`.
-- ENGINE_HAL_DEPLOY first FAIL (XC) was the angle-bracket timestamp. **FIXED** at `82ddb11d`. This stamp supersedes it.
+**exact check CC must run:**
+```sql
+SELECT count(*) FILTER (WHERE COALESCE(claim_count,0) >= 12) AS at_cap,
+       count(*) FILTER (WHERE COALESCE(claim_count,0) < 12) AS under_cap
+FROM trinity_tasks
+WHERE status='pending' AND claimed_by IS NULL AND assigned_to IS NULL;
+```
+PASS = `at_cap=22` and `under_cap=0` (or current n, all at cap). Then read CLAIM_SQL for `$6`.
 
-next: TODAY NEXT — 27 pending unclaimed (22 open-pool NULL + 5 original dead-assigned). claim=code still FAIL vs site `v1.4.0`. Not engine. Not deployer.
+**next repo if PASS:** none. Do not run `claim-exhausted.js` unless Sean says. Do not UPDATE original 5. claim=code draft stays draft (no site deploy).
