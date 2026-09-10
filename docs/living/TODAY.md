@@ -108,6 +108,29 @@ Inventory in `TOKEN_BUDGET.md`. Truth: 24h LLM spend ≈ **$0.0019 total** (groq
 ## SESSION CLOSE 2026-09-10 (CC) — all 4 NOW-tasks done
 1. ✅ Claim-path named + proven (probe 435116 claimed by gcm in 11s; 5 pending all `assigned_to` non-running CLI agents). 2. ✅ Docs → hyperdag-protocol PR #21 (4 files). 3. ✅ #121 must-fixes all present; greptile P2 verified FALSE POSITIVE (SHAs pinned + contents:read); Strix APPROVED — ready for Sean docs-only merge, not merged/published. 4. ✅ Free-tier gate: Grok's `free-tier-gate.js` logic verified CORRECT by CC; NOT exhausted.
 
-**NEXT (real work):** wire `free-tier-gate.js` into `ConstitutionalAgentV4.callLLM` + repid-engine proxy (inert until wired) + add `cerebras`/`nvidia` rows to V4 `PROVIDERS` (FREE_TRY_ORDER names them, map lacks them). **Sean:** merge #121; set `OPENROUTER_MODEL=:free` + NVIDIA key on Railway; decide the 5 mis-assigned tasks; resolve the mid-merge `trinity-symphony-shared` working tree (5+ conflict markers). **Held:** G2/G4/G6, evergreen re-arm, 58-view SECDEF (P0-7 parked).
+## C-LOOPS CLOSE 2026-09-10 (CC)
+- **C1 free-tier-gate wiring** — Grok's PR #51 verified COMPLETE by CC (comment on #51): `callLLM` uses `orderProviders(allowPaid())`, engine proxy gated, 429→`markExhausted`, `FREE_EXHAUSTED` no paid failover; PROVIDERS covers all FREE_TRY_ORDER names; OpenRouter paid default refused unless `:free`; existing test proves all 3 required properties. **Not pushed** (Grok holds the branch lane — 2 agents/1 branch = lost work). Not merged/deployed.
+- **C2 safe re-arm** — tasks **435117/435118/435119** claimed + completed in **123s by 3 live agents** (w3c PASS, orch VETO, shofet done). Fleet healthy; claim-path diagnosis reconfirmed.
+- **C3 published-1.3.0 measurement** — `TRUSTSHELL_E2E.md` written. 4 live keyless calls exit 0 (PASS/VETO/RepID 2152/proof verified). **Site lie confirmed:** trustshell.dev says "npm package **v1.4.0**" but published `@latest`=**1.3.0**; "quorum of decorrelated families" is really 2/6 partial. Website unchanged (Sean's copy call).
+
+**NEXT:** C1/C2/C3 closed. Sean queue: merge #121 + #51 (both HOLD for you); site copy 1.4.0→1.3.0; `OPENROUTER_MODEL=:free` + NVIDIA key on Railway; decide the 5 mis-assigned tasks; resolve mid-merge `trinity-symphony-shared` tree. **Held:** G2/G4/G6, evergreen volume, 58-view SECDEF.
+
+## L-LOOPS 2026-09-10 (CC)
+- **L1 FREE GATE** — see `FREE_GATE_LIVE.md` (Grok, Railway-sourced): #51 **DEPLOYED gcm 20:27:47Z, hop ORDER VERIFIED** (groq→cerebras→openrouter→nvidia→together, no deepseek, cerebras 404 parked). CC complement: HAL quorum (repid-engine) is a **separate UNGATED path** — its openrouter uses `qwen/qwen-2.5-72b-instruct` (paid, not `:free`); `OPENROUTER_MODEL` did NOT change it → **repid-engine still needs its own free-tier gate + verify the env reaches the quorum**.
+- 🔴 **HEADLINE BLOCKER:** the fleet's direct `callLLM` free hops **all fail** — PROVIDERS models are dead (`groq: llama-3.3-70b-versatile` retired; `cerebras: gemma-4-31b` 404). Gate order is correct, but no free completion is possible until models are refreshed. **Verified live model that works:** the HAL quorum succeeded on groq with **`openai/gpt-oss-20b`** (20:31Z). **Fix (Grok lane, trinity PROVIDERS map):** set groq→`openai/gpt-oss-20b`, refresh cerebras/nvidia/together to current free ids.
+- **L2 OPEN-POOL DAY** — 24 tasks armed (435122–435145, open pool). Draining SLOW: only **trinity-w3c** engaged (1 done, 1 doing) — the other 11 aren't completing, consistent with the dead-model blocker (HAL-verify tasks route to the working engine; reasoning tasks fail on direct callLLM). **NOT yet at ≥10 claims/≥3 agents** — tasks persist; fleet keeps claiming after this session (nobody waits on CC). Re-check target: `insert_source='cc-open-pool-day-2026-09-10'`.
+- **L3 ONE-PATH PACK** — MCP smoke done (appended to `TRUSTSHELL_E2E.md`): `verify`✓ `getRepID`✓; `present_proof` not in published MCP 1.0.0/1.2.0 (is in 1.4.0 tree per Grok). `SITE-COPY-PATCH.md` drafted (Grok owns). Mirror to hyperdag-protocol: branch diverged under Grok — leaving to Grok's parity push (merge now allowed per Sean).
+- **L4 hygiene REPORT (no UPDATE):** open tasks still targeted at dead names — `trinity-cowork-executor`×3, `trinity-gemini-antigravity`×2, `trinity-grok-code`×2 (all `is_live_fleet=false`); NEW ones still accruing to these → **something upstream keeps assigning to dead CLI names** (find + fix the assigner; Sean/Grok). Peer-verify churn-filter DESIGN: producer should drop `EVERGREEN_AUDIT`/`diag_probe`/`SHADOW_REJECT` before enqueue (design only, no drain).
+
+**NEXT after L-loops:** (1) refresh trinity PROVIDERS models (unblocks L2 free completions) — Grok lane; (2) repid-engine HAL-quorum free-tier gate + verify `OPENROUTER_MODEL` reaches it; (3) find the upstream assigner writing tasks to dead CLI names; (4) L2 will reach ≥10/≥3 as the fleet cycles — re-verify next check.
 
 **Do not start a new sweep. Free-tier only until Sean authorizes paid.**
+
+## NEXT 2026-09-10 (Grok, after L1–L4)
+
+1. ✅ #121 merged (no publish). ✅ #51 merged. gcm deploy SUCCESS 20:27Z. `OPENROUTER_MODEL` **name** present.
+2. **L1** `FREE_GATE_LIVE.md` — hop order VERIFIED (groq→cerebras→openrouter→nvidia→together); no `deepseek/deepseek-chat` in hops. Groq-first **success** NOT VERIFIED (all hops failed on 435123/435146).
+3. **L2** open-pool: 8 claims / 6 agents (bar 10/3). Insert blocked (local pooler password). CC pool still draining.
+4. **L3** SITE-COPY-PATCH.md drafted (do not deploy). MCP: published 1.0.0 has no `present_proof`; 1.4.0 tree does.
+5. **L4** `ASSIGNED_TO_HYGIENE.md` report only. Original 5 untouched.
+6. Keep L2 counting. Cerebras stays parked. NIM optional. No Railway restart.
