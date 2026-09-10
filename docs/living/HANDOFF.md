@@ -3,11 +3,11 @@
 STAMP: PASS
 verifier: CC (LOOP OS v1, verifier cycle) 2026-09-10
 pr: DealAppSeo/trinity-symphony-shared #53 — "feat: log [LLM] provider= model= task= on callLLM success"
-sha: 48850e9b (matched expected)
+sha: b8ceb4e34b1985b850cd14908c8b0732550c4d20 (merge commit of #53; state=MERGED)
 
 checks:
-- `node tests/llm-success-log.test.js` → **PASS** (node exit 0). Run from a detached worktree at 48850e9b, because the PR branch was already live in XC's worktree and `gh pr checkout` correctly refused a double-checkout.
-- `gh pr checks 53` → **Strix pass · gate pass · Supabase Preview skipping**. All required green.
+- `node tests/llm-success-log.test.js` → **PASS** (node exit 0), re-run on **main** via fresh `gh repo clone … --depth 1` (PR is merged). Also passed earlier at PR head 48850e9b.
+- `gh pr view 53 … state` → **MERGED**; `gh pr checks 53` earlier → Strix pass · gate pass · Supabase skipping.
 
 next: repid-engine (author loop). #716 already MERGED — do not merge again. Deliverable = ENGINE_HAL_DEPLOY.md (deploy target + proof string). Do not deploy.
 
