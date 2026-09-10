@@ -14,7 +14,7 @@ Night forbidden (repeat): npm publish · Railway restart · MODE=full · column 
 
 | Vital | Status now | Done-when |
 |---|---|---|
-| Money-path settlement beat | #707 merged; **#710 MERGEABLE, CI re-running, awaiting Sean `merge`** | Next living-proof captures USDC (or testnet USDC) after `/satisfy` accepts criterion ratings — i.e. a `service_contracts` row reaches `settled` again (stuck `fulfilled` since 09-05) |
+| Money-path settlement beat | #707 merged; **#710 merged** | Next living-proof captures USDC (or testnet USDC) after `/satisfy` accepts criterion ratings — i.e. a `service_contracts` row reaches `settled` again (stuck `fulfilled` since 09-05) |
 | Honesty claim=code | #121 APPROVE-HOLD | README three-state table matches live HAL 2/6; no unpublished npx pin; no `evaluate()` as live on 1.3.0 |
 | Live instrument health | ✅ **DONE** — `v_agent_liveness` live + `/state`/generator repointed; `artifact_url` false-positive fixed | met: view returns honest advancing/hung/down + not_claiming_24h; `/state` no longer uses bare `artifact_url IS NULL` |
 | Next Ready under HYP-6 | HYP-5 CALLSITES 13→0 is Backlog | Only after the three rows above move or are Sean-blocked |
@@ -95,7 +95,7 @@ Root cause NAMED (not a code bug): all 5 pending tasks were `assigned_to` non-ru
 
 ## NEXT (execute in order — nobody waits on chat)
 1. ✅ Loop 1 (G3+G1) done. ✅ Claim-path named + proven. ✅ Loop 2 #710 MERGEABLE (Sean merge).
-2. **Push TODAY.md + AGENT_RESTART_CHECKLIST.md + CLAIM_PATH.md → hyperdag-protocol/docs/living/** (branch + PR; Sean merges).
+2. **Push TODAY.md + TOKEN_BUDGET.md + CLAIM_PATH.md + AGENT_RESTART_CHECKLIST.md → hyperdag-protocol/docs/living/** (branch + PR; Sean merges). Grok owns TOKEN_BUDGET.md (first writer). CC owns CLAIM_PATH.md.
 3. **#121 trustshell must-fixes only** — no merge, no publish.
 4. Evergreen re-arm: **HOLD** until Sean confirms FREE-TIER providers for the fleet (do not arm volume that spends).
 

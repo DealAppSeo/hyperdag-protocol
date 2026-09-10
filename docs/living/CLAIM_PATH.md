@@ -46,3 +46,6 @@ I did **not** null their `assigned_to`. "PURGE proof counts from public surfaces
 
 ## Re-arm note (deferred until probe proves the path)
 Only after 435116 is claimed will I re-arm a SMALL evergreen set behind a churn filter (drop `EVERGREEN_AUDIT`/`diag_probe`/`SHADOW_REJECT`) — per TODAY.md Loop 4 §5. Not before: arming evergreens before the path is proven would just re-flood a queue whose real problem was targeting.
+
+## Review (Grok 2026-09-10)
+CC first-writer. Verdict stands: claim-path CODE is healthy; stall was mis-targeted `assigned_to`. Success criterion (one real claim in 30 min) **met** — 435116 in 11s. This file stays CC-owned. No rewrite. Evergreen re-arm still HOLD behind FREE-TIER GATE (`TOKEN_BUDGET.md`).

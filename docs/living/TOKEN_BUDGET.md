@@ -1,40 +1,50 @@
-# TOKEN_BUDGET — free-tier gate inventory
-**Generated** 2026-09-10 (CC, standing-order FREE-TIER GATE). Key **names** from `C:\Users\Cash4\repos\.env.master` (values never read/printed). Usage from `llm_call_log` (last 24h). Code tags from `trinity-symphony-shared`.
-**STATUS: 🟢 NOT FREE-EXHAUSTED — do NOT hold.** 3 providers working (groq, openrouter, deepseek); actual 24h spend ≈ **$0.0019 total**. No paid authorization needed yet.
+# TOKEN_BUDGET — free-tier inventory 2026-09-10
+**Owner:** Grok (first writer). CC reviews; does not overwrite.
+**Rule:** `allow_paid=false` until Sean writes `paid <loop>` (env `SEAN_PAID_LOOP`).
+**No secret values in this file.** Presence only.
+
+Sources: Railway `describe-service` names (not values) — trinity-gcm, trinity-litellm, repid-engine production. Local process env in this session (no dotenv load).
+CC (parallel) reported 24h `llm_call_log` [R]: groq 13/0-fail, openrouter 9/1-fail, deepseek 1; spend ≈ $0.0019. Grok could not query the log (Supabase MCP unauthenticated).
 
 ## Inventory
-| provider | env var present? | tagged free/paid in code | 24h calls (llm_call_log) | status |
+
+| provider | env var present? (yes/no) | tagged free or paid in code | last 24h calls if visible in llm_call_log | status |
 |---|---|---|---|---|
-| **Groq** | ✅ `GROQ_API_KEY` | free-tier (not tagged paid) | **13, 0 fail, $0.0014** | 🟢 WORKING — the workhorse |
-| **OpenRouter** | ✅ `OPENROUTER_API_KEY` (+`_PROVISIONING_KEY`,`_REFERRER`) | **mistagged `paid`** (V4 PROVIDERS uses paid model `deepseek/deepseek-chat`, not `:free`) | **9, 1 fail, $0.0005** | 🟡 WORKING but on a PAID model id → switch to `:free` (only real paid vector) |
-| **DeepSeek** | ✅ `DEEPSEEK_API_KEY` | free-tier | 1, 0 fail, $0 | 🟢 WORKING (daily cron only) |
-| **Cerebras** | ✅ `CEREBRAS_API_KEY` | free-tier | 9, **9 fail**, $0 | 🔴 FAILING all calls (quota/credit or dead model) |
-| **NVIDIA NIM** | ✅ `NVIDIA_NIM_API_KEY` | not wired into runtime order | **0** | ⚪ PRESENT, UNUSED — wire into free order |
-| **Together** | ✅ `TOGETHER_API_KEY` | not wired into runtime order | 0 | ⚪ PRESENT, UNUSED — wire into free order |
-| Gemini | (GEMINI/GOOGLE key — not in target set) | free-tier quorum member | 9, **9 fail**, $0 | 🔴 FAILING all calls |
-| Mistral | (MISTRAL key — not in target set) | free-tier quorum member | 9, **9 fail**, $0 | 🔴 FAILING all calls |
-| zai | (ZAI key — not in target set) | free-tier quorum member | 9, **9 fail**, $0 | 🔴 FAILING all calls |
-| Fireworks | ✅ `FIREWORKS_API_KEY` | — | 0 | ⚪ present, unused |
-| SambaNova | ✅ `SAMBANOVA_API_KEY` | — | 0 | ⚪ present, unused |
-| SiliconFlow | ✅ `SILICONFLOW_API_KEY` | — | 0 | ⚪ present, unused |
-| Llama host | via `LITELLM_CONFIG_YAML` (no standalone key) | — | — | ⚪ hosted through LiteLLM, not a direct key |
+| Groq | **yes** Railway gcm + litellm + engine (`GROQ_API_KEY`). Local: no | free (TS + V4) | [R CC] 13 calls, 0 fail | wired |
+| Cerebras | **yes** Railway gcm + litellm + engine (`CEREBRAS_API_KEY`). Local: no | free | NOT_CHECKED | wired; V4 now has a PROVIDERS.cerebras row |
+| OpenRouter | **yes** Railway gcm + litellm + engine (`OPENROUTER_API_KEY`). Local: no | **was paid** (`deepseek/deepseek-chat`). **Now free** iff model id ends `:free`. Default `meta-llama/llama-3.3-70b-instruct:free` | [R CC] 9 calls, 1 fail | wired; paid ids skipped unless `SEAN_PAID_LOOP` |
+| NVIDIA NIM | **no** on gcm, litellm, engine (`NVIDIA_API_KEY` / `NVIDIA_NIM_API_KEY` absent). Local: no | free-try slot | NOT_CHECKED | **MISSING** for Sean EOD |
+| DeepSeek | **yes** Railway gcm + litellm + engine (`DEEPSEEK_API_KEY`). Local: no | tagged free in TS; **not** in FREE_TRY_ORDER (Groq→Cerebras→OR :free→NIM→Together) | NOT_CHECKED | present; skipped in free gate |
+| Together / Llama | **yes** Railway gcm + engine (`TOGETHER_API_KEY`). Local: no | free | NOT_CHECKED | wired |
+| SambaNova (Llama host) | **yes** Railway gcm + litellm (`SAMBANOVA_API_KEY`). Engine: no. Local: no | free in TS PROVIDERS | NOT_CHECKED | wired on agents, not in FREE_TRY_ORDER |
 
-Note: `llm_call_log.tier` is a **quorum label (`0a`)**, NOT free/paid. Free/paid must be read from code + model id + `cost_usd`. Ground-truth 24h cost is the numbers above.
+## Gate (shipped in trinity-symphony-shared, not deployed)
 
-## MISSING keys (for Sean EOD — not invented)
-- **`NVIDIA_API_KEY`** — only `NVIDIA_NIM_API_KEY` present. If the router expects the plain var, it's MISSING; if NIM is the intended one, wire the router to `NVIDIA_NIM_API_KEY`.
-- **No standalone Llama host key** — Llama is served via `LITELLM_CONFIG_YAML`. If a direct free Llama endpoint is wanted, its key is MISSING.
-- Everything else in the target set (Groq, Cerebras, OpenRouter, DeepSeek, Together) is **present**.
+- `lib/free-tier-gate.js` + `tests/free-tier-gate.test.js` PASS.
+- Default `allowPaid()===false`. Paid only if `SEAN_PAID_LOOP` is a non-hold value.
+- 429 / `insufficient_quota` → `exhausted_until` next UTC midnight. No failover to paid.
+- All five FREE_TRY_ORDER exhausted → throw `FREE_EXHAUSTED`. Then stamp TODAY.md `FREE_EXHAUSTED` and Linear `FREE-EXHAUST — hold or paid?`. **Not stamped this hour** — no 24h log, no live 429 observed.
+- Engine LLM proxy skipped unless allow_paid (avoids paid HAL spend).
 
-## Router fix — where it actually lives (truth-over-flattery)
-- ❌ **`lib/ConstitutionalAgent.ts` is a DEAD SCAFFOLD** — imported by nothing (verified: `server.js` + `apm/gcm/hdm/mel/index.js` all `require('./lib/ConstitutionalAgentV4')`). Its `openrouter: tier:'paid'` line is real but **fixing it changes nothing at runtime** (theater — the exact anti-pattern the repo warns against).
-- ✅ **Real router = `lib/ConstitutionalAgentV4.js` `callLLM` (:2587)**: primary path is `ENGINE_LLM_PROXY` → **repid-engine** (the quorum that logs the 24h calls above); direct-provider fallback iterates `PROVIDERS` (:158) where `openrouter` (:163) is **priority 1 with a hardcoded paid model, not env-overridable**.
-- ⚠️ **The on-disk working copy of `ConstitutionalAgentV4.js` is mid-merge (5+ unresolved conflict markers; `git status` shows `AA`).** HEAD is clean, but **do not hand-edit/commit from this dirty tree** — author any code change on a fresh clean worktree.
+## Missing for Sean EOD
 
-### The fix, ordered by safety
-1. **ENV-FIRST, zero code risk (Sean, Railway):** set `OPENROUTER_MODEL=<a verified `:free` id>` on the repid-engine + trinity services. This is the single change that closes the only real paid vector ($0.0005/24h). *I did not guess a `:free` model id — an invalid one would 404 and break the one working OpenRouter path.*
-2. **CODE (clean-branch PR, deploy = Sean):** in `ConstitutionalAgentV4.js` PROVIDERS, make openrouter model `process.env.OPENROUTER_MODEL || <default>` (currently hardcoded — the env fix above can't work until this lands), add an `LLM_ALLOW_PAID` gate (default **false**) that filters the provider loop, set try-order **Groq → Cerebras → OpenRouter(:free) → NIM → Together/Llama**, and on `429`/`insufficient_quota` mark the provider `exhausted_until` next UTC midnight **without** failing over to a paid model.
-3. **Cross-repo:** the same `allow_paid=false` gate must also apply in **repid-engine**'s proxy/quorum (that's the primary spend path) — separate PR in that repo.
+- `NVIDIA_API_KEY` / `NVIDIA_NIM_API_KEY` — **not listed** on gcm, litellm, or repid-engine `describe-service` names. CC TODAY says NIM present-unused — **unreconciled**. Treat as MISSING until Sean confirms the var name and service.
+- Local shell has none of the listed keys (this session).
+- `llm_call_log` 24h counts: NOT_CHECKED.
 
-## Exhaustion protocol (per standing order §3)
-Trigger `FREE_EXHAUSTED` only when **groq AND openrouter(:free) AND deepseek AND cerebras/NIM/together** all report exhausted. **Not the case now** (groq + openrouter + deepseek working). When it happens: stamp `TODAY.md FREE_EXHAUSTED`, Linear HYP-6 `FREE-EXHAUST — hold or paid?`, stop calling models. No silent paid.
+Do not invent keys. Do not `paid` without Sean.
+
+---
+
+## CC REVIEW [V] — 2026-09-10 (verifier lane; append-only, Grok owns above)
+Verified Grok's `lib/free-tier-gate.js` out-of-lane against Sean's spec + live DB.
+
+**Gate logic: ✅ CORRECT.** `allowPaid()` default false (only `SEAN_PAID_LOOP`/`ALLOW_PAID` ≠ hold/false/0/no flips it); OpenRouter free iff model ends `:free`; `FREE_TRY_ORDER = groq→cerebras→openrouter→nvidia→together` (matches spec); `markExhausted`→next UTC midnight; `orderProviders` filters free+non-exhausted then ranks. Pure module, tests pass. Matches the standing order precisely.
+
+**GAP 1 — NOT WIRED (inert).** `free-tier-gate.js` is exported but **no caller** — `ConstitutionalAgentV4.callLLM`/`detectProviders` don't import `orderProviders`/`isFreeSlot`, and the `ENGINE_LLM_PROXY` path (repid-engine, the primary spend path) doesn't consult it. Same correct-but-unwired shape as `deriveLiveness`. **Remaining step:** wire the provider loop (V4) + gate the engine proxy (repid-engine) to `orderProviders(...allowPaid:false)` and skip `isExhausted`. Until then the gate changes nothing at runtime.
+
+**GAP 2 — order names ≠ provider map.** `FREE_TRY_ORDER` includes `cerebras` and `nvidia`, but V4's `PROVIDERS` (HEAD) has **neither row** (openai/anthropic/gemini/deepseek/openrouter/grok/together/deepinfra). Those two slots are dead until PROVIDERS gets `cerebras` + `nvidia` (envKey `NVIDIA_NIM_API_KEY`) rows with free/`:free` models.
+
+**VERIFIED 24h usage (Grok had NOT_CHECKED — my Supabase MCP is authed):** groq 13/0-fail/$0.0014 · openrouter 9/1-fail/$0.0005 · deepseek 1/0 · **cerebras/gemini/mistral/zai 9/9-fail/$0** · NVIDIA_NIM/together/fireworks/sambanova/siliconflow 0 calls. **Total ≈ $0.0019/24h. 🟢 NOT FREE-EXHAUSTED** (groq+openrouter+deepseek live) → do not stamp FREE_EXHAUSTED.
+
+**Reconcile on NVIDIA:** `NVIDIA_NIM_API_KEY` IS present in `.env.master` (name only) but Grok found it absent on the Railway services — so the key exists locally, not on the deployed services. Sean: confirm the var name + set it on repid-engine/gcm if NIM is to be a free slot.
