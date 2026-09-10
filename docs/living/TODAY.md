@@ -99,4 +99,10 @@ Root cause NAMED (not a code bug): all 5 pending tasks were `assigned_to` non-ru
 3. **#121 trustshell must-fixes only** — no merge, no publish.
 4. Evergreen re-arm: **HOLD** until Sean confirms FREE-TIER providers for the fleet (do not arm volume that spends).
 
+## FREE-TIER GATE 2026-09-10 (CC) — 🟢 NOT EXHAUSTED
+Inventory in `TOKEN_BUDGET.md`. Truth: 24h LLM spend ≈ **$0.0019 total** (groq $0.0014 + openrouter $0.0005). Working: groq(13,0-fail), openrouter(9,1-fail), deepseek(1). Failing 9/9: cerebras, gemini, mistral, zai. Present-unused: NVIDIA_NIM, Together, Fireworks, SambaNova, SiliconFlow. **Do NOT stamp FREE_EXHAUSTED** (3 providers live).
+- **Only real paid vector:** OpenRouter runs a **paid** model id (`deepseek/deepseek-chat`), not `:free`. Fix = env `OPENROUTER_MODEL=<verified :free id>` (Sean, Railway) — but V4 hardcodes it, so the code must be env-overridable first (small PR).
+- **Router fix location:** `ConstitutionalAgent.ts` is a DEAD SCAFFOLD (fixing = theater). Real router = `ConstitutionalAgentV4.js callLLM` → repid-engine proxy + direct fallback. Working copy is mid-merge (edit only on a clean worktree). Full `allow_paid=false` + try-order + 429-exhaustion spec in `TOKEN_BUDGET.md`; the primary paid-gate belongs in **repid-engine** (separate PR).
+- **MISSING for Sean:** `NVIDIA_API_KEY` (only `_NIM_` present); no standalone Llama key (LiteLLM-hosted).
+
 **Do not start a new sweep. Free-tier only until Sean authorizes paid.**
