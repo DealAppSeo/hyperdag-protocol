@@ -120,11 +120,24 @@ Inventory in `TOKEN_BUDGET.md`. Truth: 24h LLM spend ≈ **$0.0019 total** (groq
 - 🔴 **HEADLINE BLOCKER:** the fleet's direct `callLLM` free hops **all fail** — PROVIDERS models are dead (`groq: llama-3.3-70b-versatile` retired; `cerebras: gemma-4-31b` 404). Gate order is correct, but no free completion is possible until models are refreshed. **Verified live model that works:** the HAL quorum succeeded on groq with **`openai/gpt-oss-20b`** (20:31Z). **Fix (Grok lane, trinity PROVIDERS map):** set groq→`openai/gpt-oss-20b`, refresh cerebras/nvidia/together to current free ids.
 - **L2 OPEN-POOL DAY** — 24 tasks armed (435122–435145, open pool). Draining SLOW: only **trinity-w3c** engaged (1 done, 1 doing) — the other 11 aren't completing, consistent with the dead-model blocker (HAL-verify tasks route to the working engine; reasoning tasks fail on direct callLLM). **NOT yet at ≥10 claims/≥3 agents** — tasks persist; fleet keeps claiming after this session (nobody waits on CC). Re-check target: `insert_source='cc-open-pool-day-2026-09-10'`.
 - **L3 ONE-PATH PACK** — MCP smoke done (appended to `TRUSTSHELL_E2E.md`): `verify`✓ `getRepID`✓; `present_proof` not in published MCP 1.0.0/1.2.0 (is in 1.4.0 tree per Grok). `SITE-COPY-PATCH.md` drafted (Grok owns). Mirror to hyperdag-protocol: branch diverged under Grok — leaving to Grok's parity push (merge now allowed per Sean).
-- **L4 hygiene REPORT (no UPDATE):** open tasks still targeted at dead names — `trinity-cowork-executor`×3, `trinity-gemini-antigravity`×2, `trinity-grok-code`×2 (all `is_live_fleet=false`); NEW ones still accruing to these → **something upstream keeps assigning to dead CLI names** (find + fix the assigner; Sean/Grok). Peer-verify churn-filter DESIGN: producer should drop `EVERGREEN_AUDIT`/`diag_probe`/`SHADOW_REJECT` before enqueue (design only, no drain).
+- **L4 hygiene REPORT (no UPDATE):** open tasks targeted at dead names — `trinity-cowork-executor`×3, `trinity-gemini-antigravity`×2, `trinity-grok-code`×2 (all `is_live_fleet=false`). ⚠️ **CORRECTION:** my earlier "new ones still accruing" was WRONG — see `ASSIGNER.md`: newest dead-name task is **2026-09-02**, none since, no code hose. Peer-verify churn-filter DESIGN: producer drops `EVERGREEN_AUDIT`/`diag_probe`/`SHADOW_REJECT` before enqueue (design only, no drain).
+
+## A/C/D-LOOPS CLOSE 2026-09-10 (CC)
+- **Loop A (assigner) — `ASSIGNER.md`.** Producer = `insert_source='cowork-cl-session'`, an **interactive Cowork CLI session, NOT code** (grep for the dead names across all repos = 0 hits). **Hose already off:** newest dead-name task 2026-09-02 08:27; every other source (system/claude-loop/cc-*) assigns NULL. No cron/ORCH/Linear to fix — the fix is operator hygiene (Cowork CLI must default `assigned_to`=NULL/live name). Original rows untouched. Watch-query in the doc. (Complements Grok's `ASSIGNED_TO_HYGIENE.md`.)
+- **Loop B (L2 count) — waiting on XC's PROVIDERS deploy, NOT busy-polling.** Grok's last read: **8 claims / 6 agents** (≥3-agents met; ≥10-claims near). Stuck-on-dead-model "doing" tasks left as-is (no delete).
+- **Loop C — `ENGINE_HAL_GATE.md` (doc only, no patch).** repid-engine HAL quorum openrouter = `qwen/qwen-2.5-72b-instruct` (PAID) at `fact-check.ts:2015`, overridden by **`HAL_S2_OPENROUTER_MODEL`** not `OPENROUTER_MODEL` → that's why the env didn't gate it. `:free` sibling is retired/404; a live free slug is `nvidia/nemotron-3-ultra-550b-a55b:free`. Fix = repid-engine free-tier gate, AFTER XC's fleet fix, separate PR.
+- **Loop D — mirrored** TRUSTSHELL_E2E (MCP findings) + ASSIGNER + ENGINE_HAL_GATE to `hyperdag-protocol/docs/living/` (docs-only, pushed 67e1c42b).
 
 **NEXT after L-loops:** (1) refresh trinity PROVIDERS models (unblocks L2 free completions) — Grok lane; (2) repid-engine HAL-quorum free-tier gate + verify `OPENROUTER_MODEL` reaches it; (3) find the upstream assigner writing tasks to dead CLI names; (4) L2 will reach ≥10/≥3 as the fleet cycles — re-verify next check.
 
 **Do not start a new sweep. Free-tier only until Sean authorizes paid.**
+
+## NEXT 2026-09-10 (Grok X-LONG)
+
+1. **#52 merged + gcm deployed** (`3f4b63c1` 20:59Z). FREE_GATE_LIVE = **BUILT not VERIFIED** (llm_call_log empty via anon; 435122 done at 20:31Z before #52).
+2. **X2 files landed** (reports/2026-09-10: CLAIM_CODE, CLI_VERIFY_TRUE_FALSE, REPID_TRINITY_SHOFET, ATTESTATION_MINTER_SHA, MCP_1_0_VS_1_4; living: INFRA tombstone, ASSIGNER hygiene, PEER_VERIFY_CHURN_FILTER). Insert `xc-session` **blocked** (pooler password). Original 5 untouched.
+3. **X3** mirror living → hyperdag-protocol (docs-only).
+4. Come back to X1 when a 435122–145 HAL-verify completes after 20:55Z **or** llm_call_log shows `openai/gpt-oss-20b`. No busy-poll.
 
 ## NEXT 2026-09-10 (Grok, after L1–L4)
 
