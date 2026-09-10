@@ -21,24 +21,33 @@ Let `<DEPLOY_TS_UTC>` = the deploy completion time of the `repid-engine` API ser
 ```
 (or `… REFUSED paid HAL_S2_OPENROUTER_MODEL=…` if that override is set). Presence on a HAL verify = gate live.
 
-**2. SQL (negative — the goal met).** No OpenRouter call uses the paid qwen after the deploy. **These run as-is** (last-15-min window). Once the API deploy time is known, swap the interval line for a precise pin — e.g. `AND created_at > TIMESTAMPTZ '2026-09-10 23:00:00+00'` (substitute the real `repid-engine` API deploy timestamp):
+**2. SQL (negative — the goal met).** No OpenRouter call uses the paid qwen after the deploy.
+**Sean: set the ONE `TIMESTAMPTZ` literal below to the Railway `repid-engine` API deploy time (UTC), then run.** Do not use the example date — it is a placeholder. (psql users may `\set` instead; the two queries share the one literal.)
 ```sql
+-- ┌ SET THIS ONE LITERAL to the Railway repid-engine API deploy UTC time, then run ┐
+-- │  the '2026-09-10 00:00:00+00' below is a PLACEHOLDER — replace it.             │
+-- └──────────────────────────────────────────────────────────────────────────────┘
+
 -- MUST return 0 while SEAN_PAID_LOOP is unset:
-SELECT count(*) AS paid_qwen_calls
+SELECT count(*) AS paid_qwen_after_deploy
 FROM llm_call_log
 WHERE provider = 'openrouter'
   AND model = 'qwen/qwen-2.5-72b-instruct'
-  AND created_at > now() - interval '15 minutes';   -- or: > TIMESTAMPTZ '<API deploy ts>+00'
+  AND created_at > TIMESTAMPTZ '2026-09-10 00:00:00+00';   -- ← paste Railway deploy time here
 
 -- Free slug should appear instead (or openrouter absent if the nvidia family
 -- collapses with nvidia-nim and the slot is skipped):
 SELECT model, count(*) AS calls, max(created_at) AS last
 FROM llm_call_log
 WHERE provider = 'openrouter'
-  AND created_at > now() - interval '15 minutes'     -- or: > TIMESTAMPTZ '<API deploy ts>+00'
+  AND created_at > TIMESTAMPTZ '2026-09-10 00:00:00+00'    -- ← same deploy time
 GROUP BY model ORDER BY calls DESC;
 ```
-PASS = `paid_qwen_calls = 0`; the grouped query shows `nvidia/nemotron-3-ultra-550b-a55b:free` (or no openrouter row). *(Fixed 2026-09-10 per XC FAIL: angle-bracket placeholder was not a runnable timestamp; now runs as written.)*
+PASS = `paid_qwen_after_deploy = 0`; the grouped query shows `nvidia/nemotron-3-ultra-550b-a55b:free` (or no openrouter row).
+
+**Exact log grep (repid-engine API service logs, after deploy):** `[hal] free-tier gate` — the gate emits `[hal] free-tier gate: allow_paid=false — paid default suppressed, using nvidia/nemotron-3-ultra-550b-a55b:free` on each HAL verify that reaches the OpenRouter backfill.
+
+*(Fixed 2026-09-10 per XC FAIL: the angle-bracket `<DEPLOY_TS_UTC>` was not a runnable timestamp. Now a real `TIMESTAMPTZ` literal Sean pastes the deploy time into — no invented deploy time.)*
 
 **3. Negative control (proves it's the gate, not luck).** Temporarily set `SEAN_PAID_LOOP` to a loop value, trigger one HAL verify → the count query returns **>0** qwen rows again; unset it → back to 0 / `:free`. **Do not leave `SEAN_PAID_LOOP` set.**
 
