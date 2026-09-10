@@ -58,3 +58,21 @@ https://github.com/DealAppSeo/trinity-symphony-shared/pull/51 (`feat/free-tier-g
 - OpenRouter model = `process.env.OPENROUTER_MODEL || 'deepseek/deepseek-chat'` (no invented `:free` id). Paid id skipped while allow_paid=false.
 - Dirty local merge tree was **not** the authoring tree.
 - Not merged. No Railway restart. Runtime unchanged until Sean merges + deploys.
+
+## Cerebras 9/9 — Grok 2026-09-10 (append; error class)
+
+Source: Railway **repid-engine** deploy logs 2026-09-10T19:08Z (filter `cerebras`). Not a restart. Not `llm_call_log` rows (Grok MCP unauth); error text is the HAL quorum line.
+
+| field | value |
+|---|---|
+| class | **model-gone** (not auth, not 429, not 8k cap) |
+| HTTP | 404 `not_found_error` / `model_not_found` |
+| vendor text | `Model does not exist or you do not have access to it.` |
+| how chosen | `catalog NOT_CHECKED and no model configured` then substitute **`gemma-4-31b`** (family **gemini**) |
+| exhausted_until | **parked until `HAL_S2_CEREBRAS_MODEL` is a real Cerebras id** — this is config, not UTC-midnight quota |
+| 429? | no |
+| auth fail? | no (key present; 404 on model) |
+
+Together: **unused, key present** on gcm + engine. Already in `FREE_TRY_ORDER` after nvidia. When Cerebras is parked/exhausted, `orderProviders` skips it, so Together already runs after Groq (then OpenRouter :free, then NIM, then Together). **No `free-tier-gate.js` edit required.** Optional later: put Together immediately after Groq; that is a reorder, not a missing slot.
+
+Do not stamp FREE_EXHAUSTED (Groq still working).
