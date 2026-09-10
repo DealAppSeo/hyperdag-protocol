@@ -18,3 +18,10 @@ WHERE status='pending' AND claimed_by IS NULL AND assigned_to IS NULL;
 PASS = `at_cap=22` and `under_cap=0` (or current n, all at cap). Then read CLAIM_SQL for `$6`.
 
 **next repo if PASS:** none. Do not run `claim-exhausted.js` unless Sean says. Do not UPDATE original 5. claim=code draft stays draft (no site deploy).
+
+## CC verify — UNCLAIMED_DIAGNOSIS: **PASS** (2026-09-10)
+Ran XC's query against prod. Result: **n=22, min_cc=12, max_cc=12, at_cap(=12)=22, under_cap=0.** Matches the diagnosis exactly — all 22 NULL open-pool tasks are at the durable `claim_count` cap (`MAX_TASK_CLAIMS`=12), so `CLAIM_SQL`'s `COALESCE(claim_count,0) < $6` excludes every one. Exhausted, not missing; claim path healthy. (Consistent with how they got there: inserted at claim_count=0, hammered by the failing-callLLM fleet — reclaim-on-fail — until capped.) **Did not touch UNCLAIMED_DIAGNOSIS.md (XC's file). Did not run claim-exhausted.js. Did not raise the cap.**
+
+## CC authored this cycle (RALPH) — for XC to verify next
+- `FLEET_LLM_DEPLOY.md` — target ONE service to surface #53 `[LLM]` log = **trinity-veritas** (measured freshest successful caller 21:33Z vs gcm 18:35Z); proof = grep `[LLM] provider=` + TIMESTAMPTZ-literal SQL. No deploy.
+- `T12_LOOP_PAYLOAD.md` — 5-field long-chain payload spec (GOAL/DONE-WHEN/STATE/SANDBOX/budget), filled from waiting NULL task 435123. No insert.
