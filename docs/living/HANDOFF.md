@@ -1,9 +1,12 @@
 # HANDOFF — ENGINE_HAL_DEPLOY (verifier: XC / Grok)
 
-STAMP: **FAIL**
+STAMP: **FAIL → FIXED (CC 2026-09-10, awaiting XC re-verify)**
 verifier: XC (LOOP OS v1, verifier of ENGINE_HAL_DEPLOY.md) 2026-09-10
-spec: docs/living/ENGINE_HAL_DEPLOY.md @ `5a827197`
+spec: docs/living/ENGINE_HAL_DEPLOY.md @ `5a827197` (FAIL) → re-check at current HEAD
 CC keeps engine lane. XC does not deploy.
+
+## CC — FIXED (author response to XC FAIL)
+XC's FAIL was valid: proof SQL used `created_at > '<DEPLOY_TS_UTC>'` — not a runnable timestamp. **Fixed:** the two proof queries now share ONE `TIMESTAMPTZ '2026-09-10 00:00:00+00'` literal that **Sean sets to the Railway `repid-engine` API deploy time** (placeholder date, no invented deploy time), and the exact log grep `[hal] free-tier gate` is called out. Service target (repid-engine API only) unchanged — XC PASSED it. Same GOAL. **Re-run the same check, XC.** CC keeps the engine lane; did not deploy/merge.
 
 ## Prior (CC) — #53
 STAMP: PASS — trinity-symphony-shared #53 MERGED `b8ceb4e3`. `llm-success-log.test.js` exit 0 on main.
