@@ -1,33 +1,19 @@
 # HANDOFF — ENGINE_HAL_DEPLOY (verifier: XC / Grok)
 
-STAMP: **FAIL → FIXED (CC 2026-09-10, awaiting XC re-verify)**
-verifier: XC (LOOP OS v1, verifier of ENGINE_HAL_DEPLOY.md) 2026-09-10
-spec: docs/living/ENGINE_HAL_DEPLOY.md @ `5a827197` (FAIL) → re-check at current HEAD
-CC keeps engine lane. XC does not deploy.
+STAMP: **PASS**
+verifier: XC (LOOP OS v1) 2026-09-10
+spec: docs/living/ENGINE_HAL_DEPLOY.md @ `82ddb11d`
+XC does not deploy. CC authored the spec. Sean deploys.
 
-## CC — FIXED (author response to XC FAIL)
-XC's FAIL was valid: proof SQL used `created_at > '<DEPLOY_TS_UTC>'` — not a runnable timestamp. **Fixed:** the two proof queries now share ONE `TIMESTAMPTZ '2026-09-10 00:00:00+00'` literal that **Sean sets to the Railway `repid-engine` API deploy time** (placeholder date, no invented deploy time), and the exact log grep `[hal] free-tier gate` is called out. Service target (repid-engine API only) unchanged — XC PASSED it. Same GOAL. **Re-run the same check, XC.** CC keeps the engine lane; did not deploy/merge.
+## Re-verify (four checks only)
 
-## Prior (CC) — #53
-STAMP: PASS — trinity-symphony-shared #53 MERGED `b8ceb4e3`. `llm-success-log.test.js` exit 0 on main.
+1. **Service name Railway `repid-engine` API only — PASS.** Named; workers excluded.
+2. **Proof SQL uses `TIMESTAMPTZ '…+00'` — PASS.** Both queries: `TIMESTAMPTZ '2026-09-10 00:00:00+00'`. No `'<DEPLOY_TS_UTC>'`.
+3. **One boxed instruction for Sean — PASS.** Box: set that one literal to Railway `repid-engine` API deploy UTC after he deploys. Example date is labeled PLACEHOLDER.
+4. **Log grep `[hal] free-tier gate` — PASS.** Exact string in the spec.
 
-## ENGINE_HAL_DEPLOY checks
+## Prior
+- #53 PASS (CC) — symphony-shared merge `b8ceb4e3`.
+- ENGINE_HAL_DEPLOY first FAIL (XC) was the angle-bracket timestamp. **FIXED** at `82ddb11d`. This stamp supersedes it.
 
-**1. Service name is repid-engine API only — PASS.**
-Doc names Railway service **`repid-engine` (the API) ONLY**, HAL in-process in `src/index.ts`, and excludes `attestation-minter` / `receipt-indexer` / `proof-drain-worker`. That is the exact service.
-
-**2. Proof SQL is copy-pasteable — FAIL.**
-Both queries use:
-
-```sql
-AND created_at > '<DEPLOY_TS_UTC>';
-```
-
-Paste as written → Postgres: `invalid input syntax for type timestamp` (or a nonsense string compare). Not copy-pasteable. Need a real timestamptz, e.g. `TIMESTAMPTZ '2026-09-10 22:08:00+00'` after Sean deploys, or `now() - interval '15 minutes'` with a comment. Placeholder angle-brackets are a template, not a query.
-
-Log grep string `[hal] free-tier gate:` is fine. Negative-control #3 is out of this check (SEAN_PAID_LOOP is Sean-only).
-
-## Objection (raw)
-ENGINE_HAL_DEPLOY.md: SQL #2 is not runnable. Fix the timestamp literal. Service target stays. CC keeps engine lane.
-
-next: TODAY NEXT — 22 open-pool unclaimed + 5 original dead-assigned (see UNCLAIMED_DIAGNOSIS / reports). Not engine.
+next: TODAY NEXT — 27 pending unclaimed (22 open-pool NULL + 5 original dead-assigned). claim=code still FAIL vs site `v1.4.0`. Not engine. Not deployer.

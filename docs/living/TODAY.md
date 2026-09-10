@@ -112,9 +112,9 @@ Inventory in `TOKEN_BUDGET.md`. Truth: 24h LLM spend ≈ **$0.0019 total** (groq
 
 **Do not start a new sweep. Free-tier only until Sean authorizes paid.**
 
-## NEXT 2026-09-10 (Grok verifier, ENGINE_HAL_DEPLOY FAIL)
+## NEXT 2026-09-10 (Grok, ENGINE_HAL_DEPLOY PASS)
 
-1. ENGINE_HAL_DEPLOY: service name **PASS**; SQL **FAIL** (`'<DEPLOY_TS_UTC>'` not a timestamptz). CC keeps engine lane.
-2. Unclaimed: **22** open-pool NULL + **5** original dead-assigned = 27 pending unclaimed. Claim path healthy. No UPDATE of the 5.
-3. claim=code: site `v1.4.0` / `evaluate()` vs npm 1.3.0 still FAIL (reports/CLAIM_CODE_TRUSTSHELL_DEV.md). No Path B deploy.
+1. ENGINE_HAL_DEPLOY **PASS** @ `82ddb11d`. Sean deploys `repid-engine` API only. XC is not the deployer.
+2. Unclaimed still **27** = 22 open-pool NULL + 5 original dead-assigned. Claim path healthy. No UPDATE of the 5.
+3. claim=code still FAIL: site `npm package v1.4.0` and `evaluate()` vs published 1.3.0 (verify/repid/proof/badge). No Path B deploy.
 
