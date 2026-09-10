@@ -105,4 +105,9 @@ Inventory in `TOKEN_BUDGET.md`. Truth: 24h LLM spend ≈ **$0.0019 total** (groq
 - **Router fix location:** `ConstitutionalAgent.ts` is a DEAD SCAFFOLD (fixing = theater). Real router = `ConstitutionalAgentV4.js callLLM` → repid-engine proxy + direct fallback. Working copy is mid-merge (edit only on a clean worktree). Full `allow_paid=false` + try-order + 429-exhaustion spec in `TOKEN_BUDGET.md`; the primary paid-gate belongs in **repid-engine** (separate PR).
 - **MISSING for Sean:** `NVIDIA_API_KEY` (only `_NIM_` present); no standalone Llama key (LiteLLM-hosted).
 
+## SESSION CLOSE 2026-09-10 (CC) — all 4 NOW-tasks done
+1. ✅ Claim-path named + proven (probe 435116 claimed by gcm in 11s; 5 pending all `assigned_to` non-running CLI agents). 2. ✅ Docs → hyperdag-protocol PR #21 (4 files). 3. ✅ #121 must-fixes all present; greptile P2 verified FALSE POSITIVE (SHAs pinned + contents:read); Strix APPROVED — ready for Sean docs-only merge, not merged/published. 4. ✅ Free-tier gate: Grok's `free-tier-gate.js` logic verified CORRECT by CC; NOT exhausted.
+
+**NEXT (real work):** wire `free-tier-gate.js` into `ConstitutionalAgentV4.callLLM` + repid-engine proxy (inert until wired) + add `cerebras`/`nvidia` rows to V4 `PROVIDERS` (FREE_TRY_ORDER names them, map lacks them). **Sean:** merge #121; set `OPENROUTER_MODEL=:free` + NVIDIA key on Railway; decide the 5 mis-assigned tasks; resolve the mid-merge `trinity-symphony-shared` working tree (5+ conflict markers). **Held:** G2/G4/G6, evergreen re-arm, 58-view SECDEF (P0-7 parked).
+
 **Do not start a new sweep. Free-tier only until Sean authorizes paid.**

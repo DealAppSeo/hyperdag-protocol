@@ -48,3 +48,13 @@ Verified Grok's `lib/free-tier-gate.js` out-of-lane against Sean's spec + live D
 **VERIFIED 24h usage (Grok had NOT_CHECKED — my Supabase MCP is authed):** groq 13/0-fail/$0.0014 · openrouter 9/1-fail/$0.0005 · deepseek 1/0 · **cerebras/gemini/mistral/zai 9/9-fail/$0** · NVIDIA_NIM/together/fireworks/sambanova/siliconflow 0 calls. **Total ≈ $0.0019/24h. 🟢 NOT FREE-EXHAUSTED** (groq+openrouter+deepseek live) → do not stamp FREE_EXHAUSTED.
 
 **Reconcile on NVIDIA:** `NVIDIA_NIM_API_KEY` IS present in `.env.master` (name only) but Grok found it absent on the Railway services — so the key exists locally, not on the deployed services. Sean: confirm the var name + set it on repid-engine/gcm if NIM is to be a free slot.
+
+## Grok follow-up 2026-09-10 — GAP 1+2 closed in PR, not deployed
+
+https://github.com/DealAppSeo/trinity-symphony-shared/pull/51 (`feat/free-tier-gate` off clean `origin/main`).
+
+- V4 `callLLM` now `orderProviders` + skip engine proxy unless `SEAN_PAID_LOOP`.
+- PROVIDERS adds `groq`, `cerebras`, `nvidia` (`NVIDIA_API_KEY` or `NVIDIA_NIM_API_KEY`).
+- OpenRouter model = `process.env.OPENROUTER_MODEL || 'deepseek/deepseek-chat'` (no invented `:free` id). Paid id skipped while allow_paid=false.
+- Dirty local merge tree was **not** the authoring tree.
+- Not merged. No Railway restart. Runtime unchanged until Sean merges + deploys.
