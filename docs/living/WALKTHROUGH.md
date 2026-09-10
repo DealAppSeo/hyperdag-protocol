@@ -76,3 +76,7 @@ Then ask the model to `verify_output` a sentence and `get_repid` `trinity-shofet
 | Merge+deploy **trinity-symphony-shared #51** only after you read the test list | `node tests/free-tier-gate.test.js`. Not money/schema/publish, but it **does** change LLM routing. Do not merge blind. |
 
 BLOCKED_SEAN: those four. Nobody else merges #51 or publishes.
+
+## MCP smoke (this session)
+
+`verify_output` Paris → PASS 100 (partial quorum). `get_repid` trinity-shofet → 2152 ESTABLISHED. `present_proof` trinity-shofet → verified. Published MCP package is **1.0.0**; this smoke used the repo MCP. See TRUSTSHELL_E2E.md append.
