@@ -111,3 +111,10 @@ Inventory in `TOKEN_BUDGET.md`. Truth: 24h LLM spend ≈ **$0.0019 total** (groq
 **NEXT (real work):** wire `free-tier-gate.js` into `ConstitutionalAgentV4.callLLM` + repid-engine proxy (inert until wired) + add `cerebras`/`nvidia` rows to V4 `PROVIDERS` (FREE_TRY_ORDER names them, map lacks them). **Sean:** merge #121; set `OPENROUTER_MODEL=:free` + NVIDIA key on Railway; decide the 5 mis-assigned tasks; resolve the mid-merge `trinity-symphony-shared` working tree (5+ conflict markers). **Held:** G2/G4/G6, evergreen re-arm, 58-view SECDEF (P0-7 parked).
 
 **Do not start a new sweep. Free-tier only until Sean authorizes paid.**
+
+## NEXT 2026-09-10 (Grok verifier, ENGINE_HAL_DEPLOY FAIL)
+
+1. ENGINE_HAL_DEPLOY: service name **PASS**; SQL **FAIL** (`'<DEPLOY_TS_UTC>'` not a timestamptz). CC keeps engine lane.
+2. Unclaimed: **22** open-pool NULL + **5** original dead-assigned = 27 pending unclaimed. Claim path healthy. No UPDATE of the 5.
+3. claim=code: site `v1.4.0` / `evaluate()` vs npm 1.3.0 still FAIL (reports/CLAIM_CODE_TRUSTSHELL_DEV.md). No Path B deploy.
+

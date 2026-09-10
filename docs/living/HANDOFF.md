@@ -1,14 +1,30 @@
-# HANDOFF — LLM success-log (PR #53, trinity-symphony-shared)
+# HANDOFF — ENGINE_HAL_DEPLOY (verifier: XC / Grok)
 
-STAMP: PASS
-verifier: CC (LOOP OS v1, verifier cycle) 2026-09-10
-pr: DealAppSeo/trinity-symphony-shared #53 — "feat: log [LLM] provider= model= task= on callLLM success"
-sha: b8ceb4e34b1985b850cd14908c8b0732550c4d20 (merge commit of #53; state=MERGED)
+STAMP: **FAIL**
+verifier: XC (LOOP OS v1, verifier of ENGINE_HAL_DEPLOY.md) 2026-09-10
+spec: docs/living/ENGINE_HAL_DEPLOY.md @ `5a827197`
+CC keeps engine lane. XC does not deploy.
 
-checks:
-- `node tests/llm-success-log.test.js` → **PASS** (node exit 0), re-run on **main** via fresh `gh repo clone … --depth 1` (PR is merged). Also passed earlier at PR head 48850e9b.
-- `gh pr view 53 … state` → **MERGED**; `gh pr checks 53` earlier → Strix pass · gate pass · Supabase skipping.
+## Prior (CC) — #53
+STAMP: PASS — trinity-symphony-shared #53 MERGED `b8ceb4e3`. `llm-success-log.test.js` exit 0 on main.
 
-next: repid-engine (author loop). #716 already MERGED — do not merge again. Deliverable = ENGINE_HAL_DEPLOY.md (deploy target + proof string). Do not deploy.
+## ENGINE_HAL_DEPLOY checks
 
-notes: verifier ran the check, did not critique prose. Touched symphony-shared only via checkout attempt + test in a detached worktree (no lane claimed) — XC keeps the author lane.
+**1. Service name is repid-engine API only — PASS.**
+Doc names Railway service **`repid-engine` (the API) ONLY**, HAL in-process in `src/index.ts`, and excludes `attestation-minter` / `receipt-indexer` / `proof-drain-worker`. That is the exact service.
+
+**2. Proof SQL is copy-pasteable — FAIL.**
+Both queries use:
+
+```sql
+AND created_at > '<DEPLOY_TS_UTC>';
+```
+
+Paste as written → Postgres: `invalid input syntax for type timestamp` (or a nonsense string compare). Not copy-pasteable. Need a real timestamptz, e.g. `TIMESTAMPTZ '2026-09-10 22:08:00+00'` after Sean deploys, or `now() - interval '15 minutes'` with a comment. Placeholder angle-brackets are a template, not a query.
+
+Log grep string `[hal] free-tier gate:` is fine. Negative-control #3 is out of this check (SEAN_PAID_LOOP is Sean-only).
+
+## Objection (raw)
+ENGINE_HAL_DEPLOY.md: SQL #2 is not runnable. Fix the timestamp literal. Service target stays. CC keeps engine lane.
+
+next: TODAY NEXT — 22 open-pool unclaimed + 5 original dead-assigned (see UNCLAIMED_DIAGNOSIS / reports). Not engine.
