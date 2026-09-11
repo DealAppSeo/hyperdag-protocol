@@ -62,6 +62,12 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 8 (2026-09-11) — IDLE/HOLD
+
+#135 head `95a5892` **no findings** (P1 fix clean), APPROVED/CLEAN. #134 MERGEABLE/clean. Neither merged (main `82b50a8`, Sean's gate). No new CC2 work: inbox/CC.md is **original CC's** lane (not CC2's — assignment distinguishes them), so not picking it up (lane discipline). CC2 assignment (SLICE 0–5 + chokepoint #135) is DONE pending Sean's merges. Holding; nothing to build. Will fix only genuinely-new findings on #135.
+
+---
+
 # HANDOFF — CC2 wakeup 7 (2026-09-11)
 
 Neither #134 nor #135 merged (main `82b50a8`, Sean's gate). #134 stable/MERGEABLE. My prior effective-cap fix drew a **P1** on #135 (`d1aa122`) — a real regression I introduced:
