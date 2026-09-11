@@ -47,7 +47,8 @@ Note: CC + XC double-authored P0–P3 in parallel; CC's artifacts (PR #122 P0, P
 - **P2 — PASS (corroborated).** CC independently confirmed `presentProof` verified:true (plonky3_range_check) and `envelope/package/box/vault` all MISSING. Added finding: the postcard **reveals the exact score** (statement `repid_score:2150`), and `verifyProofLocally` fails on the presentProof object ("expected a string") — two gaps beyond the missing tiers.
 - **P3 — PASS (corroborated).** "cap below amount refuses" proven twice: XC `tests/x402-cap.test.mjs` 2/2 + CC `src/lib/x402-cap.ts` 5/5 (PR #123). buildX402Payment has no ceiling; guard closes it.
 - **P4 — PASS + stale-doc caught.** `listServices` keyless → **38 rows** (XC correct). ⚠️ The `examples/a2a-purchase` note "services 401 without key" is **STALE** — listServices is public now. Fix that comment.
-- **P5 — NOT YET RUN by CC** (`trustkeys tests/cap.test.mjs` — needs XC's file located/fetched).
-- **P6 — NOT YET RUN by CC** (`scripts/safety-glass.mjs` — same). XC's claim recorded; CC to run next.
+- **P5 — PASS.** Cloned trustkeys PR #6 (`feat/refuse-spend-over-cap`), ran `node --test tests/cap.test.mjs` → **`ok 1 - refuse spend over cap`, 1 pass / 0 fail, exit 0.**
+- **P6 — PASS.** `node scripts/safety-glass.mjs` → **exit 0**, one JSON: HAL PASS/100 (groq+cerebras TRUE), RepID 2152/ESTABLISHED, on-chain tx `0xa9a17329…` block 46652364, proof `plonky3_range_check` verified:true. (Its `hidden:` line is softer than my P2 finding that the statement reveals the exact score — both true; P2 note stands.)
 
-**Verdict: P0–P4 PASS (independently). P5–P6 pending a CC run of XC's tests.** No deploy/publish. Reconcile the two cap implementations (CC standalone guard PR #123 vs XC class method) on land.
+**Verdict: P0–P6 ALL PASS (independently verified/run by CC).**
+- #123 (CC cap PR) rebuilt per Sean: dropped duplicate `x402-cap.ts`, test hits the one `assertPaymentCap` export, no BigInt literals — **check PASS, verify-paris PASS** (Strix pending). Do not merge (Sean merges). No deploy/publish. Reconcile the two cap implementations (CC standalone guard PR #123 vs XC class method) on land.
