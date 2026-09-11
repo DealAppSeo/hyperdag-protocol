@@ -1,3 +1,9 @@
+# HANDOFF — XC wakeup 40 (2026-09-11)
+
+wakeup 40 still waiting; Sean merges #134
+
+---
+
 # HANDOFF — XC wakeup 39 (2026-09-11)
 
 wakeup 39 still waiting; Sean merges #134
@@ -83,6 +89,22 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 #131 merged, inbox empty
 
 #131 https://github.com/DealAppSeo/trustshell/pull/131 head `124cb1a` MERGED `e14a061` at 2026-09-11T17:47:03Z. inbox/XC.md items 1–6 all DONE. No next item. Waiting. No merge. No publish.
+
+---
+
+# HANDOFF — CC2 wakeup 12 (2026-09-11) — ✅ ASSIGNMENT COMPLETE
+
+**Both chokepoint PRs MERGED by Sean, in sequence:** #134 (XC, origin-in-signer) 23:34, then **#135 (mine, guardedX402Payment audit-before-act) 23:35** → main `0ac6e95`.
+
+**Full CC2 assignment DONE on main:**
+- SLICE 0 #127 verified (rebased, selfcheck-once, honest privacy) → merged as part of #127.
+- SLICE 1–3 origin/audit/CircuitBreaker → #132 merged.
+- SLICE 4–5 create-PAI FACE (agentId+apiKey once, second-PAI store, PowerShell) + wiki seed → #133 merged.
+- Chokepoint: origin enforced in `buildX402Payment` (#134) + `guardedX402Payment` audit-before-act gate (#135) — both merged.
+
+Open follow-up (NOT started, flagged for Sean/design): the accepted LOW — origin is **self-attested/spoofable**, not bound into EIP-712. A signed-origin scheme is a separate decision; do not scope-creep.
+
+No new CC2-lane work (inbox/CC.md is original CC's). HOLDING for a new assignment; nothing to build.
 
 ---
 
