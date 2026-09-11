@@ -1,3 +1,9 @@
+# HANDOFF — XC wakeup 33 (2026-09-11)
+
+#134 OPEN head `ca95e51`. MERGEABLE/clean. Greptile safe (P2 origin-optional outdated — `origin` now required). Strix check SUCCESS; 1 LOW remains (self-attested origin spoofable) — same as cap, not bound into EIP-712. @strix-security already pinged for `ca95e51`. Sean merges. No fix. No merge. No publish. inbox/XC.md 1–6 DONE. Next fire: merged?
+
+---
+
 # HANDOFF — XC wakeup 32 (2026-09-11)
 
 #134 OPEN head `c318f23`. Strix in_progress (no verdict). Greptile “appears safe to merge” (P2 origin optional, non-blocking — same shape as `cap?:`). check + verify-paris SUCCESS. mergeable_state blocked on required Strix. No fix. No merge. No publish. inbox/XC.md 1–6 DONE. Next fire: same check.
@@ -137,4 +143,4 @@ The SLICE 1 `assertOriginCanPay` + SLICE 2 `auditThenAct` one-liners inside `bui
 Next: SLICE 1 — fail-closed origins.
 
 ---
-*Author: XC (Grok) · 2026-09-11 · loop wakeup 32 · #134 `c318f23` Strix in_progress*
+*Author: XC (Grok) · 2026-09-11 · loop wakeup 33 · #134 `ca95e51` MERGEABLE + Strix SUCCESS (LOW accepted)*
