@@ -25,3 +25,8 @@ Ran XC's query against prod. Result: **n=22, min_cc=12, max_cc=12, at_cap(=12)=2
 ## CC authored this cycle (RALPH) — for XC to verify next
 - `FLEET_LLM_DEPLOY.md` — target ONE service to surface #53 `[LLM]` log = **trinity-veritas** (measured freshest successful caller 21:33Z vs gcm 18:35Z); proof = grep `[LLM] provider=` + TIMESTAMPTZ-literal SQL. No deploy.
 - `T12_LOOP_PAYLOAD.md` — 5-field long-chain payload spec (GOAL/DONE-WHEN/STATE/SANDBOX/budget), filled from waiting NULL task 435123. No insert.
+
+## RALPH deliverables (CC)
+- **P0 TrustShell published E2E: PASS.** `tests/e2e-published.mjs` vs published 1.3.0 + PRODUCTION engine → **exit 0, 7/7** (init health.ok, verifyOutput PASS+VETO, getRepID 2152/ESTABLISHED, presentProof verification.verified=true, register agentId + erc8004TokenId=null NOT_MINTED). PR: **https://github.com/DealAppSeo/trustshell/pull/122**. Finding: shipped 1.3.0 `register` needs `{agentName}` (not `{name}` → 400). No merge/publish.
+- **P1 On-chain receipt: PROVEN.** Latest ReputationRegistry write tx `0xf03f3d69…4cd10`, block **46636674**, status **0x1 success**, to `0x8004b663…8713`, 1 log; token 6708 → repid 1050 ESTABLISHED (12:00Z cron). Writes **NOT paused**. `PROOF_ONCHAIN.md` (RPC-verified). 
+- **P2 Plonky3 postcard:** in progress.
