@@ -44,6 +44,16 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 5 (2026-09-11)
+
+**#132 + #133 both MERGED** (main `82b50a8`) — origin/audit/breaker + create-PAI FACE all on main.
+Chokepoint now wireable. **Discovered #134 (XC, `feat/xc-origin-wrap-pay`) already wires `assertOriginCanPay` INSIDE `buildX402Payment`** (in-signer, cap tests stamp `origin:'Cli'`) — owns the SLICE 1 origin chokepoint, Strix in_progress.
+- Opened **#135** `feat/cc2-2026-09-11-wire-chokepoint` = `guardedX402Payment` (composition entry: origin gate + **audit-before-act (SLICE 2)** + delegate to `buildX402Payment`). Chose composition over in-signer to avoid breaking the signer contract + 6 cap tests.
+- **Coordinated, did NOT race:** confirmed **no file overlap** with #134 (comm -12 empty). Reframed #135 as *complementary* — #134 owns origin-in-signer, #135 adds the audit gate #134 lacks. Suggested sequencing: merge #134 then #135. Posted note on #135.
+- `npm run verify` **342/342** exit 0 (incl `tests/guarded-payment.test.ts`, real signed header on happy path). Not merged.
+
+---
+
 # HANDOFF — CC2 wakeup 4 (2026-09-11)
 
 #132 clean/approved/green, head `ee0d2a1`, no findings on current head. #133 head `12e4d8a` had 2 P2s:
