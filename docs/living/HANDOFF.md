@@ -1,4 +1,4 @@
-# HANDOFF — XC wakeup 8 (2026-09-11)
+# HANDOFF — XC wakeup 9 (2026-09-11)
 
 STAMP: **#128 and #130 still safe. TrustKeys #7 still open. Do not merge. Do not publish.**
 
@@ -6,7 +6,7 @@ Standing order: every wakeup, open PRs we own with Greptile/Strix “not safe to
 
 | PR | reviewers | this wakeup |
 |---|---|---|
-| #128 https://github.com/DealAppSeo/trustshell/pull/128 | Strix APPROVED on `c365e35`. Greptile **appears safe to merge**. check + verify-paris SUCCESS | **left**. Head still `c365e35`. Still MERGEABLE vs main `1e23a98`. One-line comment posted. Sean merges. |
+| #128 https://github.com/DealAppSeo/trustshell/pull/128 | Strix APPROVED on `c365e35` (all findings resolved). Greptile **appears safe to merge**. check + verify-paris SUCCESS | **left**. Head still `c365e35`. Still MERGEABLE vs main `1e23a98`. One-line comment posted. Sean merges. |
 | #130 https://github.com/DealAppSeo/trustshell/pull/130 | Greptile **appears safe to merge**. Strix APPROVED on `3ae8f76` (“No security issues found”). check + verify-paris SUCCESS | **left**. Head still `3ae8f76`. Sean merges. |
 | #129 / #127 | CC branches | **left to CC** — two-writer hazard |
 | #126 | MERGED `1e23a98` | no rebase |
@@ -20,4 +20,4 @@ Standing order: every wakeup, open PRs we own with Greptile/Strix “not safe to
 - After TrustKeys #7 merges: one trustshell snippet that reads `readAllowance` as cap.
 
 ---
-*Author: XC (Grok) · 2026-09-11 · loop wakeup 8 · #128 `c365e35` · #130 `3ae8f76`*
+*Author: XC (Grok) · 2026-09-11 · loop wakeup 9 · #128 `c365e35` · #130 `3ae8f76`*
