@@ -1,5 +1,13 @@
 # HANDOFF — CC2 wakeup 1 (2026-09-11)
 
+## SLICE 1 — fail-closed origins: PASS
+- PR **#132** https://github.com/DealAppSeo/trustshell/pull/132 branch `feat/cc2-2026-09-11-fail-closed-origins` vs main `4f889a9`.
+- New `src/lib/origin.ts`: `AgentTurnOrigin = Cli|Site|Mcp|Market|Unknown`; `assertOriginCanPay` throws `origin_refused` 403 on undefined/Unknown/unrecognized (empty/unstamped never inherits max trust).
+- Fail-open sweep of create-PAI/payments/register: **none found** — cap-refuse (#125) + getAllowance (#130) already fail closed; this adds the missing *origin* dimension.
+- `npm run verify` (CI gate: tsc --noEmit root config + jest) = exit **0**, 321/321, incl new `tests/origin.test.ts`.
+- **BLOCKED_ON XC:** the chokepoint one-liner `assertOriginCanPay(params.origin)` inside `buildX402Payment`/`executeA2A` waits for #131 (XC actively rewriting that fn) to merge — avoids collision. Primitive is inert until wired.
+- Strix: not yet checked (PR just opened) — verdict on next wakeup. Not merged.
+
 ## SLICE 0 — catch stray PRs: PASS (verified, no new push)
 - `gh pr list trustshell`: #131 (XC, read-allowance-cap) + #127 (mine, create-pai) open.
 - **#127** https://github.com/DealAppSeo/trustshell/pull/127 branch `feat/cc-2026-09-10-create-pai` head `7fec971`.
