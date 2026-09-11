@@ -10,6 +10,8 @@
 | 6 | trustrepid **#8** | live `getStakeAuthority()` against keyless `/api/v1/stake/authority/:id` (filled the stake gap) |
 | + | trustrepid **#9** | `/api/metrics` stops fabricating `{agents:33,…}` on DB error → honest 503 degrade |
 
+**CI: all 6 PRs GREEN** (verified 2026-09-10 via `gh pr checks`) — Strix (required on trustshell) passes on #127 & #129; Greptile/Vercel/check/verify-paris/build-test/no-secrets/lint all pass. Mergeable when Sean is ready.
+
 ## Verifies (stamped on HANDOFF.md)
 - **init-pai #128:** PASS on feature (interview 3/3, cap-at-3, Rome VETO). Flagged defect: `register()` 429 duplicate-name is **uncaught** → literal `--name pai-night-1` re-run crashes. Suggested `status===429` catch. (Commented on #128.)
 - **MCP present_proof #126:** PASS 15/15, non-vacuous.
