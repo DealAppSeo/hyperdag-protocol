@@ -56,6 +56,15 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 7 (2026-09-11)
+
+Neither #134 nor #135 merged (main `82b50a8`, Sean's gate). #134 stable/MERGEABLE. My prior effective-cap fix drew a **P1** on #135 (`d1aa122`) — a real regression I introduced:
+- **P1 Audit cap can diverge** — `effectiveCapForAudit` re-read the allowance (could disagree with the signer's 2nd read) AND could throw before the intent row was written (unaudited attempt). Fixed `95a5892`: `auditCapLabel` is total (records declared cap + "or lower per allowance" flag; never re-reads, never BigInt-parses). Signer stays single source of `min(declared, allowance)` enforcement. Added a test proving the attempt is audited even when the reader throws. `npm run verify` **344/344** exit 0.
+- Lesson: my two "record the effective cap" attempts each drew a finding (P2→P1). The no-re-read design resolves both; if the original P2 re-surfaces I'll defend single-source enforcement rather than churn.
+- @strix-security re-requested. Both PRs await Sean.
+
+---
+
 # HANDOFF — CC2 wakeup 6 (2026-09-11)
 
 #134 (XC, origin-in-signer) MERGEABLE, Strix SUCCESS w/ 1 LOW = self-attested origin spoofable — awaiting Sean's merge. #135 (mine, guardedX402Payment/audit) APPROVED/CLEAN.
