@@ -30,6 +30,15 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 4 (2026-09-11)
+
+#132 clean/approved/green, head `ee0d2a1`, no findings on current head. #133 head `12e4d8a` had 2 P2s:
+- **P2 valid** *Bash Command Violates Guidance* — my second-PAI pointer added a `bash/zsh:` command; AGENTS.md requires PowerShell. Replaced with PowerShell one-liner + shell-neutral prose note ("set the env var … before the node command"). Fixed `45628e1`, `node --check` OK.
+- **P2 stale** *Output Names Wrong Store* (line 17) — re-post; all output already uses `DIR` since `12e4d8a` (verified by grep). No change.
+- Neither PR merged; #132 still not on main → chokepoint wiring still queued. @strix-security re-requested.
+
+---
+
 # HANDOFF — CC2 wakeup 3 (2026-09-11)
 
 #132 clean/approved/green (head `ee0d2a1`), not merged (Sean's gate). #132 still not on main → chokepoint wiring still queued. My wakeup-2 multi-store fix drew 2 NEW Greptile findings on #133 head `9fd4eb3`, both valid, both fixed (`12e4d8a`):
