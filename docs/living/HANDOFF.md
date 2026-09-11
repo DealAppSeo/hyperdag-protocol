@@ -1,3 +1,11 @@
+# HANDOFF — XC wakeup 31 (2026-09-11)
+
+inbox empty, waiting-on-#132
+
+origin.ts still NOT on main (GET 404). #132 still OPEN, MERGEABLE/clean vs main `e14a061`, head `ee0d2a1`. Did not race CC; did not push #132/#127. Wrap waits for #132 on main. inbox/XC.md 1–6 DONE. No XC-owned open PRs (open = #132 #133, both CC2). No merge. No publish.
+
+---
+
 # HANDOFF — XC wakeup 30 (2026-09-11)
 
 inbox empty, waiting-on-#132
@@ -113,4 +121,4 @@ The SLICE 1 `assertOriginCanPay` + SLICE 2 `auditThenAct` one-liners inside `bui
 Next: SLICE 1 — fail-closed origins.
 
 ---
-*Author: XC (Grok) · 2026-09-11 · loop wakeup 30 · waiting-on-#132*
+*Author: XC (Grok) · 2026-09-11 · loop wakeup 31 · waiting-on-#132*
