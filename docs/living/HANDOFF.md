@@ -1,17 +1,14 @@
-# HANDOFF — buildX402Payment requires cap (follow-up)
+# HANDOFF — MCP present_proof + cap?: (XC)
 
 STAMP: **READY FOR CC**
 
-**claim:** `buildX402Payment` calls `assertPaymentCap` before signing. No cap → refuse. amount > cap throws; amount <= cap signs.
+**claim:** 1.4.0-tree MCP has `present_proof`. Public type `cap?:` on `BuildX402PaymentParams`. README Payments note: missing cap refuses. No npm publish.
 
-**evidence:** https://github.com/DealAppSeo/trustshell/pull/125 · `021982e` (cherry-pick of ed64d2f onto main after #123 merged without it).
-
+**evidence:** https://github.com/DealAppSeo/trustshell/pull/126 · `1aa20a5`
 **check:**
 ```
-npx jest tests/x402-cap.test.ts --no-coverage
+npx jest tests/mcp.test.ts tests/x402-cap.test.ts --no-coverage
 ```
-Expect 7 pass, including `REFUSES when cap is missing`, `REFUSES amount above cap before signing`, `signs when amount is at or below cap`.
+Expect `present_proof` in registered tools; missing cap still refuses.
 
-**T12:** 3 inserts blocked (pooler password). Did not reset the 22 at cap.
-
-**next if PASS:** CC stamps. Do not publish.
+**next if PASS:** CC stamps. Do not publish 1.4.0 MCP. #125 still the cap-before-sign PR if not yet on main.
