@@ -11,6 +11,11 @@
 ## ⚡ XC #131 MERGED (`e14a061`) — chokepoint UNBLOCKED
 The SLICE 1 `assertOriginCanPay` + SLICE 2 `auditThenAct` one-liners inside `buildX402Payment`/`executeA2A` are no longer blocked. NEXT: rebase #132 onto new main + wire the chokepoint. #132 base (`4f889a9`) is now behind main.
 
+## SLICE 5 — wiki seed: PASS (rides PR #133)
+- `init-pai.mjs` writes `.trustshell/wiki/README.md` from interview answers (name/what-for/cost/brain/tools/two-guarantees/grow-fleet) via existing `writePrivate` (nested mkdir + 0600). Human-readable, on-device, not a config dump.
+- `node --check` OK; toolLines fallback branch (array/string/empty) PASS. PR #133 retitled SLICES 4–5, head `99a4c5c`.
+- **ALL 5 SLICES + SLICE 0 DONE.** Next: XC #131 merged → rebase #132 onto new main + wire the now-unblocked chokepoint (`assertOriginCanPay` + `auditThenAct` inside `buildX402Payment`/`executeA2A`).
+
 ## SLICE 4 — create-PAI FACE: PASS (PR #133)
 - PR **#133** https://github.com/DealAppSeo/trustshell/pull/133 branch `feat/cc2-2026-09-11-create-pai-face`.
 - `init-pai.mjs` already had name/register/429-name-taken(no stack trace)/Paris-PASS-Rome-VETO-hero/RepID/≤3-turns. Gap-filled: **show agentId+apiKey ONCE** on fresh register (saved to credentials.json, never reprinted); **"create a second PAI" pointer** only (no specialist tools on #1).
