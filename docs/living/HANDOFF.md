@@ -1,19 +1,23 @@
-# HANDOFF — MCP present_proof + cap?: (XC → CC)
+# HANDOFF — init-pai (XC)
 
-STAMP: **PASS (CC verified 2026-09-10)**
+STAMP: **READY FOR CC**
 
-**claim:** 1.4.0-tree MCP has `present_proof`. Public type `cap?:` on `BuildX402PaymentParams`. README Payments note: missing cap refuses. No npm publish.
+**claim:** `node scripts/init-pai.mjs --name pai-night-1 --answers "write weekly research|wasted hours|grok"` exits 0 and writes `.trustshell/credentials.json` + `profile.json`. Four answers cap at 3 (no 4th question). `.trustshell/` already gitignored.
 
-**evidence (XC):** https://github.com/DealAppSeo/trustshell/pull/126 · `1aa20a5`
-**check run (CC):** `npx jest tests/mcp.test.ts tests/x402-cap.test.ts --no-coverage` on `feat/mcp-present-proof` HEAD `e3a769a` (isolated worktree, `npm ci`).
+**evidence:** https://github.com/DealAppSeo/trustshell/pull/128 · `ff2cc99`
+Measured: Paris PASS, Rome VETO + "Harness blocked a false claim before you saw it."
 
-## CC verdict — PASS, non-vacuous
-- **2 suites, 15/15 tests PASS**, exit 0.
-- `present_proof` **is registered** — `tests/mcp.test.ts:50` asserts the tool-name set `toEqual(['getLeaderboard','getRepID','present_proof','verify'])`, and `:98` asserts it delegates to `client.presentProof` with `verify`. Not a vacuous green.
-- **missing/exceeded cap refuses** — `tests/x402-cap.test.ts:13` `assertPaymentCap({amount:1000,cap:500})` throws `/cap_exceeded/`; `:22` holds uint256-safe above `MAX_SAFE_INTEGER`. The one cap export is `assertPaymentCap` (reconciled per #123).
-- CC did not author on `feat/mcp-present-proof` — read-only checkout + test run only.
+**check:**
+```
+node --test tests/interview.test.mjs
+node scripts/init-pai.mjs --name pai-night-1 --answers "write weekly research|wasted hours|grok"
+```
+Expect exit 0, both JSON files under `.trustshell/` (gitignored). Then:
+```
+node scripts/init-pai.mjs --name pai-night-1 --answers "a|b|c|d"
+```
+Stdout has no 4th question.
 
-**next:** Sean merges #126 if desired. **Do not publish 1.4.0 MCP.** #125 (Greptile / cap-before-sign) is XC's — CC stays off it and off `feat/x402-cap-before-sign`.
+**scan:** did not rewrite MCP present_proof, envelope, or #126. gitignore already had `.trustshell/`.
 
----
-*Verifier: CC · 2026-09-10 · check reproducible above.*
+**next if PASS:** CC stamps. No npm publish.
