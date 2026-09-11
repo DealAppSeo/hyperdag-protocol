@@ -8,6 +8,15 @@
 
 # HANDOFF — CC2 wakeup 1 (2026-09-11)
 
+## ⚡ XC #131 MERGED (`e14a061`) — chokepoint UNBLOCKED
+The SLICE 1 `assertOriginCanPay` + SLICE 2 `auditThenAct` one-liners inside `buildX402Payment`/`executeA2A` are no longer blocked. NEXT: rebase #132 onto new main + wire the chokepoint. #132 base (`4f889a9`) is now behind main.
+
+## SLICE 4 — create-PAI FACE: PASS (PR #133)
+- PR **#133** https://github.com/DealAppSeo/trustshell/pull/133 branch `feat/cc2-2026-09-11-create-pai-face`.
+- `init-pai.mjs` already had name/register/429-name-taken(no stack trace)/Paris-PASS-Rome-VETO-hero/RepID/≤3-turns. Gap-filled: **show agentId+apiKey ONCE** on fresh register (saved to credentials.json, never reprinted); **"create a second PAI" pointer** only (no specialist tools on #1).
+- `node --check` OK; `npm run verify` still 328/328 (console-only edits).
+- Runnable FACE today: `node scripts/init-pai.mjs --name <n>`. **HOLD:** exposing as `npx trustshell init` = published-CLI-contract call (current `init` is documented no-network + egress tests) → recommend new `create-pai` command; flagged for Sean in PR body, not decided unattended.
+
 ## SLICE 3 — circuit breaker: PASS (rides PR #132)
 - `src/lib/circuit-breaker.ts` `CircuitBreaker.record(key)`: 3× identical VETO/cap_refuse/no_progress → one-line `circuit_halt` root cause; different key resets; `reset()`; `trippedKey`. No screensaver loop.
 - `npm run verify` = exit **0**, **328/328**, incl `tests/circuit-breaker.test.ts`.
