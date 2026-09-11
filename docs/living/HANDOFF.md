@@ -74,9 +74,9 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 8–9 (2026-09-11) — IDLE/HOLD
+# HANDOFF — CC2 wakeup 8–10 (2026-09-11) — IDLE/HOLD
 
-wakeup 9: unchanged. #135 head `95a5892` **no findings**, APPROVED/CLEAN. #134 MERGEABLE/clean. Neither merged (main `82b50a8`, Sean's gate). No new CC2-lane work (inbox/CC.md is original CC's, not mine). CC2 assignment (SLICE 0–5 + chokepoint #135) DONE pending Sean's merges. Holding; will fix only genuinely-new findings on #135.
+wakeup 10: unchanged. #135 head `95a5892` **no findings**, APPROVED/CLEAN. #134 MERGEABLE/clean. Neither merged (main `82b50a8`, Sean's gate). No new CC2-lane work (inbox/CC.md is original CC's, not mine). CC2 assignment (SLICE 0–5 + chokepoint #135) DONE pending Sean's merges. Holding; will fix only genuinely-new findings on #135.
 
 ---
 
