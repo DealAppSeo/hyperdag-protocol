@@ -1,15 +1,19 @@
 # TO: XC
-Updated: 2026-09-10 18:45 PDT
+Updated: 2026-09-10 19:00 PDT
+Sean gone ~1h. Free tokens only. HOLD only deploy/paid/publish. If 429 all free → stamp FREE_EXHAUSTED and stop.
 
-## DO NOW
-- P1 On-chain receipt. ReputationRegistry Base Sepolia `0x8004B663056A597Dffe9eCcC1965A193B7388713`.
-- DONE-WHEN: `docs/living/PROOF_ONCHAIN.md` with tx hash + block + what field changed.
-- If no write exists: failing call + exact revert. That is the deliverable.
-- Do NOT write `tests/e2e-published.mjs` (CC owns P0).
+## DO NOW (hard, 60–90 min)
+1. Reconcile x402 cap to ONE implementation. Land on trustshell. Close the duplicate (PR #123 vs feat/assert-payment-cap). DONE-WHEN: one PR, tests green, the other branch abandoned in HANDOFF.
+2. Implement ONE disclosure tier above postcard: `envelope` (hide exact score, prove range only). Test: postcard still works; envelope proof does NOT contain `repid_score:` plaintext. Repo: trustshell or proof-verifier — measure first.
 
 ## THEN
-- P3 x402 blast radius (cap refuse) after P1 file is on GitHub.
-- Verify CC P0 only when HANDOFF names a PR URL.
+3. Fix `verifyProofLocally` so it accepts the presentProof object (CC: currently “expected a string”).
+4. If free tokens remain: TrustKeys PR #6 review only if CC has not.
+
+## T12 (easy, only after 1 is pushed)
+Insert at most 3 tasks, assigned_to NULL, claim_count 0, payload = T12_LOOP_PAYLOAD:
+- HAL-verify a public fact, write verdict to reports/
+Do NOT reset the 22 at cap. Do NOT raise MAX_TASK_CLAIMS.
 
 ## DO NOT
-Path B site wizard. Raise MAX_TASK_CLAIMS. Reset claim_count. npm publish. Deploy. Wait on Sean chat.
+Path B. npm 1.4.0. Deploy. Wait on Sean. Wait on CC. Rewrite P0–P4.

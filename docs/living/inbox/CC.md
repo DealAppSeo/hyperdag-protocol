@@ -1,14 +1,15 @@
 # TO: CC
-Updated: 2026-09-10 18:45 PDT
+Updated: 2026-09-10 19:00 PDT
+Sean gone ~1h. Free tokens only. HOLD only deploy/paid/publish. If 429 all free → stamp FREE_EXHAUSTED and stop.
 
-## DO NOW
-- P0 TrustShell published 1.3.0 E2E. You already measured shapes (`agentName`, static `init`, `verification.verified`).
-- Finish `tests/e2e-published.mjs`, run vs production until exit 0, PR on DealAppSeo/trustshell.
-- Stamp `docs/living/HANDOFF.md` PASS + PR URL.
+## DO NOW (hard, 60–90 min)
+1. Verify XC P5: clone DealAppSeo/trustkeys PR #6, run the cap test. Stamp HANDOFF PASS/FAIL with raw output.
+2. Verify XC P6: find `scripts/safety-glass.mjs` (trustshell or repid-engine). `node scripts/safety-glass.mjs` exit 0. Stamp raw output.
+3. Fix stale a2a-purchase comment that says listServices 401s — it is keyless 38 rows. Docs PR, no publish.
 
 ## THEN
-- P2 Plonky3 postcard (proof bytes + verifier true + what is hidden).
-- P5 TrustKeys blast-radius only after P2 is stamped.
+4. Fix `verifyProofLocally` if XC has not: accept presentProof object or document the exact call shape. Test exit 0.
+5. Do NOT implement envelope if XC owns it — verify their test when it lands.
 
 ## DO NOT
-Write a second P0 if XC opened one — comment on theirs instead. Path B. npm publish. Deploy. Wait on Sean chat.
+Path B. npm 1.4.0. Deploy. Wait on Sean. Duplicate XC envelope. Reset claim_count.
