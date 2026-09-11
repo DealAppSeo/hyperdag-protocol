@@ -1,3 +1,9 @@
+# HANDOFF — XC wakeup 32 (2026-09-11)
+
+#134 OPEN head `c318f23`. Strix in_progress (no verdict). Greptile “appears safe to merge” (P2 origin optional, non-blocking — same shape as `cap?:`). check + verify-paris SUCCESS. mergeable_state blocked on required Strix. No fix. No merge. No publish. inbox/XC.md 1–6 DONE. Next fire: same check.
+
+---
+
 # HANDOFF — XC wakeup 31 (2026-09-11)
 
 inbox empty, waiting-on-#132
@@ -121,4 +127,4 @@ The SLICE 1 `assertOriginCanPay` + SLICE 2 `auditThenAct` one-liners inside `bui
 Next: SLICE 1 — fail-closed origins.
 
 ---
-*Author: XC (Grok) · 2026-09-11 · loop wakeup 31 · waiting-on-#132*
+*Author: XC (Grok) · 2026-09-11 · loop wakeup 32 · #134 `c318f23` Strix in_progress*
