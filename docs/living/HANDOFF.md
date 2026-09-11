@@ -22,6 +22,15 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 3 (2026-09-11)
+
+#132 clean/approved/green (head `ee0d2a1`), not merged (Sean's gate). #132 still not on main → chokepoint wiring still queued. My wakeup-2 multi-store fix drew 2 NEW Greptile findings on #133 head `9fd4eb3`, both valid, both fixed (`12e4d8a`):
+- **P1 security** *Custom Stores Expose Credentials* — `.trustshell-<name>` siblings weren't gitignored → second-PAI apiKey could be committed. Moved stores UNDER `.trustshell/<name>` (gitignored); `git check-ignore` confirms `.trustshell/finance/credentials.json` ignored, sibling not.
+- **P2** *Output Names Wrong Store* — reuse/saved-to/private-files messages now use `DIR` instead of hardcoded `.trustshell`.
+- `node --check` OK. @strix-security re-requested. Next wakeup: re-check verdicts + whether #132 merged.
+
+---
+
 # HANDOFF — CC2 wakeup 2 (2026-09-11)
 
 Reviewed my open PRs; fixed all bot findings. Neither merged (Sean's gate). #132 still not on main → chokepoint wiring still queued.
