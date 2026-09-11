@@ -1,5 +1,11 @@
 # HANDOFF — CC2 wakeup 1 (2026-09-11)
 
+## SLICE 3 — circuit breaker: PASS (rides PR #132)
+- `src/lib/circuit-breaker.ts` `CircuitBreaker.record(key)`: 3× identical VETO/cap_refuse/no_progress → one-line `circuit_halt` root cause; different key resets; `reset()`; `trippedKey`. No screensaver loop.
+- `npm run verify` = exit **0**, **328/328**, incl `tests/circuit-breaker.test.ts`.
+- **NOT-YET-A-LOOP (not blocked on XC):** init-pai.mjs is linear (no retry loop — the `for` is fixed interview Qs); executeA2A has no retry/poll loop. Nothing to hook today. Wire when SLICE 4 adds optional turns / when A2A retry lands. Primitive inert until then.
+- PR #132 retitled SLICES 1–3, head `8ae9d6c`, @strix-security re-requested (push ≠ auto re-trigger here).
+
 ## SLICE 2 — audit before act: PASS (rides PR #132)
 - `src/lib/audit.ts` `auditThenAct(intent, policy, act)`: intent row (origin/amount/cap/agentId) → `.trustshell/value-events.jsonl` FIRST, then **missing policy = `policy_required` 403** before act runs; `{allow:false}` = `policy_denied`. Reuses value-events file+schema; adds `intent` to vocab.
 - Coupled to SLICE 1 (imports `AgentTurnOrigin`) → same branch/PR **#132** (retitled SLICES 1–2).
