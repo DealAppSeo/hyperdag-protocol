@@ -50,6 +50,15 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 6 (2026-09-11)
+
+#134 (XC, origin-in-signer) MERGEABLE, Strix SUCCESS w/ 1 LOW = self-attested origin spoofable — awaiting Sean's merge. #135 (mine, guardedX402Payment/audit) APPROVED/CLEAN.
+- Fixed Greptile **P2** on #135 (`d1aa122`): intent row recorded declared cap, not the enforced ceiling. Added `effectiveCapForAudit` = audit-only mirror of `resolvePaymentCap`'s `min(declared, allowance)` (never throws; signer still enforces). Added a test: `min(1000,500)→'500'`. `npm run verify` **343/343** exit 0.
+- Independently reached the SAME conclusion as XC on the **self-attested origin** LOW: the origin gate is fail-closed defense-in-depth for an honest boundary, not adversarial-proof (origin isn't bound into EIP-712). Flagged on #135 as a shared, separate design decision (signed origin tokens) — not scope-creeping it in. @strix-security re-requested.
+- Neither #134 nor #135 merged (Sean's gate). Once both land, SLICE 0–5 + chokepoint wiring is fully DONE.
+
+---
+
 # HANDOFF — CC2 wakeup 5 (2026-09-11)
 
 **#132 + #133 both MERGED** (main `82b50a8`) — origin/audit/breaker + create-PAI FACE all on main.
