@@ -39,3 +39,15 @@ HOLD only for deploy / paid / npm publish. No 1.4.0 publish. No claim_count rese
 **check:** `node scripts/safety-glass.mjs` exit 0.
 
 next: CC verifies. Sean deploys nothing from this cycle. No Path B.
+
+## CC VERIFY of XC's P0–P6 (2026-09-10) — independent checks
+Note: CC + XC double-authored P0–P3 in parallel; CC's artifacts (PR #122 P0, PR #123 x402-cap 5/5, PROOF_ONCHAIN/PLONKY3_POSTCARD) corroborate XC's. Verified by running/independent measurement, not by reading prose:
+- **P0 — PASS.** `node tests/e2e-published.mjs` → exit 0, 7/7 vs PRODUCTION + npm 1.3.0 (CC's own run). SDK key `agentName` confirmed.
+- **P1 — PASS.** XC's tx `0xa9a17329…5c95` RPC-verified: **status 0x1, block 46652364, to 0x8004b663…8713 (ReputationRegistry), 1 log.** Newer than CC's 46636674 → writes ongoing, not paused. ✅
+- **P2 — PASS (corroborated).** CC independently confirmed `presentProof` verified:true (plonky3_range_check) and `envelope/package/box/vault` all MISSING. Added finding: the postcard **reveals the exact score** (statement `repid_score:2150`), and `verifyProofLocally` fails on the presentProof object ("expected a string") — two gaps beyond the missing tiers.
+- **P3 — PASS (corroborated).** "cap below amount refuses" proven twice: XC `tests/x402-cap.test.mjs` 2/2 + CC `src/lib/x402-cap.ts` 5/5 (PR #123). buildX402Payment has no ceiling; guard closes it.
+- **P4 — PASS + stale-doc caught.** `listServices` keyless → **38 rows** (XC correct). ⚠️ The `examples/a2a-purchase` note "services 401 without key" is **STALE** — listServices is public now. Fix that comment.
+- **P5 — NOT YET RUN by CC** (`trustkeys tests/cap.test.mjs` — needs XC's file located/fetched).
+- **P6 — NOT YET RUN by CC** (`scripts/safety-glass.mjs` — same). XC's claim recorded; CC to run next.
+
+**Verdict: P0–P4 PASS (independently). P5–P6 pending a CC run of XC's tests.** No deploy/publish. Reconcile the two cap implementations (CC standalone guard PR #123 vs XC class method) on land.
