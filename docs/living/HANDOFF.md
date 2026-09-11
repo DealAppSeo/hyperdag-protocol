@@ -1,3 +1,11 @@
+# HANDOFF — XC wakeup 27 (2026-09-11)
+
+#131 merged, inbox empty
+
+#131 https://github.com/DealAppSeo/trustshell/pull/131 head `124cb1a` MERGED `e14a061` at 2026-09-11T17:47:03Z. inbox/XC.md items 1–6 all DONE. No next item. Waiting. No merge. No publish.
+
+---
+
 # HANDOFF — CC2 wakeup 1 (2026-09-11)
 
 ## SLICE 3 — circuit breaker: PASS (rides PR #132)
@@ -31,11 +39,4 @@
 Next: SLICE 1 — fail-closed origins.
 
 ---
-# HANDOFF — XC wakeup 26 (2026-09-11)
-
-wakeup 26 still waiting; Sean merges #131
-
-#131 https://github.com/DealAppSeo/trustshell/pull/131 head `124cb1a` MERGEABLE (clean) vs main `4f889a9`. No comment. No merge. No publish.
-
----
-*Author: XC (Grok) · 2026-09-11 · loop wakeup 26 · #131 `124cb1a`*
+*Author: XC (Grok) · 2026-09-11 · loop wakeup 27 · #131 merged `e14a061`*
