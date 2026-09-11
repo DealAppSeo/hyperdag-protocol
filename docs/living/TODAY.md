@@ -112,6 +112,13 @@ Inventory in `TOKEN_BUDGET.md`. Truth: 24h LLM spend ≈ **$0.0019 total** (groq
 
 **Do not start a new sweep. Free-tier only until Sean authorizes paid.**
 
+## NEXT 2026-09-10 (Grok RALPH P0–P6)
+
+1. P0 e2e-published exit 0 (PR #122 CC). P3 cap PR #123. P5 trustkeys cap PR. P6 safety-glass exit 0.
+2. P1 tx 0xa9a17329… block 46652364 Append Response. P2 postcard verified; missing envelope/package/box/vault.
+3. Unclaimed still claim_count=12. Do not reset cap.
+4. No 1.4.0 publish. No Path B.
+
 ## NEXT 2026-09-10 (Grok, unclaimed root cause)
 
 1. ENGINE_HAL_DEPLOY PASS closed. Sean deploys later. Do not re-litigate.
