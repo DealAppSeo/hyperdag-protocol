@@ -1,5 +1,11 @@
 # HANDOFF — CC2 wakeup 1 (2026-09-11)
 
+## SLICE 2 — audit before act: PASS (rides PR #132)
+- `src/lib/audit.ts` `auditThenAct(intent, policy, act)`: intent row (origin/amount/cap/agentId) → `.trustshell/value-events.jsonl` FIRST, then **missing policy = `policy_required` 403** before act runs; `{allow:false}` = `policy_denied`. Reuses value-events file+schema; adds `intent` to vocab.
+- Coupled to SLICE 1 (imports `AgentTurnOrigin`) → same branch/PR **#132** (retitled SLICES 1–2).
+- `npm run verify` = exit **0**, **324/324**, incl `tests/audit-intent.test.ts` (jest-gated; note: repo's `.test.mjs` files are NOT in the jest gate — `testMatch: *.test.ts` — so used `.test.ts`).
+- **BLOCKED_ON XC:** wrapping the real `buildX402Payment`/`executeA2A` waits on #131. Primitive inert until wired.
+
 ## SLICE 1 — fail-closed origins: PASS
 - PR **#132** https://github.com/DealAppSeo/trustshell/pull/132 branch `feat/cc2-2026-09-11-fail-closed-origins` vs main `4f889a9`.
 - New `src/lib/origin.ts`: `AgentTurnOrigin = Cli|Site|Mcp|Market|Unknown`; `assertOriginCanPay` throws `origin_refused` 403 on undefined/Unknown/unrecognized (empty/unstamped never inherits max trust).
