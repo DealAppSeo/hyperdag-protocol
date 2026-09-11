@@ -11,6 +11,12 @@
 ## ⚡ XC #131 MERGED (`e14a061`) — chokepoint UNBLOCKED
 The SLICE 1 `assertOriginCanPay` + SLICE 2 `auditThenAct` one-liners inside `buildX402Payment`/`executeA2A` are no longer blocked. NEXT: rebase #132 onto new main + wire the chokepoint. #132 base (`4f889a9`) is now behind main.
 
+## WAKEUP 1 CLOSE — PR states (for Sean)
+- **#132 (SLICES 1–3)** — check/verify-paris/Greptile/**Strix "No security issues found"**/Vercel all GREEN, **APPROVED**, CLEAN, MERGEABLE. → **Sean's merge.**
+- **#133 (SLICES 4–5)** — check/verify-paris/Vercel GREEN; Strix/Greptile re-running on head `99a4c5c` (mention posted); BLOCKED until that verdict. → wait, then Sean's merge.
+- **Next wakeup:** if #132 on main → new PR wiring `assertOriginCanPay`+`auditThenAct` into `buildX402Payment`/`executeA2A` (now that #131 is merged). Gated on #132 merge, NOT stacked on the approved PR.
+- Held to constraints: free tokens only, no publish, no Railway deploy, no prod INSERT into agent_listings, no self-merge.
+
 ## SLICE 5 — wiki seed: PASS (rides PR #133)
 - `init-pai.mjs` writes `.trustshell/wiki/README.md` from interview answers (name/what-for/cost/brain/tools/two-guarantees/grow-fleet) via existing `writePrivate` (nested mkdir + 0600). Human-readable, on-device, not a config dump.
 - `node --check` OK; toolLines fallback branch (array/string/empty) PASS. PR #133 retitled SLICES 4–5, head `99a4c5c`.
