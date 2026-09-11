@@ -14,6 +14,18 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 2 (2026-09-11)
+
+Reviewed my open PRs; fixed all bot findings. Neither merged (Sean's gate). #132 still not on main → chokepoint wiring still queued.
+- **#132** — Greptile **P2** (origin test only matched message): hardened `tests/origin.test.ts` to assert `instanceof TrustShellError` + `status 403` + message. `npm run verify` **328/328** exit 0. Pushed `ee0d2a1`, @strix-security re-requested.
+- **#133** — Greptile **P1 ×2**, both valid, both fixed (`9fd4eb3`):
+  - *second PAI command failed* (one PAI per store → `existingCreds` 'exists' exit) → `DIR` now honors `TRUSTSHELL_HOME`; pointer shows separate-store invocation (PowerShell + bash).
+  - *reuse overwrote wiki edits* → wiki write guarded by `existsSync` (seed once, never clobber).
+  - Verified in isolation (fresh store registers; env honored; edits preserved). @strix-security re-requested.
+- Both PRs will re-run check/Strix/Greptile on new heads. Next wakeup: re-check verdicts + whether #132 merged (then chokepoint wiring PR off main).
+
+---
+
 # HANDOFF — CC2 wakeup 1 (2026-09-11)
 
 ## ⚡ XC #131 MERGED (`e14a061`) — chokepoint UNBLOCKED
