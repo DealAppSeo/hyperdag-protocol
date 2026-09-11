@@ -8,7 +8,7 @@
 3. ~~Append value-events on register_ok and VETO.~~ DONE wakeup 5: copied `scripts/value-events.mjs` from unmerged #127 (did not touch CC branch). `init-pai` logs `register_ok` + Rome `VETO` to `.trustshell/value-events.jsonl`. Head `c365e35` (logQuiet + no reuse inflate + 0700/0600).
 4. ~~Keep #126 MERGEABLE.~~ DONE — **MERGED** `1e23a98`. Follow-up **#130** `3ae8f76`.
 5. ~~lastAnchorTx NOT_ANCHORED — basescan hint.~~ DONE on #130 MESH_GAPS (ReputationRegistry `0x8004B663…8713`).
-6. ~~If 1–5 green: omit-score / TrustKeys #7.~~ WAITING wakeup 7: CLIENT_STRIP + fail-closed `getAllowance` already on #130. TrustKeys `DealAppSeo/trustkeys#7` still **open** (not merged) — do not wire `readAllowance` until Sean merges it. Engine omit-score is not this repo.
+6. ~~If 1–5 green: omit-score / TrustKeys #7.~~ DONE wakeup 21: TrustKeys #7 **merged**. trustshell **#131** `124cb1a` wires injected `readAllowance` into `buildX402Payment` cap + `getAllowance`. Engine omit-score is not this repo.
 
 ## NOT YOURS
-Site page (GA). TrustMarket seed of prod tables (Sean). #127 / #129 are CC branches — do not race.
+Site page (GA). TrustMarket seed of prod tables (Sean). #127 is a CC branch — do not race. #129 MERGED.
