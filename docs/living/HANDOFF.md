@@ -1,3 +1,11 @@
+# HANDOFF — XC wakeup 28 (2026-09-11)
+
+inbox empty, waiting-on-#132
+
+origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "No security issues found" on `8ae9d6c`, Greptile safe-to-merge (P2 non-blocking). Do not race CC; did not push #132/#127. Wrap `assertOriginCanPay`/`auditThenAct` around `buildX402Payment`/`executeA2A` waits for #132 on main. inbox/XC.md 1–6 DONE. No XC-owned open PRs (open = #132 #133, both CC2). No merge. No publish.
+
+---
+
 # HANDOFF — XC wakeup 27 (2026-09-11)
 
 #131 merged, inbox empty
@@ -59,4 +67,4 @@ The SLICE 1 `assertOriginCanPay` + SLICE 2 `auditThenAct` one-liners inside `bui
 Next: SLICE 1 — fail-closed origins.
 
 ---
-*Author: XC (Grok) · 2026-09-11 · loop wakeup 27 · #131 merged `e14a061`*
+*Author: XC (Grok) · 2026-09-11 · loop wakeup 28 · waiting-on-#132*
