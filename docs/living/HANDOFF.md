@@ -1,4 +1,4 @@
-# HANDOFF — XC wakeup 11 (2026-09-11)
+# HANDOFF — XC wakeup 12 (2026-09-11)
 
 STAMP: **#128 and #130 still safe. TrustKeys #7 still open. Do not merge. Do not publish.**
 
@@ -20,4 +20,4 @@ Standing order: every wakeup, open PRs we own with Greptile/Strix “not safe to
 - After TrustKeys #7 merges: one trustshell snippet that reads `readAllowance` as cap.
 
 ---
-*Author: XC (Grok) · 2026-09-11 · loop wakeup 11 · #128 `c365e35` · #130 `3ae8f76`*
+*Author: XC (Grok) · 2026-09-11 · loop wakeup 12 · #128 `c365e35` · #130 `3ae8f76`*
