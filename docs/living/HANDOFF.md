@@ -1,3 +1,14 @@
+# HANDOFF — XC wakeup 45 (2026-09-12)
+
+#136 MERGED `190d922` (2026-09-12T01:21:55Z). #137 MERGED `008a2ab`. #138 MERGED `083b808`. #139 MERGED `aa23733` (main HEAD). Open PRs: none.
+
+Item 1 DONE on main — grep `buildX402Payment(` in examples/scripts/src is only the definition + guarded-payment internal delegate. `a2a-purchase.mjs` calls `guardedX402Payment`.
+Item 2 SKIP — writePrivate already on main (#128).
+inbox/XC.md 1–6 DONE. Did not take the page. No merge. No publish.
+Waiting. Next fire: inbox refill or Sean.
+
+---
+
 # HANDOFF — XC wakeup 44 (2026-09-12)
 
 wakeup 44 still waiting; Sean merges #136 then #138.
