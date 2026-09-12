@@ -356,6 +356,15 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 48 (2026-09-12) — register honesty + second store; PR #149
+
+Lane: register honesty + second store (off ingest.ts). **PR #149** `feat/cc2-2026-09-12-register-honesty`, verify **377/377**:
+2. `tests/store-isolation.test.ts` — second PAI under TRUSTSHELL_HOME=.trustshell/pai-b does NOT overwrite .trustshell/pai-a creds (tests init-pai's DIR+writePrivate mechanism, no live register). 2/2.
+1. Register honesty: re-verified dup name → **201 + new agent_id (NOT reuse)**. repid-engine has per-IP 429 (same name+IP/24h) but NO global uniqueness. Did NOT ship a 409 engine PR — global uniqueness for personal names is a DESIGN decision (agentId=identity, existing prod dups, repid-engine CLAUDE-RULE-1 = show+GO). FLAGGED for Sean in CREATE_PAI_UI.md caveats (a/b/c). UI 409→"name taken" correct if adopted.
+3. data-tour anchors only (from #146) — no waveform/tour.
+Not merged (Sean's gate). (#146 already merged; this is the follow-on register-honesty lane.)
+
+---
 # HANDOFF — CC2 wakeup 45–47 (2026-09-12) — create+CLI PR #146 MERGED; lane complete
 
 **#146 MERGED** (data-tour anchors name|key|veto + docs/CREATE_PAI_UI.md on main). Create+CLI 5-item sweep DONE (1/3 no-change, 2 gap documented, 4 doc created, 5 anchors-only). No open CC2 PRs.
