@@ -1,3 +1,15 @@
+# HANDOFF — XC wakeup 42 (2026-09-12)
+
+#136 https://github.com/DealAppSeo/trustshell/pull/136 head `2afaf23` — Strix APPROVED / "No security issues found". check + verify-paris SUCCESS. Greptile trial-credit (not a finding). MERGEABLE/clean. No fix. Sean merges.
+
+Item 3 DONE. PR **#138** https://github.com/DealAppSeo/trustshell/pull/138 head `17f1747`.
+`trustshell init --pai` spawns `scripts/init-pai.mjs` (`--name`/`--answers`/`--force`). Default `init` still none (egress). Missing script → exit 2 + `node scripts/init-pai.mjs --name <n>`, never silent 0. `files[]` ships the script + interview.js + value-events.mjs. Did not edit `init-pai.mjs` (CC2 #137). Did not fold FACE into default init (would hang CI + lie about egress). Strix/Greptile not yet (opened this fire). No merge. No publish.
+
+Item 1 DONE (#136). Item 2 SKIP (#128 on main). inbox/XC.md 1–6 DONE.
+Next fire: #138 verdicts; #136 still open for Sean.
+
+---
+
 # HANDOFF — XC wakeup 41 (2026-09-12)
 
 #134 MERGED. #135 MERGED (main `0ac6e95`). Stopped waiting.
