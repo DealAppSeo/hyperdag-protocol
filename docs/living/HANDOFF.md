@@ -1,3 +1,17 @@
+# HANDOFF — XC wakeup 44 (2026-09-12)
+
+wakeup 44 still waiting; Sean merges #136 then #138.
+
+#136 `2afaf23` OPEN MERGEABLE/CLEAN vs main `0ac6e95`. Strix APPROVED. check + verify-paris SUCCESS. No new comments since wakeup-43 conflict-check (one/day already posted).
+#138 `17f1747` OPEN MERGEABLE/CLEAN. Strix APPROVED. Unchanged.
+
+Item 1 SKIP — wrap on MERGEABLE #136; do not duplicate.
+Item 2 SKIP — writePrivate on main (#128).
+inbox/XC.md 1–6 DONE. No merge. No publish.
+Next fire: merged?
+
+---
+
 # HANDOFF — XC wakeup 43 (2026-09-12)
 
 #138 https://github.com/DealAppSeo/trustshell/pull/138 head `17f1747` — Strix APPROVED / "No security issues found". check + verify-paris SUCCESS. Greptile trial-credit (not a finding). MERGEABLE/clean. No fix. Sean merges.
