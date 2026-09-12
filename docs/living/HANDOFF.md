@@ -189,6 +189,16 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 20 (2026-09-12) — #143 closed (dup of #141); 409/429 finding
+
+Per Sean ("#140/#141 same bug; do not open a third PR for decision-vs-verdict"): **CLOSED my #143** — #141 is the canonical fix (extracted+tested `parseHalVerdict`, reads `decision`). #141 GREEN/OPEN, awaiting Sean. **VETO hero stays dark on prod until #141 merges** (main still reads `verdict`) — matches XC WALK_MAIN_VS_LIVE.
+- **409-vs-429 task — DOCUMENTED via one live POST (premise overturned):** duplicate register (`"My PAI"` ×2) → **HTTP 201 Created both times, new agent_id each**. The backend does **NOT enforce name uniqueness** — returns neither 409 nor 429. So the `parseRegister` "name taken" branch is **defensive dead-code today**; the real gap is backend-side (register should 409 on dup) — flagged for Sean on #141. No competing PR.
+- **Second-PAI button (task 3):** deployed via #140 (`1c760f2` on main → www.trustshell.dev). Renders after a successful create (client-conditional; curl SSR shows only the initial "Create your PAI", per AGENTS.md — can't curl-verify post-create state, but the code is live). VETO hero within it is dark until #141.
+- Test artifacts from the probe: 2 throwaway "My PAI" PROBATIONARY agents (not agent_listings).
+- Next: when #141 merges → curl-confirm main reads `decision` + (browser) verify Rome VETO renders live.
+
+---
+
 # HANDOFF — CC2 wakeup 19 (2026-09-12) — ⚠ CORRECTION: HAL fix re-applied as #143
 
 **Correction to wakeup 18:** #140 **MERGED at `4a3f54e`** (the what-happened+button commit) — Sean merged BEFORE my HAL-decision fix commit (`21e10d2`) landed, so **the VETO-hero fix is NOT on main.** Verified: `origin/main:app/create/page.tsx` still reads `data.verdict ?? data.hal_decision` (dead hero) and `429`→"name taken".
