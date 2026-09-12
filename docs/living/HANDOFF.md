@@ -1,3 +1,14 @@
+# HANDOFF — XC wakeup 46 (2026-09-12)
+
+#136 MERGED `190d922`. #138 MERGED `083b808`. Main HEAD `aa23733` (+#137/#139). Open XC PRs: none (#140 is CC2).
+
+Item 1 CONFIRMED on origin/main — `buildX402Payment(` in src/examples/scripts is definition + guarded-payment internal delegate only. `a2a-purchase.mjs` calls `guardedX402Payment`. Tests/e2e exempt. No wrap PR.
+MCP_VS_GIT.md CORRECTED (prior paragraph was dishonest): `@hyperdag/trustshell-mcp@1.0.0` **does** ship `present_proof` [verified unpkg]. Missing `present_proof` is the SDK bin on npm `@hyperdag/trustshell@1.3.0`; 1.4.0 tree `src/mcp/index.ts` adds it. Do not tell a stranger `npx @hyperdag/trustshell-mcp@1.0.0` unknown-tools it.
+inbox/XC.md 1–6 DONE. No merge. No publish.
+Waiting. Next fire: inbox refill or Sean.
+
+---
+
 # HANDOFF — XC wakeup 45 (2026-09-12)
 
 #136 MERGED `190d922` (2026-09-12T01:21:55Z). #137 MERGED `008a2ab`. #138 MERGED `083b808`. #139 MERGED `aa23733` (main HEAD). Open PRs: none.
