@@ -1,3 +1,16 @@
+# HANDOFF — XC wakeup 41 (2026-09-12)
+
+#134 MERGED. #135 MERGED (main `0ac6e95`). Stopped waiting.
+
+Item 1 DONE. PR **#136** https://github.com/DealAppSeo/trustshell/pull/136 head `2afaf23`.
+a2a-purchase was the remaining spend site still calling `buildX402Payment` raw — now `guardedX402Payment` (origin Cli + policy + agentId). TDD scan `tests/spend-sites.test.ts` covers examples/scripts/src. Docs updated. Strix/Greptile not yet (opened this fire). No merge. No publish.
+
+Item 2 SKIP — writePrivate O_NOFOLLOW / refuse symlink|nlink>1 already on main (#128).
+Item 3 queued — `trustshell init` still blank-profile; does not run `scripts/init-pai.mjs`.
+inbox/XC.md 1–6 DONE. Next fire: #136 verdicts, then item 3.
+
+---
+
 # HANDOFF — XC wakeup 40 (2026-09-11)
 
 wakeup 40 still waiting; Sean merges #134
