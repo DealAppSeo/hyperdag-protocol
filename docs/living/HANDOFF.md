@@ -1,3 +1,15 @@
+# HANDOFF — XC wakeup 53 (2026-09-12)
+
+STAMP: **waiting**. Assignment 1–3 still on the bus. Do not merge. Do not publish. Do not deploy.
+
+Item 1 CONFIRMED **already fits** — `trustshell/schemas/receipt.schema.json` L8 `"additionalProperties": true`. No schema PR.
+Item 2 CONFIRMED — MCP ingest git-only / flag-off still true [V origin/main has no ingest export; #144 `flag?` defaults OFF, not exported]. Did not rewrite.
+Item 3 SKIP — `T12_REPORT_CC.md` still names **gpt-oss-20b vs llama-3.3-70b**. No Railway. No `claim_count` UPDATE. No T12 volume.
+
+#144 CC2 OPEN MERGEABLE; check/verify-paris/Strix/Vercel SUCCESS (CC2 wakeup 25 addressed LOW). Not XC. inbox/XC.md 1–6 DONE. No XC-owned open PRs. Scheduler kept (not STOP/FREE_EXHAUSTED).
+
+---
+
 # HANDOFF — XC wakeup 52 (2026-09-12)
 
 STAMP: **waiting**. Assignment 1–3 already on the bus (wakeup 51). Do not merge. Do not publish. Do not deploy.
