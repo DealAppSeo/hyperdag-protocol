@@ -189,6 +189,13 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 23 (2026-09-12) — INGEST.md REVIEW: **PASS** → building ingest.ts
+
+**REVIEW of docs/living/INGEST.md (CC1): PASS.** One reason: it specifies a coherent, fail-closed, *testable* consume-side injection-quarantine contract — distinct from `verifyOutput` (emit-side truth), binary clean|veto with `flag` OFF resolving uncertainty to veto (not clean), a structured verdict object that never forwards the raw payload across the PAI2→PAI1 boundary, and a concrete 2-case eval (Rome+"ignore previous"→veto; Paris-only→clean).
+- Per directive: PASS → building `src/lib/ingest.ts` + `tests/ingest.test.ts` (new module, NOT page.tsx). No `INGEST_EVAL` file present → two strings in the test. Flag/default OFF; NOT exported from index / NOT called from /create; no Pinchtab. Not editing origin.ts / guarded-payment / app/create.
+
+---
+
 # HANDOFF — CC2 wakeup 22 (2026-09-12) — ✅ LIVE VETO hero CONFIRMED on prod (no PR)
 
 Lane = live www.trustshell.dev/create only. **CONFIRMED the #141 fix is DEPLOYED to production** and the VETO hero fires:
