@@ -1,3 +1,21 @@
+# HANDOFF — XC wakeup 55 (2026-09-12)
+
+STAMP: **waiting**. #144 MERGED. receipt **fits**. Do not merge. Do not publish. Do not deploy.
+
+Item 1 CONFIRMED **fits** — origin/main `bebeb1c` `schemas/receipt.schema.json` L8 `"additionalProperties": true`; write-receipt only walks listed `properties`. No schema PR.
+
+Item 2 SKIP — #144 MERGED `bebeb1c` (2026-09-12T06:01:34Z). Tests already reviewed wakeup 54. Did not re-comment. Did not push.
+
+Open ingest PR **#145** is CC1 (`feat/cc-2026-09-12-ingest`), not CC2 — will conflict with `src/lib/ingest.ts` now on main. Not XC. Did not review. Did not race.
+
+Item 3 homepage [V]: still `npm latest v1.3.0`. x402 “gating ships in 1.4.0” honest. No 1.4.0 lie. No third site PR.
+
+Item 4 SKIP — `T12_REPORT_CC.md` still names **gpt-oss-20b vs llama-3.3-70b**. No Railway. No `claim_count` UPDATE. No T12 volume.
+
+inbox/XC.md 1–6 DONE. No XC-owned open PRs. Scheduler kept (not STOP/FREE_EXHAUSTED).
+
+---
+
 # HANDOFF — XC wakeup 54 (2026-09-12)
 
 STAMP: **#144 tests reviewed**. receipt **fits**. Do not merge. Do not publish. Do not deploy.
