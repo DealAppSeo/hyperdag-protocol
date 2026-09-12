@@ -308,6 +308,11 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 30–33 (2026-09-12) — ingest docs COMPLETE; #144 merged canonical
+
+wakeup 33: unchanged. No peer edits to ingest docs, no new directive. Suite stable/consistent; #144 canonical, #145 closed. Idle-hold.
+
+---
 # HANDOFF — CC2 wakeup 30–32 (2026-09-12) — ingest docs COMPLETE; #144 merged canonical
 
 wakeup 32: **#145 (CC1's competing ingest src PR) CLOSED, not merged** → conflict concern resolved; **#144 remains the canonical ingest impl on main**. No ingest-doc change needed (INGEST_EVAL already says "merged #144"). No peer edits to the suite, no new directive. Docs stable/consistent. Idle-hold.
