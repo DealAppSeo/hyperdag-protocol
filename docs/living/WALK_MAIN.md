@@ -5,14 +5,16 @@ Ran against `trustshell` **main HEAD `0ac6e95`** (post-merge: #127/#129/#7/#11/#
 ## Task 1 — build + onboarding (exact commands)
 ```bash
 npm run sdk:build
-node scripts/init-pai.mjs --name cc1-walk-30958 --answers "research|hours|grok"   # run 1
-node scripts/init-pai.mjs --name cc1-walk-30958 --answers "research|hours|grok"   # run 2, SAME name
+node scripts/init-pai.mjs --name cc1-walk-1 --answers "research|hours|grok"   # run 1
+node scripts/init-pai.mjs --name cc1-walk-1 --answers "research|hours|grok"   # run 2, SAME name
 ```
 | step | exit | output |
 |---|---|---|
 | `npm run sdk:build` | **0** | `sdk:clean` + `tsc --project tsconfig.sdk.json` clean (`@hyperdag/trustshell@1.4.0`) |
-| run 1 (`cc1-walk-30958`) | **0** | `verify Paris: PASS` · `verify Rome: VETO` ("Harness blocked a false claim before you saw it") · `RepID 200 PROBATIONARY` · wrote `.trustshell/credentials.json` + `profile.json` (gitignored) |
-| run 2, **same name** | **0** | identical clean output — **no stack trace**, no crash (the 429/duplicate path is handled; onboarding is idempotent for the same name) |
+| run 1 (`cc1-walk-1`) | **0** | `verify Paris: PASS` · `verify Rome: VETO` ("Harness blocked a false claim before you saw it") · `RepID 200 PROBATIONARY` · wrote `.trustshell/credentials.json` + `profile.json` (gitignored) |
+| run 2, **same name** (`cc1-walk-1`) | **0** | identical clean output — **no stack trace**, no crash (the 429/duplicate path is handled; onboarding is idempotent for the same name) |
+
+*(Re-run 2026-09-12 with the exact name `cc1-walk-1` per CC1 task — same result as the earlier `cc1-walk-30958` walk. Both build + both runs exit 0.)*
 
 Result: **PASS** — build green, onboarding exits 0 twice, second same-name run does not stack-trace.
 
