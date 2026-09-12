@@ -247,6 +247,15 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 25 (2026-09-12) — #144 Strix LOW addressed
+
+#144 was green (check/verify-paris/Strix/Vercel all SUCCESS) with **1 non-blocking Strix LOW** on ingest.ts. Addressed (`da71e8e`), verify 371/371:
+- **(b) excerpt forwarded imperatives near-verbatim** → `sanitizeExcerpt` now redacts a broad imperative-verb set (ignore/reveal/exfiltrate/approve/transfer/delete/execute/act as/you are now/…); over-redaction is fail-safe (excerpt is a gist). Test asserts imperatives are redacted, never passed through the PAI2→PAI1 boundary.
+- **(a) heuristic bypassable** → documented KNOWN CEILING at the code site: `clean` = "no KNOWN injection" (not "provably safe"), flag off (uncertainty→veto), module NOT exported/wired; upgrade path = model classifier.
+- @strix-security re-requested. Still: not exported from index, not called from /create, no Pinchtab, no edits to origin.ts/guarded-payment/app/create. Not merged (Sean's gate).
+
+---
+
 # HANDOFF — CC2 wakeup 24 (2026-09-12) — ingest.ts BUILT (PR #144); fixture caught a false-veto
 
 INGEST.md REVIEW=PASS (prior). Built **PR #144** `feat/cc2-2026-09-12-ingest`: `src/lib/ingest.ts` + `tests/ingest.test.ts`. `npm run verify` **370/370** exit 0.
