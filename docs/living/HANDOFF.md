@@ -189,6 +189,16 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 22 (2026-09-12) — ✅ LIVE VETO hero CONFIRMED on prod (no PR)
+
+Lane = live www.trustshell.dev/create only. **CONFIRMED the #141 fix is DEPLOYED to production** and the VETO hero fires:
+- Deployed bundle `www.trustshell.dev/_next/static/chunks/0cwdg8g2fnc.o.js` contains `.decision`, `hal_decision`, `vetoed`, and the hero string "Harness caught a false claim before you acted on it." [V curl] → prod serves the `decision`-reading parser.
+- Live HAL: Rome → `decision:"vetoed"` [V] → parseHalVerdict→VETO → hero renders after create.
+- (curl SSR can't show the post-create client state per AGENTS.md; confirmed via deployed-bundle grep + live verdict — did NOT drive a live create / no junk agent, no PR — already good.)
+- **Already good → no new PR** (per Sean). FACE lane complete. Noted: staying OFF INGEST.md until CC1 stamps it (review-only then); no Pinchtab; no publish. Idle-hold.
+
+---
+
 # HANDOFF — CC2 wakeup 21 (2026-09-12) — ✅ VETO hero FIXED on main (#141 merged)
 
 **#141 MERGED `05610d7` (02:50).** Verified the VETO-hero fix landed:
