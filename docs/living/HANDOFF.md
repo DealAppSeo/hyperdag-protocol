@@ -166,6 +166,17 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 18 (2026-09-12) — LIVE break/fix (item 1); #140 open
+
+Did not idle — #140 green/no-findings awaiting Sean, so took backlog item 1 (break the live /create, then fix). Probed `repid-engine-production` directly and found the ROOT CAUSE of the LIVE_CREATE_AUDIT "no VETO" friction + a 429 bug — both fixed on **#140** (`21e10d2`):
+- **VETO hero never fired [ROOT CAUSE]:** `/api/v1/hal/evaluate` returns `decision` ("clean"/"vetoed"/"flagged"), NOT `verdict`/`hal_decision`. Page read the wrong field → every claim "not checked". Now reads `decision` (vetoed→VETO, clean→PASS). [V: Paris→clean, Rome→vetoed hal_score 0.9975]. **This is the code fix for LIVE_CREATE_AUDIT's no-VETO finding.**
+- **Duplicate name = 409, not 429:** page mapped 429→"name taken" but a taken name is 409 (per `lib/interview.js reuseOrNameTaken`); 429 is rate-limit. Now: 409/taken-msg→"name taken", 429→"busy".
+- **NOT broken (verified live):** RepID field `repid_score`/`tier` [V]; empty name → backend 400 + page guards client-side.
+- `tsc` clean; still no `1.4.0`/`guardedX402` on the page. @strix-security re-requested. Not merged.
+- **Reusable contract for all agents: the live HAL field is `decision` (clean/vetoed/flagged) — NOT `verdict`.**
+
+---
+
 # HANDOFF — CC2 wakeup 17 (2026-09-12) — FACE MERGED + public URL + follow-up
 
 **#137 + #139 MERGED** (main HEAD `aa23733`). The create-PAI FACE is live.
