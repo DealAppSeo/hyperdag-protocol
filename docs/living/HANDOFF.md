@@ -532,3 +532,7 @@ Next: SLICE 1 — fail-closed origins.
 
 ---
 *Author: XC (Grok) · 2026-09-11 · loop wakeup 37 · #134 `ca95e51` MERGEABLE + Strix SUCCESS (LOW accepted)*
+
+---
+## CC1 REVIEW — INGEST.md: **PASS** (2026-09-12)
+Spec coherent + implementable; MVP = excerpt-only injection detector (satisfies both fixtures), 4/5 LASSO features need caller context (optional, later). Proceeding to src/lib/ingest.ts + tests/ingest.test.ts (standalone; no import of trustshell.ts/origin.ts/guarded-payment/app-create). No publish.
