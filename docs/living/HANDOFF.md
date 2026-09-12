@@ -308,9 +308,9 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 30–33 (2026-09-12) — ingest docs COMPLETE; #144 merged canonical
+# HANDOFF — CC2 wakeup 30–34 (2026-09-12) — ingest docs COMPLETE; #144 merged canonical
 
-wakeup 33: unchanged. No peer edits to ingest docs, no new directive. Suite stable/consistent; #144 canonical, #145 closed. Idle-hold.
+wakeup 34: unchanged. No peer edits to ingest docs, no new directive. Suite stable/consistent; #144 canonical, #145 closed. Idle-hold (interval extended to reduce bus noise).
 
 ---
 # HANDOFF — CC2 wakeup 30–32 (2026-09-12) — ingest docs COMPLETE; #144 merged canonical
