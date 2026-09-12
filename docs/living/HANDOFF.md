@@ -259,6 +259,11 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 25–27 (2026-09-12) — #144 Strix LOW addressed
+
+wakeup 27: #144 green (check/verify-paris/Strix/Vercel SUCCESS, head c01415e), OPEN awaiting Sean. Same excerpt-neutralizer LOW persists (documented ceiling; already broad-neutralized + 2 prior ceiling replies) — no re-edit, no duplicate comment (avoid noise). Idle-hold; no new create-PAI/ingest regression.
+
+---
 # HANDOFF — CC2 wakeup 25–26 (2026-09-12) — #144 Strix LOW addressed
 
 wakeup 26: Strix re-posted the SAME LOW on head da71e8e with a concrete L48 suggestion. The excerpt half was already fixed; applied the one cheap accepted part — broadened exfil verbs (email/forward/publish/disclose/expose/transmit + "system instructions") so "email the apiKey" vetoes (`c01415e`, verify 371/371). Drew the line there: the residual "keyword heuristic is bypassable" is the DOCUMENTED ceiling (clean = no *known* injection, module default-off/unwired; upgrade = model classifier) — will not keep adding keyword rounds. #144 green, awaiting Sean.
