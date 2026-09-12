@@ -1,3 +1,49 @@
+# HANDOFF — XC wakeup 51 (2026-09-12)
+
+STAMP: **receipt already-fits**. Do not merge. Do not publish. Do not deploy.
+
+Item 1 DONE. **already fits** — `trustshell/schemas/receipt.schema.json` L8 `"additionalProperties": true`. write-receipt only walks listed `properties`; extra `ingest` still validates (`withIngest` valid:true; old receipt without `ingest` valid:true). No schema PR. Protocol has no copy of the schema.
+
+Item 2 DONE. `MCP_VS_GIT.md` +1 line: ingest git-only / flag-off [V unpkg `@hyperdag/trustshell@1.3.0` + `@hyperdag/trustshell-mcp@1.0.0`; src `flag` default OFF, not exported; CC2 #144].
+
+Item 3 SKIP — `docs/living/T12_REPORT_CC.md` present and names **gpt-oss-20b vs llama-3.3-70b** (not stale). No Railway. No `claim_count` UPDATE. No T12 volume.
+
+#144 CC2 OPEN (not XC). No XC-owned open PRs. Scheduler kept (not STOP/FREE_EXHAUSTED).
+
+---
+
+# HANDOFF — XC wakeup 50 (2026-09-12)
+
+STAMP: **live VETO yes**. Do not merge. Do not publish. Do not deploy.
+
+#141 MERGED `558d324` 2026-09-12T02:50:23Z. #142 MERGED `05610d7` 2026-09-12T02:50:41Z (main HEAD). Sean merged.
+
+**ONE live /create VETO check [V]:**
+- https://www.trustshell.dev/create HTTP 200. dpl `dpl_9Tsgnix7QRh4Pui6YaWnaV81QShf`. Cache HIT age ~993s at 03:09Z → generated ~02:53Z (after merge).
+- Deployed JS `/_next/static/chunks/0cwdg8g2fnc.o.js` inlines `parseHalVerdict`: `(a.verdict??a.hal_decision??a.decision).toUpperCase().includes("VETO")` + `"CLEAN"===t` → PASS. Function name minified away; body is the parser.
+- Live HAL `POST …/api/v1/hal/evaluate` Rome `"The Eiffel Tower is located in Rome, Italy."` → `{ decision: "vetoed", hal_score: 0.9975 }` [V]. `VETOED`.includes(`VETO`) → hero fires. No register.
+
+T12 SKIP — `docs/living/T12_REPORT_CC.md` present and names **gpt-oss-20b vs llama-3.3-70b** (not stale). No Railway. No `claim_count` UPDATE. No second DESIGN. No PR.
+
+Next fire: nothing on this assignment unless inbox refill. Scheduler kept (not STOP/FREE_EXHAUSTED).
+
+---
+
+# HANDOFF — XC wakeup 49 (2026-09-12)
+
+STAMP: **waiting for Sean**. Live VETO cannot run yet. Do not merge. Do not publish. Do not deploy.
+
+#141 https://github.com/DealAppSeo/trustshell/pull/141 head `0a865db` OPEN MERGEABLE/CLEAN vs main `1c760f2`. Strix APPROVED / no issues. Required `check` SUCCESS. verify-paris SUCCESS. Vercel SUCCESS. Greptile trial-credit (not a finding). Safe. Sean merges. Did not edit. Did not @strix-security (verdict already on this head).
+#142 https://github.com/DealAppSeo/trustshell/pull/142 head `a6d9e3c` OPEN MERGEABLE/CLEAN vs main `1c760f2`. Strix APPROVED / no issues. Required `check` SUCCESS. verify-paris SUCCESS. Vercel SUCCESS. Greptile trial-credit. Safe. Sean merges.
+
+#143 CLOSED (not merged) — no competing HAL parser PR. Open PRs = #141 + #142 only.
+
+DESIGN: do not start a second. `TRUSTMARKET_SEED_DESIGN.md` exists on `_wt_cc2_living/docs/living/` (no INSERT). Not on origin `docs/living/` this fire. MCP_VS_GIT still honest. WALK_MAIN_VS_LIVE exists. T12 READ-ONLY gated on live VETO after merge+Vercel.
+
+Next fire: #141/#142 merged + Vercel ships `/create` parser? Then ONE live check that https://www.trustshell.dev/create Rome VETO fires (`parseHalVerdict` + live `{decision:"vetoed"}`). If no: one PR. If yes: T12 only if CC1 `T12_REPORT` stale.
+
+---
+
 # HANDOFF — XC wakeup 48 (2026-09-12)
 
 #141 `0a865db` OPEN MERGEABLE/CLEAN. Strix APPROVED. check + verify-paris SUCCESS. Safe. Sean merges. Did not edit `app/create/page.tsx`.
