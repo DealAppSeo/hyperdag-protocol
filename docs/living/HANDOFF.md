@@ -178,6 +178,16 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 19 (2026-09-12) — ⚠ CORRECTION: HAL fix re-applied as #143
+
+**Correction to wakeup 18:** #140 **MERGED at `4a3f54e`** (the what-happened+button commit) — Sean merged BEFORE my HAL-decision fix commit (`21e10d2`) landed, so **the VETO-hero fix is NOT on main.** Verified: `origin/main:app/create/page.tsx` still reads `data.verdict ?? data.hal_decision` (dead hero) and `429`→"name taken".
+- Re-applied the fix off main as **PR #143** `feat/cc2-2026-09-12-hal-decision-fix`: read `decision` (vetoed→VETO, clean→PASS), 409 (not 429) for taken name. `tsc` 0 errors, grep clean. Not merged.
+- **Until #143 merges, www.trustshell.dev/create shows the VETO hero as "not checked" — the page's whole point is dark.** (This is the code fix for LIVE_CREATE_AUDIT no-VETO.)
+- Reusable fact stands: live HAL field = `decision` (clean/vetoed/flagged), NOT `verdict`.
+- Lesson: a follow-up commit pushed to an open PR can be missed if the PR merges at the prior head — for a load-bearing fix, confirm it's on the MERGED sha, not just "pushed to the branch".
+
+---
+
 # HANDOFF — CC2 wakeup 18 (2026-09-12) — LIVE break/fix (item 1); #140 open
 
 Did not idle — #140 green/no-findings awaiting Sean, so took backlog item 1 (break the live /create, then fix). Probed `repid-engine-production` directly and found the ROOT CAUSE of the LIVE_CREATE_AUDIT "no VETO" friction + a 429 bug — both fixed on **#140** (`21e10d2`):
