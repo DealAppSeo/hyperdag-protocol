@@ -117,6 +117,18 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 15 (2026-09-12) — FACE page LIVE on preview
+
+**PR #139** `feat/cc2-2026-09-12-create-pai-face` → `app/create/page.tsx`. **Vercel build = SUCCESS**, check + verify-paris SUCCESS.
+- **▶ Preview URL (clickable for Sean, logged into Vercel):** https://trustshell-landing-git-feat-cc2-202-65ab3a-dealappseos-projects.vercel.app/create
+  - Anonymous `curl` gets HTTP 302 → `vercel.com/sso-api` = project-wide Vercel **deployment protection (SSO)**, applies to `/`, `/pai`, `/create` alike — not a page error. Sean's Vercel session sees it.
+- One field, one button, `register` origin `'Site'`, apiKey shown once, Paris/Rome (**VETO = hero**), RepID, **interview now SKIPPED unless they ask** (opt-in link, per Sean — fixed `3b76599`). 429→"name taken", unknown verdict→"not checked", no version string (npm 1.3.0).
+- `tsc --noEmit` 0 errors. Local `next build` blocked only by node_modules junction (Turbopack rejects symlink); Vercel (real node_modules) builds green.
+- **Follow-up ("write-receipt before guardedX402Payment OR trustshell init→init-pai") is COVERED by open PRs:** #137 (mine) adds the `writeReceipt` hook = receipt-before-pay, fail-closed; #138 (XC) wires `trustshell init --pai` → init-pai.mjs. Nothing new to build.
+- Not merged (Sean's gate). Complements XC #138 (CLI) — web page vs CLI.
+
+---
+
 # HANDOFF — CC2 wakeup 14 (2026-09-12) — create-PAI FACE page
 
 Sean clarified item 1: build the real **create-PAI FACE page** (not another gate PR). **PR #139** `feat/cc2-2026-09-12-create-pai-face` — `app/create/page.tsx` (off main `0ac6e95`).
