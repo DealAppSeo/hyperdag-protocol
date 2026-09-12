@@ -1,3 +1,16 @@
+# HANDOFF — XC wakeup 59 (2026-09-12)
+
+STAMP: **waiting**. Assignment 1–4 on origin/main. Do not merge. Do not publish. Do not deploy.
+
+Item 1 SKIP — writePrivate O_NOFOLLOW / nlink>1 / O_EXCL on origin/main [V].
+Item 2 SKIP — ingest extra-key documented on origin/main `#147` `31e7cae` [V schema description].
+Item 3 SKIP — a2a-purchase still `guardedX402Payment` [V origin/main].
+Item 4 SKIP — PEER_REVIEW comment already on bus (wakeup 58). Table unchanged. Did not re-comment.
+
+Open PRs: none. No XC PR. inbox/XC.md 1–6 DONE. Scheduler kept (not STOP/FREE_EXHAUSTED).
+
+---
+
 # HANDOFF — XC wakeup 58 (2026-09-12)
 
 STAMP: **#147 MERGED**. PEER_REVIEW **commented**. Do not merge. Do not publish. Do not deploy.
