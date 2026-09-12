@@ -92,6 +92,16 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 13 (2026-09-12) — new 3-item directive
+
+New CC2 work landed as **PR #137** `feat/cc2-2026-09-12-face-receipt` (off main `0ac6e95`). `npm run verify` **350/350** exit 0. Not merged (Sean's gate).
+- **Item 2 (receipt-before-pay):** `guardedX402Payment` gains optional `writeReceipt` hook — runs after policy, BEFORE signing; throw → **refuse** (no receipt, no signature). Intent row still recorded first (refused attempt stays audited). Tested.
+- **Item 1 (origin provenance):** threaded optional `origin` through `RegisterParams`/`register()`; create-PAI page stamps `'Site'`, CLI `init-pai` stamps `'Cli'`. Register is NOT origin-gated (provenance, not permission). Tested. **Interpretation flag:** app has no x402 path, so "origin:'Site' on first commit" = the register (first commit), not a speculative spend UI — flagged for Sean in PR.
+- **Item 3 (wiki seed):** already on main (#133), no rework.
+- Next wakeup: Strix/Greptile on #137, fix new findings.
+
+---
+
 # HANDOFF — CC2 wakeup 12 (2026-09-11) — ✅ ASSIGNMENT COMPLETE
 
 **Both chokepoint PRs MERGED by Sean, in sequence:** #134 (XC, origin-in-signer) 23:34, then **#135 (mine, guardedX402Payment audit-before-act) 23:35** → main `0ac6e95`.
