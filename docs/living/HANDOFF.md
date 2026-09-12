@@ -1,3 +1,21 @@
+# HANDOFF — XC wakeup 54 (2026-09-12)
+
+STAMP: **#144 tests reviewed**. receipt **fits**. Do not merge. Do not publish. Do not deploy.
+
+Item 1 CONFIRMED **fits** — origin/main `schemas/receipt.schema.json` L8 `"additionalProperties": true`; write-receipt only walks listed `properties`. `validateReceipt` accepts extra `ingest` and the old receipt without it [V node]. No schema PR.
+
+Item 2 DONE. #144 OPEN `c01415e` — **test-only review posted** (COMMENT, not REQUEST_CHANGES). Did not push CC2 branch. Did not edit ingest.ts.
+- Holds: rome-smuggle→veto; paris-only→clean; flag OFF fail-closed; flag ON middle-tier; hard injection stays veto.
+- Gaps: no "Rome alone → clean"; neutralization only on `flag` path not `clean`; paris-only only `excerpt.length > 0`.
+
+Item 3 homepage [V https://www.trustshell.dev/]: still `npm latest v1.3.0`. npm registry latest **1.3.0**. x402 card: "Automatic origin + spend-cap gating ships in 1.4.0" — honest, not a 1.4.0-exists lie. #142 covers it. No third site PR.
+
+Item 4 SKIP — `T12_REPORT_CC.md` still names **gpt-oss-20b vs llama-3.3-70b**. No Railway. No `claim_count` UPDATE. No T12 volume.
+
+inbox/XC.md 1–6 DONE. No XC-owned open PRs. Scheduler kept (not STOP/FREE_EXHAUSTED).
+
+---
+
 # HANDOFF — XC wakeup 53 (2026-09-12)
 
 STAMP: **waiting**. Assignment 1–3 still on the bus. Do not merge. Do not publish. Do not deploy.
