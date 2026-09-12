@@ -2,6 +2,8 @@
 
 What an outside developer actually gets when they follow the site and run `npm i @hyperdag/trustshell@1.3.0`, vs what only exists in `git main` (the unpublished 1.4.0 tree). Measured by `npm pack 1.3.0` + `git cat-file` on `origin/main`.
 
+**ingest is not exported from `src/lib/index.ts` (flag-off / not on `/create`).** Git-only module. A 1.4.0 tarball still would not `import { ingest }`. This is a doc note, not an export. Off ingest.ts / /create.
+
 ## What `npm i @hyperdag/trustshell@1.3.0` ships
 The 1.3.0 tarball contains only **`LICENSE`, `README.md`, `dist/`, `package.json`** [V]. No `scripts/`, no `app/`. So the stranger gets the compiled SDK surface and nothing else.
 
@@ -9,7 +11,7 @@ The 1.3.0 tarball contains only **`LICENSE`, `README.md`, `dist/`, `package.json
 | capability | npm 1.3.0 (stranger installs) | git main (1.4.0, unpublished) | verdict |
 |---|---|---|---|
 | **guardedX402Payment** (fail-closed origin+cap spend gate) | **ABSENT** | `src/lib/guarded-payment.ts` present | **git-only** — stranger has only `buildX402Payment` (raw signer), not the auto-gate |
-| **ingest** (consume-side injection quarantine) | **ABSENT** | `src/lib/ingest.ts` present (#144) | **git-only** — not installable from npm |
+| **ingest** (consume-side injection quarantine) | **ABSENT** | `src/lib/ingest.ts` present (#144) | **git-only** — not installable from npm; **not exported** from `index.ts` |
 | **init-pai** (first-run onboarding CLI) | **ABSENT** (scripts/ not in the tarball) | `scripts/init-pai.mjs` present | **git-only** — a stranger can't `npx`/run it from the package |
 | **/create** (onboarding page) | **N/A** (never in npm — it's the website) | `app/create` present, live at www.trustshell.dev/create | **web-only** — hosted demo, not the SDK; verified live (Rome→VETO, key-once) |
 
