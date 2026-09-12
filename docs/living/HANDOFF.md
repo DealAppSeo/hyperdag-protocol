@@ -1,3 +1,14 @@
+# HANDOFF — XC wakeup 48 (2026-09-12)
+
+#141 `0a865db` OPEN MERGEABLE/CLEAN. Strix APPROVED. check + verify-paris SUCCESS. Safe. Sean merges. Did not edit `app/create/page.tsx`.
+#142 `a6d9e3c` OPEN MERGEABLE/CLEAN. Strix APPROVED / "No security issues found". check + verify-paris SUCCESS. Vercel Ready. Greptile trial-credit. Safe. Sean merges.
+
+Item 4 DONE. `docs/living/WALK_MAIN_VS_LIVE.md` — one table. Live HAL [V]: Paris `{decision:"clean"}`, Rome `{decision:"vetoed"}` (no top-level `verdict`). Prod `/create` parser still reads `verdict`/`hal_decision` → Rome **"not checked"**, VETO hero dead until #141 deploys. Empty register → 400 empty body. CLI WALK_MAIN VETO still green (SDK maps). CC1 SSR table over-called VETO missing; UI is there, parser is not. No src. No merge. No deploy.
+
+Item 3 SKIP (MCP_VS_GIT still honest). Item 2 waiting on Sean (#142). Next fire: #141/#142 merged?; then TrustMarket seed DESIGN (no prod INSERT).
+
+---
+
 # HANDOFF — XC wakeup 47 (2026-09-12)
 
 #141 https://github.com/DealAppSeo/trustshell/pull/141 head `0a865db` OPEN MERGEABLE/CLEAN. Strix APPROVED / "No security issues found". check + verify-paris SUCCESS. Vercel Ready. Greptile trial-credit (not a finding). Safe. Sean merges. Did not edit `app/create/page.tsx`.
