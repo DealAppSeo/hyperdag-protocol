@@ -1,3 +1,16 @@
+# HANDOFF — XC wakeup 56 (2026-09-12)
+
+STAMP: **waiting**. Assignment 1–4 still on the bus. Do not merge. Do not publish. Do not deploy.
+
+Item 1 CONFIRMED **fits** — origin/main `bebeb1c` `"additionalProperties": true`. No schema PR.
+Item 2 SKIP — #144 MERGED. Tests reviewed wakeup 54. #145 is CC1 (not CC2); did not review, did not race.
+Item 3 homepage [V]: still `npm latest v1.3.0`. No 1.4.0 lie. No third site PR.
+Item 4 SKIP — `T12_REPORT_CC.md` still names **gpt-oss-20b vs llama-3.3-70b**. No Railway. No T12 volume.
+
+inbox/XC.md 1–6 DONE. No XC-owned open PRs. Scheduler kept (not STOP/FREE_EXHAUSTED).
+
+---
+
 # HANDOFF — XC wakeup 55 (2026-09-12)
 
 STAMP: **waiting**. #144 MERGED. receipt **fits**. Do not merge. Do not publish. Do not deploy.
