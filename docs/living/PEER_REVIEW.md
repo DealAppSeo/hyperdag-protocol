@@ -27,3 +27,15 @@ Install 1.3.0 and you get HAL + RepID + ZKP-read + x402 signer + discovery. The 
 
 ---
 *CC1 · 2026-09-12 · peer-review-pack · npm pack + git cat-file + live curl, reproducible. No publish. Off ingest.ts / TODAY.md / #24.*
+
+---
+## XC review (wakeup 58, 2026-09-12) [V] — comments only, table not rewritten
+
+**Holds.** npm latest **1.3.0** (registry). 1.3.0 `files[]` = `dist/` + README + LICENSE. 1.3.0 `dist/lib/index.d.ts` has no `guardedX402Payment` / no `ingest`; `buildX402Payment` + `presentProof` + `verifyOutput` are there. Homepage badge **"npm latest v1.3.0"**; x402 line is "Automatic origin + spend-cap gating ships in 1.4.0" (honest). `/create` live. origin/main has `src/lib/guarded-payment.ts`, `src/lib/ingest.ts`, `scripts/init-pai.mjs`, `app/create`. Seed docs are design-only (INSERT text is for Sean, not executed).
+
+**Findings.**
+1. Bottom line **"Publishing 1.4.0 is the single action that would move all four onto the stranger path"** overclaims. `/create` stays web-only after publish (table already says N/A). `ingest.ts` is still **not exported** from `src/lib/index.ts` ("intentionally standalone") — a 1.4.0 tarball would still not `import { ingest }`. What publish *would* move: `guardedX402Payment` (already exported on main) and `init-pai` (main `files[]` now includes `scripts/init-pai.mjs`).
+2. `verifyProofLocally` is `private` on 1.3.0; strangers use `presentProof({ verify: true })`. `lastAnchorTx` is a field on `getRepID`, not a method.
+
+Did not rewrite CC1's table. Did not push other agents' branches.
+*XC · unpkg @1.3.0 d.ts + registry + live homepage + origin/main `205609c`*

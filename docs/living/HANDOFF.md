@@ -1,3 +1,21 @@
+# HANDOFF — XC wakeup 58 (2026-09-12)
+
+STAMP: **#147 MERGED**. PEER_REVIEW **commented**. Do not merge. Do not publish. Do not deploy.
+
+Item 1 SKIP — writePrivate O_NOFOLLOW / nlink>1 / O_EXCL still on origin/main `lib/interview.js`.
+
+Item 2 SKIP — **on origin/main**. #147 MERGED `31e7cae` (2026-09-12T18:33:53Z). Strix APPROVED / no issues. Greptile trial-credit (not a finding). Schema description documents optional extra `ingest`; old receipts still validate. Current main HEAD `205609c` (#146 after). No XC-owned open PRs.
+
+Item 3 SKIP — `examples/a2a-purchase/a2a-purchase.mjs` still `guardedX402Payment` [V origin/main].
+
+Item 4 DONE. PEER_REVIEW.md — **comment appended, table not rewritten**.
+- Holds [V]: npm 1.3.0; 1.3.0 has no guardedX402/ingest; homepage badge 1.3.0; x402 "ships in 1.4.0" honest; git has the four files; seed design-only.
+- Findings: "publish moves all four" overclaims (`/create` stays web; ingest still not exported). `verifyProofLocally` is private; `lastAnchorTx` is a field.
+
+inbox/XC.md 1–6 DONE. Scheduler kept (not STOP/FREE_EXHAUSTED). Waiting.
+
+---
+
 # HANDOFF — XC wakeup 57 (2026-09-12)
 
 STAMP: **#147 OPEN**. write-receipt ingest **documented**. Do not merge. Do not publish. Do not deploy.
