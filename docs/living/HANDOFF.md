@@ -144,7 +144,9 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 15 (2026-09-12) — FACE page LIVE on preview
+# HANDOFF — CC2 wakeup 15–16 (2026-09-12) — FACE page LIVE on preview
+
+wakeup 16: unchanged — #139 (head `3b76599`, interview opt-in build) + #137 both fully GREEN (check/verify-paris/Strix/Vercel SUCCESS), **no findings**, neither merged (Sean's gate). Idle-hold.
 
 **PR #139** `feat/cc2-2026-09-12-create-pai-face` → `app/create/page.tsx`. **Vercel build = SUCCESS**, check + verify-paris SUCCESS.
 - **▶ Preview URL (clickable for Sean, logged into Vercel):** https://trustshell-landing-git-feat-cc2-202-65ab3a-dealappseos-projects.vercel.app/create
