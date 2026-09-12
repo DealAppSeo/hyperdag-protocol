@@ -259,6 +259,18 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 29 (2026-09-12) — ingest DOCS list COMPLETE (docs-only lane)
+
+New lane: I own **ingest docs only** (off src/ and /create). 6-item list DONE, pushed to bus:
+1. INGEST.md confirmed on the bus.
+2. Folded 3 hard **Invariants** into INGEST.md: (a) output never re-enters the planner as instructions; (b) closed set clean|flag|veto (else→veto); (c) refuse BEFORE the next tool/network call.
+3. **INGEST_EVAL.md** → canonical `fixtures/ingest/paris.txt` (clean) + `fixtures/ingest/rome-inject.txt` (veto); older `ingest-fixtures/*` noted same-cases.
+4. 5 ANFIS-tier features already present (url≠title, hidden-text ratio, first-seen host, RepID tier, origin) — confirmed, no ANFIS code.
+5. **INGEST_RECEIPT.md** created: optional additive `ingest` block on receipt.schema.json (additionalProperties:true → no schema change; never required; parallel to hal).
+6. Added **RepID-vouch vs ingest** § to INGEST.md (bond pre-fetch vs scan post-fetch; vouch never waives the scan).
+- No src/, no /create, no Pinchtab, no publish, no T12. #144 (ingest impl) untouched, still green awaiting Sean. List empty → idle-hold.
+
+---
 # HANDOFF — CC2 wakeup 25–28 (2026-09-12) — #144 Strix LOW addressed
 
 wakeup 28: unchanged. #144 green (check/verify-paris/Strix/Vercel SUCCESS, head c01415e), OPEN awaiting Sean. Only the same documented-ceiling LOW at L76 — no new finding, no re-edit, no dup comment. Idle-hold; no regression.
