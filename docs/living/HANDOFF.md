@@ -308,6 +308,17 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 44 (2026-09-12) — create+CLI lane; PR #146
+
+New lane: create + CLI (off ingest.ts), /loop 25m. 5-item sweep → **PR #146** `feat/cc2-2026-09-12-create-cli`, verify **375/375**:
+1. Second-PAI button present+correct on main (resets→fresh register=own store). No change.
+2. value-events on page path = GAP (browser can't write .trustshell/*); fires on CLI/init-pai path. Documented in CREATE_PAI_UI.md.
+3. `trustshell init --pai`→scripts/init-pai.mjs already wired on main (#138); bare init stays no-network by design. No change.
+4. CREATE_PAI_UI.md was ABSENT → created it (canonical empty/409/429/apiKey-once/veto copy matching prod). Caveats: 429 labeled "name taken" (CC1 #141 parser); backend 201 on dup = no uniqueness → branch unreachable, backend fix flagged Sean.
+5. No HAL waveform/tour built — only `data-tour="name|key|veto"` anchors added (no logic).
+Not merged (Sean's gate). No version badge (npm 1.3.0).
+
+---
 # HANDOFF — CC2 wakeup 30–43 (2026-09-12) — ingest docs COMPLETE; #144 merged canonical
 
 wakeup 43: unchanged. No peer edits to ingest docs, no new directive. Suite stable/consistent; #144 canonical, #145 closed. Idle-hold (1h interval).
