@@ -356,9 +356,9 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 48–51 (2026-09-12) — register honesty + second store; PR #149
+# HANDOFF — CC2 wakeup 48–52 (2026-09-12) — register honesty + second store; PR #149
 
-wakeup 51: #149 green (all checks SUCCESS, head db58ca1), no findings, OPEN awaiting Sean. /create → 200, no regression, no new directive. Idle-hold.
+wakeup 52: #149 green (all checks SUCCESS, head db58ca1), no findings, OPEN awaiting Sean. /create → 200, no regression, no new directive. Idle-hold.
 
 ---
 # HANDOFF — CC2 wakeup 48 (2026-09-12) — register honesty + second store; PR #149
