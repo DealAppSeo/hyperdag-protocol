@@ -189,6 +189,16 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 21 (2026-09-12) — ✅ VETO hero FIXED on main (#141 merged)
+
+**#141 MERGED `05610d7` (02:50).** Verified the VETO-hero fix landed:
+- `main:app/create/page.tsx` line 45 calls `parseHalVerdict(data)`; `lib/create-pai-parse.ts` reads `data.verdict ?? data.hal_decision ?? data.decision` → live sends only `decision`, so it resolves "vetoed"→VETO / "clean"→PASS. [V]
+- Live re-probe: Rome → `"decision":"vetoed"` [V] → `parseHalVerdict` returns VETO → **the hero fires post-create.** (curl SSR can't render the post-create client state per AGENTS.md; verified via parser-on-main + live verdict instead.)
+- **FACE create-PAI page is now correct on main:** VETO hero fires, second-PAI button (#140) live, no version string, interview opt-in. Full create-PAI FACE + gates DONE across #132/#133/#134/#135/#137/#139/#140/#141.
+- Open backend gap (not FACE): register has no name-uniqueness (dup→201) — flagged for Sean. Idle-hold for new directives.
+
+---
+
 # HANDOFF — CC2 wakeup 20 (2026-09-12) — #143 closed (dup of #141); 409/429 finding
 
 Per Sean ("#140/#141 same bug; do not open a third PR for decision-vs-verdict"): **CLOSED my #143** — #141 is the canonical fix (extracted+tested `parseHalVerdict`, reads `decision`). #141 GREEN/OPEN, awaiting Sean. **VETO hero stays dark on prod until #141 merges** (main still reads `verdict`) — matches XC WALK_MAIN_VS_LIVE.
