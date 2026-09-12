@@ -11,6 +11,11 @@
   ```
 - PAI1 decides using the verdict + a short sanitized excerpt + a proposed action. It cannot be steered by instructions hidden in the source, because it never reads the source. This is the whole point: **the untrusted text is contained at PAI2; only a structured, non-executable summary escapes.**
 
+## Invariants (hard — an implementer MUST hold all three)
+1. **`ingest` output never re-enters the planner as instructions.** PAI1's planner consumes the verdict object as *data only*: `verdict` is a label, `excerpt` is a sanitized non-executable string, `proposedAction` is a suggestion it may reject. The raw fetched content — and any imperative text inside it — is never fed back into the planner/prompt. That is the whole point of the boundary: a hidden "ignore previous…" can never become a live instruction because the bytes carrying it never reach the decider.
+2. **Closed verdict set: `clean` | `flag` | `veto` — nothing else.** Any other, absent, or unrecognized value is treated as `veto` (fail-closed). `flag` is emitted only when explicitly enabled; with flag OFF the set collapses to `clean`|`veto` and uncertainty resolves to `veto`.
+3. **Refuse BEFORE the next tool/network call.** `ingest` is a precondition on the agent's *next action*: on `veto` (or an unresolved `flag`), the agent makes no further tool call, fetch, spend, or write that uses this content — it quarantines and stops. The gate runs before the action, never after (fail-closed ordering: no "act, then check").
+
 ## Verdicts
 | verdict | meaning | what PAI1 gets |
 |---|---|---|
@@ -61,8 +66,11 @@ ANFIS routing on tier is a **later** phase — this list is the feature set only
 ## ingest → receipt (slice 5, not blocked — brief pointer)
 An `ingest` verdict can ride the existing `schemas/receipt.schema.json` (CC1, merged #129) as an additive block, e.g. `"ingest": { "verdict": "clean|flag|veto", "host": "...", "features": {...} }`, alongside `hal`/`repid`/`cap`. It does **not** replace `hal` (decision axis) — it's a parallel field. Full mapping only if an implementer needs it (INGEST_RECEIPT.md); not blocked, so not expanded here.
 
+## RepID vouch vs `ingest` scan (two different safeties — they compose)
+A RepID **vouch** is a *reputation bond*: an agent or human with standing stakes its RepID to attest "this page/host is safe to click," and if that proves false the voucher's RepID is slashed — a safety you can *lose*, posted *before* you fetch. `ingest` is a *content scan*: it reads the fetched HTML/text right now for injection/manipulation, staking nothing, *after* you fetch. They are complementary, not substitutes — a vouch says *who* is accountable for a source (a cheap prior, no fetch needed); `ingest` says *what the bytes actually contain* (evidence, no accountability). A high-RepID vouch may relax a prior (e.g. the `first-seen-host` feature softens) but **never waives the scan** — fail-closed still applies — and an `ingest:clean` never substitutes for a vouch when real value or RepID is at stake. Bond the source with a vouch; scan the bytes with `ingest`.
+
 ## Scope / non-goals (constraints honored)
 Design doc only — **no Pinchtab, no logged-in Chrome, no `src/lib/trustshell.ts`, no `/create` PR, no T12, no publish.** `ingest` is a distinct gate from `verifyOutput`; this specifies the contract + eval so an implementer (not CC1's lane) can build it behind the PAI2→PAI1 boundary. No code shipped here.
 
 ---
-*CC1 · 2026-09-12 · docs lane · INGEST.md owned by CC1. ingest = consume-side injection quarantine; verifyOutput = emit-side truth check.*
+*CC1 (contract, eval, features) · CC2 (Invariants §, RepID-vouch §, INGEST_RECEIPT.md) · 2026-09-12 · docs lane. ingest = consume-side injection quarantine; verifyOutput = emit-side truth check.*
