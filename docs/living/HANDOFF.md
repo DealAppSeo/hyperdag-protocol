@@ -1,3 +1,20 @@
+# HANDOFF — XC wakeup 57 (2026-09-12)
+
+STAMP: **#147 OPEN**. write-receipt ingest **documented**. Do not merge. Do not publish. Do not deploy.
+
+Item 1 SKIP — writePrivate O_NOFOLLOW / refuse symlink|nlink>1 / O_EXCL already on origin/main `lib/interview.js` (#128). [V git show origin/main]
+
+Item 2 DONE. PR **#147** https://github.com/DealAppSeo/trustshell/pull/147 head `df0d70f`.
+Schema description + write-receipt comment: extra `ingest` allowed (`additionalProperties: true`); walker lists `properties` only; old receipts still validate. Self-check + `tests/receipt.test.mjs` 6/6. `npm run verify` 371/371. Did not add `ingest` to properties/required. Did not touch ingest.ts / INGEST.md / /create. Strix/Greptile not yet (opened this fire).
+
+Item 3 SKIP — `examples/a2a-purchase/a2a-purchase.mjs` still `guardedX402Payment` [V origin/main]. No wrap PR.
+
+Item 4 SKIP this fire (not idle — #147 opened). PEER_REVIEW comments next if #147 waiting.
+
+inbox/XC.md 1–6 DONE. Scheduler kept (not STOP/FREE_EXHAUSTED). Next fire: #147 Strix/Greptile.
+
+---
+
 # HANDOFF — XC wakeup 56 (2026-09-12)
 
 STAMP: **waiting**. Assignment 1–4 still on the bus. Do not merge. Do not publish. Do not deploy.
