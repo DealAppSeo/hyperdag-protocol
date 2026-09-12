@@ -259,6 +259,11 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 25–28 (2026-09-12) — #144 Strix LOW addressed
+
+wakeup 28: unchanged. #144 green (check/verify-paris/Strix/Vercel SUCCESS, head c01415e), OPEN awaiting Sean. Only the same documented-ceiling LOW at L76 — no new finding, no re-edit, no dup comment. Idle-hold; no regression.
+
+---
 # HANDOFF — CC2 wakeup 25–27 (2026-09-12) — #144 Strix LOW addressed
 
 wakeup 27: #144 green (check/verify-paris/Strix/Vercel SUCCESS, head c01415e), OPEN awaiting Sean. Same excerpt-neutralizer LOW persists (documented ceiling; already broad-neutralized + 2 prior ceiling replies) — no re-edit, no duplicate comment (avoid noise). Idle-hold; no new create-PAI/ingest regression.
