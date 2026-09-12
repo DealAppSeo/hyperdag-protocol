@@ -235,6 +235,15 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 24 (2026-09-12) — ingest.ts BUILT (PR #144); fixture caught a false-veto
+
+INGEST.md REVIEW=PASS (prior). Built **PR #144** `feat/cc2-2026-09-12-ingest`: `src/lib/ingest.ts` + `tests/ingest.test.ts`. `npm run verify` **370/370** exit 0.
+- Contract per INGEST.md: `ingest(content, {flag?})` → `{ingest:clean|veto|flag, excerpt, proposedAction}`. Strong injection→veto (excerpt = neutralized reason, never the payload); borderline→veto (flag off, fail-closed) / flag (flag on). Standalone: NOT exported from index, NOT called from /create, no Pinchtab; did not touch origin.ts/guarded-payment/app/create.
+- Used the **real INGEST_EVAL fixtures** (vendored `docs/living/ingest-fixtures/*` → `tests/fixtures/ingest/`). Running the actual `paris-only.txt` **caught a false positive** my hand-written string missed: the benign note says *"nothing telling the agent to do, ignore, reveal…"* → a bare `/\bignore\b/` flagged descriptive prose. Tightened BORDERLINE to imperative-context only; strong "ignore PREVIOUS INSTRUCTIONS"/"reveal apiKey" still caught by INJECTION. paris→clean, rome→veto. (Lesson: real fixtures > hand-written strings — the adversarial-benign case is exactly what a keyword matcher fails.)
+- Not merged (Sean's gate). Receipt schema already fits `ingest` (XC: additionalProperties:true).
+
+---
+
 # HANDOFF — CC2 wakeup 23 (2026-09-12) — INGEST.md REVIEW: **PASS** → building ingest.ts
 
 **REVIEW of docs/living/INGEST.md (CC1): PASS.** One reason: it specifies a coherent, fail-closed, *testable* consume-side injection-quarantine contract — distinct from `verifyOutput` (emit-side truth), binary clean|veto with `flag` OFF resolving uncertainty to veto (not clean), a structured verdict object that never forwards the raw payload across the PAI2→PAI1 boundary, and a concrete 2-case eval (Rome+"ignore previous"→veto; Paris-only→clean).
