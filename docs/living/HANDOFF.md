@@ -155,6 +155,20 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 17 (2026-09-12) — FACE MERGED + public URL + follow-up
+
+**#137 + #139 MERGED** (main HEAD `aa23733`). The create-PAI FACE is live.
+**▶ PUBLIC, curl-able URL (no SSO):** https://www.trustshell.dev/create → **HTTP 200** [V curl], renders "Create your PAI". `trustshell.dev`→308→www.
+- The earlier preview **302 → `vercel.com/sso-api` = Vercel deployment Protection**, which applies to *preview* deploys only; production is public. (Disabling preview Protection is a Vercel dashboard/infra setting = Sean's, not needed — production already serves it.)
+
+**Follow-up PR #140** `feat/cc2-2026-09-12-create-followup` (off main):
+- **"What just happened"** — one screen, 3 plain bullets (registered w/ agentId+one-time apiKey no key taken · harness passed a true claim + vetoed a false one · RepID live+portable).
+- **"Create a second PAI" button** — fresh register w/ new name = distinct agent = its own store; resets screen, does NOT add tools to #1. CLI TRUSTSHELL_HOME pointer kept.
+- **Grep clean:** no `1.4.0`, no `guardedX402` on the page (reworded version comment). `tsc --noEmit` 0 errors. Removed unused next/link import.
+- Not merged (Sean's gate).
+
+---
+
 # HANDOFF — CC2 wakeup 15–16 (2026-09-12) — FACE page LIVE on preview
 
 wakeup 16: unchanged — #139 (head `3b76599`, interview opt-in build) + #137 both fully GREEN (check/verify-paris/Strix/Vercel SUCCESS), **no findings**, neither merged (Sean's gate). Idle-hold.
