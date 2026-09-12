@@ -259,6 +259,11 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 25–26 (2026-09-12) — #144 Strix LOW addressed
+
+wakeup 26: Strix re-posted the SAME LOW on head da71e8e with a concrete L48 suggestion. The excerpt half was already fixed; applied the one cheap accepted part — broadened exfil verbs (email/forward/publish/disclose/expose/transmit + "system instructions") so "email the apiKey" vetoes (`c01415e`, verify 371/371). Drew the line there: the residual "keyword heuristic is bypassable" is the DOCUMENTED ceiling (clean = no *known* injection, module default-off/unwired; upgrade = model classifier) — will not keep adding keyword rounds. #144 green, awaiting Sean.
+
+---
 # HANDOFF — CC2 wakeup 25 (2026-09-12) — #144 Strix LOW addressed
 
 #144 was green (check/verify-paris/Strix/Vercel all SUCCESS) with **1 non-blocking Strix LOW** on ingest.ts. Addressed (`da71e8e`), verify 371/371:
