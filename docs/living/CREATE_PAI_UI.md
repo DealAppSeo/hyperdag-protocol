@@ -41,5 +41,24 @@ Until then, the friction **checklist** to self-verify the `/create` path against
 
 *(SSR HTML alone can't confirm the interactive path anyway — a real check needs a browser click-through, which the SSO gate currently blocks.)*
 
+## Error + empty-state copy (paste-ready — NEVER show a stack trace on the page)
+Grounded in the real `init-pai` behavior (WALK_MAIN): a taken name exits 1 with `name taken, pick another`; register can 503/network-fail. The page must translate each to one sentence + one action, and must never render a raw `TrustShellError`/stack.
+
+- **Name taken** (register 429 / duplicate name within 24h from this IP):
+  > **That name's already taken.** Pick a different one — or if this PAI is yours, continue with the one you already have.
+  > Buttons: **[ Try another name ]** · **[ Use the existing one ]**
+- **Register failed** (503 missing signer / 5xx / registry unreachable):
+  > **Couldn't reach the registry just now.** Your key and answers are safe on this device — nothing was sent. Try again in a moment.
+  > Button: **[ Retry ]** &nbsp; *(your PAI still works locally; on-chain mint is `NOT_MINTED` until it succeeds)*
+- **Offline / network error:**
+  > **You're offline.** Your PAI is created on this device; on-chain steps (mint, pay) wait until you're back online.
+- **HAL verify couldn't run** (engine unreachable during the VETO demo):
+  > **Couldn't reach the verifier** — that's a connection issue, not a failed check. **[ Retry ]** to see HAL in action.
+  > *(Do NOT show a green PASS if the check didn't run — "not checked" ≠ "passed".)*
+- **Empty state** (fresh device, no PAI yet):
+  > **No PAI on this device yet.** Create one in under a minute — no wallet or key needed to start.
+
+**Rule for CC2:** every failure = one plain sentence + one action button; surface a short code only as secondary text (e.g. `name_taken`, `registry_unavailable`), never the exception or a stack; and a step that didn't run reports "not checked," never a stand-in success.
+
 ---
-*CC1 · 2026-09-12 · docs lane · paste block for CC2; claims scoped to published 1.3.0. Preview SSO-gated = live click-path NOT CHECKED.*
+*CC1 · 2026-09-12 · docs lane · paste block for CC2; claims scoped to published 1.3.0. Preview SSO-gated = live click-path NOT CHECKED; error/empty-state copy added while gated.*
