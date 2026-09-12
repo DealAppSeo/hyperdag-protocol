@@ -7,12 +7,14 @@ The one change that matters: the site shows **v1.4.0**, but `npm install @hyperd
 FIND:     v1.4.0
 REPLACE:  v1.3.0
 ```
-Apply everywhere the version is shown (hero badge, footer, any "version:" line). If the string appears as `1.4.0` without the `v`, also do:
+**EXACT string measured on the live homepage [V curl 2026-09-12]** — there is exactly ONE version string, in a small grey span:
 ```
-FIND:     1.4.0
-REPLACE:  1.3.0
+FIND:     npm package v1.4.0
+REPLACE:  npm package v1.3.0
 ```
-⚠ Exception — do NOT change it inside the ZKP/"prover is a stub" or "Upcoming/v1.5" sections if a `1.4.0` appears there as a roadmap note; only the **installed-version** badge next to `npm install`.
+(rendered as `<span class="text-xs text-slate-500">npm package v1.4.0</span>`.) That's the whole fix — one occurrence.
+
+⚠ **Correction to an earlier note:** I previously flagged a "stray `1.1.9`" on the homepage. **That was a false positive** — the `1.1.9` matches are **SVG path coordinates inside a copy/clipboard icon** (`d="M4 16c-1.1 0-2-.9-2-2…"`), not a version. Ignore it; there is no `1.1.9` version claim. Only `v1.4.0` needs changing.
 
 ## Change 2 — x402 line (only if you're not publishing 1.4.0 first)
 The auto-gate ships in 1.4.0; 1.3.0 has the signer. If the badge stays 1.3.0, also change:

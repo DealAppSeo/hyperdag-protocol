@@ -13,7 +13,7 @@ Ran the real page (the **public** `https://www.trustshell.dev/create`, HTTP 200 
 | 6 | Empty / duplicate-name error copy | **MISSING (in SSR)** — no visible guidance for empty submit or name-taken (429). |
 | 7 | Dead-ends | nav has **Agents** → `/agents` route returns **HTTP 200** (page loads, not a route-level dead-end). The recorded trap was an **API/action-level 401** ("get an agent"), which is client-side — **still needs a browser to confirm.** |
 | 8 | Steps to create | 2 fields (name + Create); full generation flow client-side, not in SSR. |
-| — | Version | not on `/create`. **Homepage shows `v1.4.0` AND a stray `1.1.9`** [V curl] — fix the `v1.4.0` badge to `1.3.0` (SITE_STRINGS_TO_CHANGE) and check what the `1.1.9` refers to (even staler). |
+| — | Version | not on `/create`. Homepage has exactly one version string: **`npm package v1.4.0`** → fix to `v1.3.0` (SITE_STRINGS_TO_CHANGE). **CORRECTION:** the earlier "stray `1.1.9`" was a **false positive** — SVG path coordinates in a copy icon, not a version. Ignore it. |
 
 ## WALK_MAIN (SDK/CLI) vs live page — one table
 What the SDK `init-pai` walk surfaces (WALK_MAIN) vs what the live page shows:
