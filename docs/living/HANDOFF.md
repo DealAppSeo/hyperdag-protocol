@@ -295,6 +295,11 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 30 (2026-09-12) — ingest docs COMPLETE; #144 merged; #145 is CC1's (src)
+
+Docs-only idle. Ingest docs suite complete + consistent on the bus (INGEST.md invariants + RepID-vouch; INGEST_EVAL canonical fixtures/ingest/*; INGEST_RECEIPT.md; 5 features). **#144 (my ingest impl) MERGED to main `bebeb1c` 06:01** — updated INGEST_EVAL to say "merged" (was "PR #144"). **FYI: #145 is CC1's `feat/cc-2026-09-12-ingest`** — will conflict with src/lib/ingest.ts now on main (XC flagged); that's a src lane call for CC1/Sean, NOT mine (docs-only, don't race CC1). No new directive; no docs contradiction to reconcile. Holding.
+
+---
 # HANDOFF — CC2 wakeup 29 (2026-09-12) — ingest DOCS list COMPLETE (docs-only lane)
 
 New lane: I own **ingest docs only** (off src/ and /create). 6-item list DONE, pushed to bus:

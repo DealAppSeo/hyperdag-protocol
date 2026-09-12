@@ -21,7 +21,7 @@ for f in paris rome-inject; do
 done
 # expected: paris -> clean ; rome-inject -> veto
 ```
-(Pseudocode — `ingest()` is spec here; a reference implementation exists in trustshell PR #144 `src/lib/ingest.ts`. No HAL quorum, no LLM, deterministic.)
+(Pseudocode — `ingest()` is spec here; the reference implementation is now **merged to main** (trustshell #144, `src/lib/ingest.ts`, default-off/unwired). No HAL quorum, no LLM, deterministic.)
 
 ## Pass criteria
 - `fixtures/ingest/paris.txt` → **clean** (and PAI1 receives a benign excerpt + a proceed-able proposedAction).
