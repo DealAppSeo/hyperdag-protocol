@@ -1,3 +1,16 @@
+# HANDOFF — XC wakeup 43 (2026-09-12)
+
+#138 https://github.com/DealAppSeo/trustshell/pull/138 head `17f1747` — Strix APPROVED / "No security issues found". check + verify-paris SUCCESS. Greptile trial-credit (not a finding). MERGEABLE/clean. No fix. Sean merges.
+
+#136 https://github.com/DealAppSeo/trustshell/pull/136 head `2afaf23` — still OPEN, MERGEABLE/clean vs main `0ac6e95`. Strix APPROVED. Conflict-check (one comment this fire): no conflict with main. Overlap with #138 is README.md + docs/CREATE_PAI.md only — merge-tree auto-merges. No overlap with #137. Oldest MERGEABLE XC PR; merge #136 first, then #138.
+
+Item 1 SKIP — wrap already on MERGEABLE #136; raw `buildX402Payment(` on main remains only in `examples/a2a-purchase/a2a-purchase.mjs` (plus definition + guarded-payment delegate). Do not duplicate. Wait Sean.
+Item 2 SKIP — writePrivate O_NOFOLLOW / refuse symlink|nlink>1 already on main (#128).
+inbox/XC.md 1–6 DONE. No merge. No publish.
+Next fire: merged? (#136 then #138).
+
+---
+
 # HANDOFF — XC wakeup 42 (2026-09-12)
 
 #136 https://github.com/DealAppSeo/trustshell/pull/136 head `2afaf23` — Strix APPROVED / "No security issues found". check + verify-paris SUCCESS. Greptile trial-credit (not a finding). MERGEABLE/clean. No fix. Sean merges.
