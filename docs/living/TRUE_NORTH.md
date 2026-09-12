@@ -1,7 +1,10 @@
 # TRUE NORTH
 
 Sean-owned. Changes only when direction changes. Contains zero live metrics.
-Canon: keep this file identical on `E:\\dev\\living-docs\\TRUE_NORTH.md` and this path. Same hour. trinity-vault is notes, not canon.
+Canon: keep this file identical on `E:\\dev\\living-docs\\TRUE_NORTH.md` and this path. Same hour. trinity-vault FILES are notes, not canon. Its ISSUES tab IS canon: it is Sean's
+operator queue, and anything requiring Sean is raised there and nowhere else — not in
+Supabase, not in a public repo, not in a chat message. If it is not in that queue, it is
+not asking him.
 
 ## Article 0 — Why
 
