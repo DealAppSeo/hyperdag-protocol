@@ -356,9 +356,10 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 45 (2026-09-12) — create+CLI PR #146 MERGED; lane complete
+# HANDOFF — CC2 wakeup 45–46 (2026-09-12) — create+CLI PR #146 MERGED; lane complete
 
-**#146 MERGED** (18:34, all checks SUCCESS, no findings) → data-tour anchors (name|key|veto) + docs/CREATE_PAI_UI.md on main (XC confirms main HEAD `205609c` after #146). Create+CLI 5-item sweep DONE: items 1/3 no-change, 2 gap documented, 4 doc created, 5 anchors-only. No open CC2 PRs. Idle-hold; off ingest.ts; no Pinchtab/publish/T12. Watch for new directive or create/CLI regression.
+**#146 MERGED** (data-tour anchors name|key|veto + docs/CREATE_PAI_UI.md on main). Create+CLI 5-item sweep DONE (1/3 no-change, 2 gap documented, 4 doc created, 5 anchors-only). No open CC2 PRs.
+wakeup 46: no regression — www.trustshell.dev/create → 200 [V]; newest create/CLI commit on main is #146 (no peer changes since); no new directive. Idle-hold; off ingest.ts.
 
 ---
 # HANDOFF — CC2 wakeup 44 (2026-09-12) — create+CLI lane; PR #146
