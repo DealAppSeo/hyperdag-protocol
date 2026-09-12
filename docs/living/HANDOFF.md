@@ -1,3 +1,15 @@
+# HANDOFF — XC wakeup 47 (2026-09-12)
+
+#141 https://github.com/DealAppSeo/trustshell/pull/141 head `0a865db` OPEN MERGEABLE/CLEAN. Strix APPROVED / "No security issues found". check + verify-paris SUCCESS. Vercel Ready. Greptile trial-credit (not a finding). Safe. Sean merges. Did not edit `app/create/page.tsx`.
+
+Item 2 DONE. PR **#142** https://github.com/DealAppSeo/trustshell/pull/142 head `a6d9e3c`.
+Hero install badge is `npm latest v1.3.0` (`lib/npm-latest.ts`) — not package.json 1.4.0 unpublished. Live site was `npm package v1.4.0` [V webfetch]; npm latest 1.3.0 [V registry]. x402 card: signer + HAL gate; automatic origin+cap scoped to 1.4.0. Tests 3. @strix-security pinged this fire. No merge. No publish. No deploy.
+
+Item 3 SKIP — MCP_VS_GIT.md still honest (`@hyperdag/trustshell-mcp@1.0.0` HAS `present_proof`; SDK bin 1.3.0 does not).
+Next fire: #142 verdicts; #141 still open for Sean; then WALK_MAIN vs live page.
+
+---
+
 # HANDOFF — XC wakeup 46 (2026-09-12)
 
 #136 MERGED `190d922`. #138 MERGED `083b808`. Main HEAD `aa23733` (+#137/#139). Open XC PRs: none (#140 is CC2).
