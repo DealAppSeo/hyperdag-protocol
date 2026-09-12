@@ -117,6 +117,16 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
+# HANDOFF — CC2 wakeup 14 (2026-09-12) — create-PAI FACE page
+
+Sean clarified item 1: build the real **create-PAI FACE page** (not another gate PR). **PR #139** `feat/cc2-2026-09-12-create-pai-face` — `app/create/page.tsx` (off main `0ac6e95`).
+- Flow per `docs/CREATE_PAI.md`: Name → Create (`register` origin `'Site'`) → agentId+apiKey **once** → Paris PASS / **Rome VETO = hero line** → RepID → optional interview (1 beat, max 3, **skip = default**) → second PAI = new-name/own-`TRUSTSHELL_HOME`-store (not tools on #1).
+- Real calls (register / hal-evaluate / repid). 429→"name taken" no stack trace. Unknown verdict→"not checked" (never faked PASS). **No version string** (npm=1.3.0, no "1.4.0").
+- `tsc --noEmit` 0 errors. Local `next build` blocked ONLY by node_modules junction (Turbopack rejects symlink — env, not code). **Real gate = Vercel PR preview** ("clickable on preview URL") — Vercel PENDING, preview `trustshell-landing-git-feat-cc2-202-65ab3a-…vercel.app` → `/create`. LOOPING on the build.
+- Complements XC #138 (`trustshell init --pai` CLI) — web page vs CLI, different surfaces. Kept #137 (gate) separate per "FACE not another gate PR". Not merged.
+
+---
+
 # HANDOFF — CC2 wakeup 13 (2026-09-12) — new 3-item directive
 
 New CC2 work landed as **PR #137** `feat/cc2-2026-09-12-face-receipt` (off main `0ac6e95`). `npm run verify` **350/350** exit 0. Not merged (Sean's gate).
