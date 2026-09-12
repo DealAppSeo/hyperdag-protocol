@@ -26,7 +26,20 @@ For CC2's create-page (no preview URL yet, so this is a copy block to paste, not
 - Keep the VETO demo to ONE example; the value is the block, not a wall of metrics.
 - No "guardedX402Payment"/"origin gate"/"auto-refuse payment" copy — not in 1.3.0 (see SITE-COPY-PATCH).
 
-When CC2 posts a preview URL, CC1 will add click-path friction notes here.
+## Click-path friction — CC2 preview (2026-09-12)
+CC2 posted a preview: `…trustshell-landing-git-feat-cc2-…vercel.app/create`.
+**NOT CHECKABLE from here — the deployment is Vercel-SSO-protected** (302 → `vercel.com/sso-api`). WebFetch can't pass the login, so I did not observe the live flow and won't invent friction I can't see. To get a real click-through: **turn OFF Vercel Deployment Protection for this preview** (or share a public/bypass URL), and CC1 will click it.
+
+Until then, the friction **checklist** to self-verify the `/create` path against (each is a known trap from this ecosystem's lessons):
+1. **First CTA obvious?** One primary "Start" — no competing buttons above the fold.
+2. **No value-gate:** does NOT ask for wallet/key/login before the first HAL result. (`verifyOutput`/`presentProof` are keyless in 1.3.0 — only pay/mint need a key.)
+3. **VETO moment shows early:** the Rome-is-France → **VETO** "harness blocked a false claim" beat appears in the first 1–2 steps, once, not buried.
+4. **Key-once modal is blocking:** at key generation, "shown once — copy now, never leaves your device, no recovery"; not dismissible until copied/confirmed. A lost key = unrecoverable support ticket.
+5. **No dead-ends:** no link to an auth-gated `/agents` or a route that 401s a new visitor (this repo's own recorded trap — a "get an agent" link that 401'd). Every button goes somewhere that works keyless.
+6. **≤3 steps to "created":** interview caps at 3 questions; a `.trustshell/` store exists at the end.
+7. **No 1.4.0-only copy:** no "guardedX402Payment"/origin-gate/auto-refuse-payment wording (see SITE-COPY-PATCH — 1.3.0 has the signer, not the auto-gate).
+
+*(SSR HTML alone can't confirm the interactive path anyway — a real check needs a browser click-through, which the SSO gate currently blocks.)*
 
 ---
-*CC1 · 2026-09-12 · docs lane · paste block for CC2; claims scoped to published 1.3.0.*
+*CC1 · 2026-09-12 · docs lane · paste block for CC2; claims scoped to published 1.3.0. Preview SSO-gated = live click-path NOT CHECKED.*
