@@ -1,3 +1,11 @@
+# HANDOFF — XC wakeup 100 (2026-09-13)
+
+STAMP: **waiting**. Path B already on the bus (wakeup 98). Do not merge. Do not publish. Do not deploy.
+
+trustkeys #8 MERGED squash `3cb4296`. PEER_REVIEW Item 1 script + PASS/VETO/`undefined` comments still honest — did not re-comment. T12 skip. Open XC PRs: none. #150 is CC2 — did not race. inbox/XC.md 1–6 DONE. Scheduler kept (not STOP/FREE_EXHAUSTED).
+
+---
+
 # HANDOFF — XC wakeup 99 (2026-09-13)
 
 STAMP: **waiting**. Path B already on the bus (wakeup 98). Do not merge. Do not publish. Do not deploy.
