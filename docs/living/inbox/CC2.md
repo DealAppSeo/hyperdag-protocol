@@ -1,30 +1,28 @@
-# CC2 inbox — relayed by CC1 from ai_dispatch #60 (2026-09-13)
-*(CC2 doesn't read ai_dispatch; CC1 relays it here per dispatch #62 Phase 0. Source: dispatch #60, from=claude, to=cc2. Verbatim task queue below.)*
+# CC2 inbox — Grok/team refill 2026-09-13 16:20 PDT (new directive — kills idle-hold)
 
-## CC2 work queue — 4 phases (~hours), loop then STOP
-Verified facts from cowork-executor live SQL 2026-09-13 (do NOT re-derive; build on these):
-- **#58 root cause CONFIRMED:** the deployed trustshell.dev Next.js bundle embeds a LEGACY anon Supabase key disabled 2026-08-04 → every browser call 401 → the live-stats widget is dead. Fix = replace the embedded key with the NEW publishable key, then redeploy. The exact change-set is in trinity-vault#1. CC1 handed this to Claude Design; **if Design has NOT shipped it, you own it.**
+/loop 30m. Free only. Resume the cron. Queue is no longer empty.
+Source: Sean asked Grok to refill from HYP-6 + living-ops after CC2 wakeup 101 idle-hold. Do only YOUR items. Draft PRs. Do not merge. Do not publish.
+
+Path A E2E (#149 + #150) is MERGED. /create → 200. Do not re-do Path A.
+
+## NOW (do in order)
+1. **P1 #58 live-stats key-swap — STILL BROKEN this hour.** Homepage widget stuck on "Loading live scores…"; copy admits endpoint unavailable; last-known figures dated 2026-08-30. Root cause already named: deployed Next.js bundle embeds the LEGACY anon Supabase JWT disabled 2026-08-04 → browser calls 401. Replace with the current publishable key (via `get_publishable_keys` or Sean — **do not paste secrets into git**). Playwright + curl proof that the stats request returns 200 and a real number. Honest count, not 104.
+2. **P2 90-day gate walk on PUBLISHED npm.** Clean temp dir. `npm i @hyperdag/trustshell@1.3.0` (not git 1.4.0 unpublished). Keyless `verifyOutput` + `getRepID` / `presentProof`. Write a receipt on this bus: PASS / FAIL per call, exact error, no Sean in the loop. Do **not** attempt mint (Bearer-gated 401 is known design). No public "MVP launched" language.
+3. **P3 429-dedup E2E** for CREATE_PAI_UI.md caveat (b) drift: per-IP 429 did NOT fire on identical back-to-back `/create` POSTs. Assert intended behavior, or document live behavior if the caveat is wrong. Do **NOT** implement global PAI-name uniqueness (409 vs non-unique labels is Sean's call).
+4. **P4 stretch — ingest quarantine harden.** Strix: keyword blocklist is bypassable; `flag` tier is a no-op. More fixtures in INGEST_EVAL. Fail-closed on paraphrases. Keep default-off, not exported from `src/lib/index`, not wired to `/create`.
+
+## NOT YOURS
+Marketplace prod RLS / `[DEMO]` seed / `/marketplace/browse` (TRUE_NORTH freeze: TrustMarket UI beyond stub; page is 404 on trustshell.dev; marketplaces are downstream). PAI name uniqueness. npm publish 1.4.0. Merge of #151 / #736 / #737. Key rotation.
+
+## LOOP PROTOCOL
+Work phases in order. After each: open a draft PR (never merge), stamp HANDOFF, one-line on trinity-vault#1 + this inbox. When NOW is empty, STOP the cron and post "CC2 queue empty — stopped, will resume on new dispatch." Do NOT idle-poll /create. Free tokens only. Stop on FREE_EXHAUSTED.
+
+---
+# PREVIOUS — relayed by CC1 from ai_dispatch #60 (2026-09-13)
+*(CC2 diverted to Path A E2E #149+#150 and went idle-hold. Phase 1 live-stats was NOT shipped — re-queued above. Phases 2–3 marketplace are now NOT YOURS / product-lock.)*
+
+Verified facts from cowork-executor live SQL 2026-09-13 (do NOT re-derive):
+- **#58 root cause CONFIRMED:** deployed trustshell.dev Next.js bundle embeds a LEGACY anon Supabase key disabled 2026-08-04 → every browser call 401 → live-stats widget dead.
 - `repid_leaderboard_public` is anon-readable (208 rows) once the key is correct.
-- `marketplace_listings` = 0 and `marketplace_offers` = 0. `/marketplace/browse` is structurally empty: the 4 browse tables have RLS ON with 0 policies and no anon grant (triple-locked, not just "nobody posted").
+- `marketplace_listings` = 0 and `marketplace_offers` = 0. `/marketplace/browse` on trustshell.dev is 404. Product lock: marketplaces downstream.
 - Supabase `qnnpjhlxljtqyigedwkb` runs on NEW keys; the legacy anon JWT is disabled project-wide (never re-enable it).
-
-**PHASE 1 (P1) — Ship the #58 live-stats key-swap.**
-- Build/wire: in the site repo, find the embedded Supabase anon key (the disabled legacy JWT) and replace it with the current publishable key (via Supabase `get_publishable_keys` or from Sean; do NOT paste secrets into git). Redeploy (Vercel).
-- Test: after deploy, load the homepage/live-stats in Playwright; assert the stats request returns 200 (not 401) and renders a real number. curl the underlying REST call with the publishable key and confirm 200 + rows.
-- DoD: live site shows working stats; Playwright + curl evidence in the PR. **Coordinate with CC1 Phase 1 so the number shown is the HONEST count (91), not 104.**
-
-**PHASE 2 (P2) — Open the marketplace read-path (#127).**
-- Build/wire: add anon read-only RLS policies (`SELECT USING(true)` or a scoped predicate) to the 4 marketplace browse tables so `/marketplace/browse` can render. Do NOT grant write to anon.
-- Test: anon REST GET on each table returns rows; `/marketplace/browse` renders in Playwright.
-- DoD: PR (branch, do not merge) + anon GET proof.
-
-**PHASE 3 (P2) — Seed labelled demo listings.**
-- Build: insert a handful of CLEARLY-LABELLED demo listings (name prefixed `[DEMO]`) so browse isn't empty. Never present them as real user data.
-- Test: browse renders N demo listings; each links to a working detail view.
-- DoD: PR + screenshot/Playwright of populated browse.
-
-**PHASE 4 (stretch) — Create/CLI hardening.**
-- Reproduce and fix-or-document the 429 dedup drift you flagged (per-IP 429 did NOT fire on identical back-to-back `/create` POSTs, contrary to CREATE_PAI_UI.md caveat (b)). Add an E2E assertion for the intended behavior.
-
-**LOOP PROTOCOL:** work phases in order. After each, open a PR (never merge), post a one-line status to trinity-vault#1 and reply on dispatch #60. When all done, STOP your 30-min cron and post "CC2 queue empty — stopped, will resume on new dispatch." Do NOT idle-poll /create forever.
-**SEAN-GATED:** the taken-PAI-name 409-vs-non-unique decision is Sean's — do NOT implement global uniqueness until he rules. No npm publish. No merges.

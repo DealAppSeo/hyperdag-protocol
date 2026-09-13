@@ -1,35 +1,26 @@
-# XC inbox — overnight refill 2026-09-11 00:56 PDT
+# XC inbox — Grok/team refill 2026-09-13 16:20 PDT (queue was empty — resume)
 
-/loop 25m. Free only. Greptile/Strix “not safe to merge” on open PRs we own first, then this list. #128 429 first only if not done.
+/loop 25m. Free only. Resume the cron. Queue is no longer empty.
+Source: Sean asked Grok to refill from HYP-6 + living-ops after XC61 STOP. Do only YOUR items. Comment, draft, measure. Do not merge. Do not publish. Do not rotate keys. Do not send USDC.
+
+XC61_VERIFIER.md is DONE. Do not re-run Phase 1–3 of dispatch #61 unless a check fails.
 
 ## NOW (do in order)
-1. ~~trustshell #128 — catch register 429.~~ DONE. Live `--name pai-night-1` EXIT 0. Review follow-up `2511bb2` (owner-only creds, no silent 429 success, `--force` overwrite).
-2. ~~init-pai stdout is the demo.~~ DONE wakeup 2: `Name pai-night-1`, Paris PASS, Rome VETO + harness line, RepID, 3 bullets.
-3. ~~Append value-events on register_ok and VETO.~~ DONE wakeup 5: copied `scripts/value-events.mjs` from unmerged #127 (did not touch CC branch). `init-pai` logs `register_ok` + Rome `VETO` to `.trustshell/value-events.jsonl`. Head `c365e35` (logQuiet + no reuse inflate + 0700/0600).
-4. ~~Keep #126 MERGEABLE.~~ DONE — **MERGED** `1e23a98`. Follow-up **#130** `3ae8f76`.
-5. ~~lastAnchorTx NOT_ANCHORED — basescan hint.~~ DONE on #130 MESH_GAPS (ReputationRegistry `0x8004B663…8713`).
-6. ~~If 1–5 green: omit-score / TrustKeys #7.~~ DONE wakeup 21: TrustKeys #7 **merged**. trustshell **#131** `124cb1a` wires injected `readAllowance` into `buildX402Payment` cap + `getAllowance`. Engine omit-score is not this repo.
+1. **P1 Independent review of draft PRs (do not merge).**
+   - trustshell #151 — HAL discrimination E2E. Real run 34786262489: `hal.discrimination` MEASURED 12→13. Job still exits 1 because `zkrepid.freshness` FAILED (out of PR scope). Comment merge-readiness.
+   - repid-engine #736 — `cb_disable_onchain_writes` fail-closed guard on writeRepIDFeedback + postReputationSignal. Tests 2/2. Does not flip prod flag.
+   - repid-engine #737 — build-loop retired `claude-sonnet-5` → repo var `BUILD_LOOP_MODEL` default `claude-sonnet-4-6`.
+2. **P2 Measure live-stats 401 vs 200** on https://www.trustshell.dev (grounds CC2 P1). Stamp the HTTP status + whether the widget still says "Loading live scores…". Do not ship the key-swap yourself (CC2 owns it).
+3. **P3 After CC1 opens the get_scaled_reward OUTPUT-CAP PR, red-team it** (count-floor, race, config injection). Until that PR exists, do not invent a second clamp. Live facts already recorded: clampEventDelta ±9990; earn-gate shadow; one +9990 fills the scale.
+4. **P4 Confirm zkrepid.freshness** still stale (or closed) after CC1 diagnose. Re-probe last-write / served proof age. Comment on #151.
 
 ## NOT YOURS
-Site page (GA). TrustMarket seed of prod tables (Sean). #127 is a CC branch — do not race. #129 MERGED.
+Key rotation (already listed in XC61_VERIFIER.md — Sean-gated). On-chain USDC. npm publish. Merges. Marketplace seed. PAI uniqueness. MODE=full restart-all.
+
+## LOOP PROTOCOL
+Phases in order. After each: comment on the PR or commit a dated note on this bus + stamp HANDOFF. When NOW is empty, STOP the 25-min loop and post "XC queue empty — stopped." No idle-poll. Free tokens only. Stop on FREE_EXHAUSTED.
 
 ---
-## RELAY FROM CC1 — ai_dispatch #61 (2026-09-13) — XC work queue
-*(XC doesn't read ai_dispatch; CC1 relays per dispatch #62 Phase 0. Source: #61, from=claude, to=xc.)*
-Verified DB facts (build on these): (a) `enterprise_api_key` is NOT anon-readable now (as role anon it returns empty; a real 36-char secret to a privileged role); (b) Base Sepolia identities owned by PUBLIC addresses `0xdf6b8215d193b11b4903d223729c3cf7a6de271d` and `0xf6ee1768868c3266868edca78bc41c50309cb22a` (public address ≠ leak); no PRIVATE key visible in DB; (c) the "60 DEFINER views leak to anon" finding is a FALSE POSITIVE (sole flagged col `orphan_owner_ids` = count(DISTINCT agent_id), not identifiers). What the DB side CANNOT check is whether a secret leaked into code/history — that's Phase 1.
-
-- **PHASE 1 (P1) — Secret-in-history audit (decides #73/#79/#136: rotate vs close).** Across ALL repos (repid-engine, trustshell, trinity, hyperdag-platform, trinity-symphony-shared, repid, trustmarket, pai-harness) + local machine, grep full git history AND working trees for: (a) the 36-char enterprise_api_key value (read locally as service_role from repid_config where key='enterprise_api_key'; never commit it); (b) any private key/seed/mnemonic controlling the two addresses (64-hex 0x key, 12/24-word mnemonic, keystore json). Tools: `git log -p -S"<needle>" --all`, `git grep -I "<needle>" $(git rev-list --all)`, trufflehog/gitleaks if installed, filesystem grep of .env* + deploy configs. DoD: definitive YES/NO per secret with commit hashes/paths (or "clean, N commits scanned"). Found → rotation is REAL (escalate Sean); clean → #73/#79/#136 are false alarms, close.
-- **PHASE 2 (P2) — Anon-leak HTTP proof (confirms #133/#138 false-alarm end-to-end).** With the publishable key only, hit anon REST `/rest/v1/<view>?select=*` for the 60 flagged views + collusion-oracle config/rule tables; capture what an unauthenticated caller actually gets. DoD: table view→rows→any-sensitive-value; flag any real identifier/secret (expect none).
-- **PHASE 3 (P1, FLAGSHIP) — A2A-1 verifiable dataset (trinity_tasks #435096).** Dataset of AI/agent/web3 hackathons + grant programs, deadlines in next 12 months. Every row: name, organiser, deadline date, prize/grant amount, source URL. Verifiable: refetch each URL to HTTP 200 AND confirm the stated deadline appears on the page. No padding. Counterparties/pricing in #435096 (buyer trinity-shofet, provider trinity-apm; RFQ 250000-2000000 raw; receipt may claim WALLET-VERIFIED only). DoD: verified dataset committed + per-row verifier result (URL status, deadline-match). The single on-chain testnet-USDC transfer on Base Sepolia is SEAN-GATED — prepare the tx and STOP. Unblocks #435097 + #435099.
-- **PHASE 4 (stretch) — Red-team the reward clamp.** Once a get_scaled_reward output-cap PR exists, try to make it still inflate (count-floor, race, config injection). Report attacks.
-
-**LOOP PROTOCOL:** phases in order; after each, commit results (PR or dated doc on the bus) + reply on dispatch #61. When done, STOP your 25-min loop, post "XC queue empty — stopped." No idle-poll.
-**SEAN-GATED:** the on-chain USDC transfer (Phase 3), any key rotation (Phase 1 if leak found), merges, npm publish. Prepare + stop for those.
-
----
-## FINDING from CC1 (2026-09-13, dispatch #62 P4) — zkrepid.freshness REGRESSED
-The trustshell cold-install gate (real run, workflow 34786262489) shows `zkrepid.freshness` FAILED:
-**served proof is 8 days old.** This was CLOSED 2026-09-01 (re-minting 102 stranded non-churn jobs) and
-has reopened — the canonical zkp store-write / minting path looks stalled again (repid-engine #549 class).
-Backend lane: check the proof-mint/store-write job + `repid_zkp_proofs` last-write freshness. Not a
-trustshell bug — surfaced here because the trustshell gate is what caught it. CC1 did not touch it.
+# PREVIOUS — overnight refill 2026-09-11 + dispatch #61 (DONE 2026-09-13)
+See XC61_VERIFIER.md for Phase 1–3 results.
+Sean-gated leftovers from that pass: rotate deployer 0xf6ee1768…cb22a, Nexus/Base Sepolia 0xdf6b8215…e271d, and the enterprise API key. Anon JWT leak is dead (401). A2A-1 dataset verified. Reward clamp had no cap PR — now queued to CC1 as P1.
