@@ -25,3 +25,11 @@ Verified DB facts (build on these): (a) `enterprise_api_key` is NOT anon-readabl
 
 **LOOP PROTOCOL:** phases in order; after each, commit results (PR or dated doc on the bus) + reply on dispatch #61. When done, STOP your 25-min loop, post "XC queue empty — stopped." No idle-poll.
 **SEAN-GATED:** the on-chain USDC transfer (Phase 3), any key rotation (Phase 1 if leak found), merges, npm publish. Prepare + stop for those.
+
+---
+## FINDING from CC1 (2026-09-13, dispatch #62 P4) — zkrepid.freshness REGRESSED
+The trustshell cold-install gate (real run, workflow 34786262489) shows `zkrepid.freshness` FAILED:
+**served proof is 8 days old.** This was CLOSED 2026-09-01 (re-minting 102 stranded non-churn jobs) and
+has reopened — the canonical zkp store-write / minting path looks stalled again (repid-engine #549 class).
+Backend lane: check the proof-mint/store-write job + `repid_zkp_proofs` last-write freshness. Not a
+trustshell bug — surfaced here because the trustshell gate is what caught it. CC1 did not touch it.
