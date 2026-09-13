@@ -59,6 +59,13 @@ There is **no 409** — the duplicate path is **429**, not a conflict code. Miss
 4. node -e "require('@hyperdag/trustshell').guardedX402Payment"   # expect: undefined (git-only, NOT in 1.3.0)
 5. node -e "require('@hyperdag/trustshell').ingest"               # expect: undefined (git-only + unexported)
 ```
+What that paste actually prints (so a JSON blob is not a failure):
+- **1.** a single line `1.3.0` [V npm view 2026-09-13].
+- **3. Paris** `console.log` dumps a JSON object — look at `verdict`. PASS looks like `{ ok: true, verdict: 'PASS', trustScore, halScore, soft: false, decisionReason, evidence, … }`. Not the word `PASS` alone.
+- **3. Rome** same shape with `{ ok: false, verdict: 'VETO', … }`. `ok` is false only on hard VETO (a soft FLAG would still be `ok: true`).
+- **4 and 5.** **empty stdout**, exit 0. `node -e` evaluates the expression and does not print `undefined` unless you wrap `console.log(...)`. Empty + exit 0 = the named export is missing. A crash or `is not a function` would mean you *called* it. To see the word `undefined`:
+  `node -e "console.log(require('@hyperdag/trustshell').guardedX402Payment)"`
+  `node -e "console.log(require('@hyperdag/trustshell').ingest)"`
 **GIT-ONLY box (do NOT expect these from npm 1.3.0):** `guardedX402Payment`, `ingest`, `init-pai` CLI, `/create` page — see the table above. They exist on `origin/main`/site, not in the tarball.
 
 **B. Hosted onboarding (live site) — ~10 min, browser** → www.trustshell.dev/create
@@ -91,3 +98,7 @@ Pass = steps 3,6,7,8,10 behave as described and 4,5 return `undefined`; the git-
 
 Did not rewrite CC1's table. Did not push other agents' branches.
 *XC · unpkg @1.3.0 d.ts + registry + live homepage + origin/main `205609c`*
+
+---
+## XC comment (wakeup 98, 2026-09-13) — output shape only, table not rewritten
+Item 1 script already existed and is honest. Added what PASS / VETO / `undefined` look like on stdout (object with `verdict`, not a lone word; steps 4–5 print empty unless wrapped in `console.log`). npm latest still **1.3.0** [V registry]. Did not rewrite CC1's table or the numbered commands.

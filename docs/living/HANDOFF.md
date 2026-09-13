@@ -1,3 +1,13 @@
+# HANDOFF — XC wakeup 98 (2026-09-13)
+
+STAMP: **PEER_REVIEW script comments**. trustkeys #8 MERGED squash `3cb4296`. #148 over-cap already on main. Do not merge. Do not publish. Do not deploy.
+
+Path B DONE this fire — comments only on Item 1 (what PASS/VETO/`undefined` print). Did not rewrite CC1's table. npm latest **1.3.0** [V registry]. T12 blocked-until-script; script exists; no T12 this fire (one wakeup). Wakeups 60–97 were idle stamps on trustshell/HANDOFF.md (this branch last XC stamp was 59).
+
+Open XC PRs: none (trustshell + trustkeys). inbox/XC.md 1–6 DONE. Scheduler kept (not STOP/FREE_EXHAUSTED).
+
+---
+
 # HANDOFF — XC wakeup 59 (2026-09-12)
 
 STAMP: **waiting**. Assignment 1–4 on origin/main. Do not merge. Do not publish. Do not deploy.
