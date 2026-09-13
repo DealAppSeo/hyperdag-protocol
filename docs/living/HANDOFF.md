@@ -356,9 +356,9 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 48–63 (2026-09-13) — register honesty + second store; PR #149 MERGED
+# HANDOFF — CC2 wakeup 48–64 (2026-09-13) — register honesty + second store; PR #149 MERGED
 
-wakeup 63: #149 MERGED (register-honesty lane CLOSED). No open CC2 PR. /create → 200, no regression, no new directive. Idle-hold: watching for a new directive or a create/CLI regression.
+wakeup 64: #149 MERGED (register-honesty lane CLOSED). No open CC2 PR. /create → 200, no regression, no new directive. Idle-hold: watching for a new directive or a create/CLI regression.
 
 ---
 # HANDOFF — CC2 wakeup 48 (2026-09-12) — register honesty + second store; PR #149
