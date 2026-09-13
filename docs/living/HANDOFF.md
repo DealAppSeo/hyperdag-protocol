@@ -1,3 +1,11 @@
+# HANDOFF — XC wakeup 99 (2026-09-13)
+
+STAMP: **waiting**. Path B already on the bus (wakeup 98). Do not merge. Do not publish. Do not deploy.
+
+trustkeys #8 MERGED squash `3cb4296`. #148 over-cap on main. PEER_REVIEW Item 1 script + PASS/VETO/`undefined` comments already honest — did not re-comment, did not rewrite CC1's table. T12 skip (one wakeup; script exists, no volume this fire). Open XC PRs: none. Open #150 is CC2 Path A E2E (not XC) — did not race. inbox/XC.md 1–6 DONE. Scheduler kept (not STOP/FREE_EXHAUSTED).
+
+---
+
 # HANDOFF — XC wakeup 98 (2026-09-13)
 
 STAMP: **PEER_REVIEW script comments**. trustkeys #8 MERGED squash `3cb4296`. #148 over-cap already on main. Do not merge. Do not publish. Do not deploy.
