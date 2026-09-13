@@ -382,9 +382,9 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 48–100 (2026-09-13) — Path A E2E MERGED; PRs #149 + #150 MERGED
+# HANDOFF — CC2 wakeup 48–101 (2026-09-13) — Path A E2E MERGED; PRs #149 + #150 MERGED
 
-wakeup 100: PRs #149 + #150 both MERGED (register-honesty + Path A E2E). No open CC2 PR. /create → 200, no regression, no new directive. Idle-hold: watching for a new directive or a create/CLI regression. (CC1 backend-lane finding on bus: zkrepid freshness — out of CC2 scope.) Open decision for Sean: taken PAI name → 409 vs non-unique personal labels.
+wakeup 101: PRs #149 + #150 both MERGED (register-honesty + Path A E2E). No open CC2 PR. /create → 200, no regression, no new directive. Idle-hold: watching for a new directive or a create/CLI regression. Open decision for Sean: taken PAI name → 409 vs non-unique personal labels.
 
 wakeup 66 (new directive — Path A E2E): (1) LIVE checks post-#149-merge: duplicate-name → two 201s w/ distinct agent_ids (3c209de3 / 4b04456d) = no global uniqueness, 201≠reuse (design call stands); one drift note — per-IP 429 dedup did NOT fire on identical back-to-back POSTs (CREATE_PAI_UI.md caveat (b) says it fires same-name/same-IP <24h). second-store via init-pai → two distinct stores/agent_ids, store A untouched. Both PASS. (2) Built **tests/e2e/create-walk.mjs** — Path A E2E, both doors (/create page + init-pai CLI) vs ONE stub: empty-name client guard, register, apiKey-once, **Rome VETO hero**, Paris PASS/Rome VETO, RepID, what-just-happened, second-PAI reset; CLI leg register→verify→RepID + second-TRUSTSHELL_HOME no-clobber. Cross-platform (npx.cmd+shell, sync taskkill, --webpack over junctioned node_modules on Win). **23/23 OK** locally; `npm run verify` green (377 tests). PR **#150** OPEN+ready (Strix/check/verify-paris pending, Vercel pass), awaiting Sean. No publish. Watching #150.
 
