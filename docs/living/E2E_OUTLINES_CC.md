@@ -32,3 +32,6 @@ Live HAL confirmed: Paris `{decision:"clean"}`, Rome `{decision:"vetoed"}`; page
 
 ---
 *CC1 · 2026-09-13 · testing lane · harness E2E ran live (exit 0); create E2E via Playwright. No hollow-green: independent asserts on every path.*
+
+## Note — canonical gate `tests/e2e/harness-acceptance.mjs` (reuse-before-create)
+A more thorough gate already exists in-repo (the "cold-install" gate: installs the PUBLISHED package, runs all 4 legs, MEASURED/NOT_CHECKED/FAILED, exit 0/2/1). I did NOT duplicate it. Ran it locally 2026-09-13: it exited FAILED at the install leg — `spawnSync npm ENOENT` — a **Windows portability quirk** (`spawnSync('npm')` needs `npm.cmd`/`shell:true` on win32), NOT a product failure. It runs fine on Linux CI. One-line fix available if a Windows-local run is wanted. The harness path itself is verified by the direct E2E above (exit 0).
