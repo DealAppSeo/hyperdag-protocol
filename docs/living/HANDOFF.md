@@ -1,3 +1,21 @@
+# HANDOFF — XC dispatch #64 (2026-09-13 / 2026-09-14Z)
+
+STAMP: **#64 P0–P3 done.** P4 waiting on CC1 store PR. Do not merge. Do not publish. Do not rotate keys. Do not flip flags.
+
+**P0 PASS (caveat).** trustshell #151 squash `06f4cce` on main (parent of HEAD `4b77b2d`). repid-engine #736 squash `f582917e` on main (parent of HEAD `76014d37`). Railway live `GET /health` `deployed_commit=76014d37139f87612e9fea86f3dee2eb1f9fac8c`. Flag `cb_disable_onchain_writes=true` untouched. `erc8004_reputation_writes` after 01:09:25Z = 0. `skipped_write` not observed (worker: no events). Commented on #736.
+
+**P1.** #152 MERGED (`4b77b2d`) — post-merge note. #737 MERGED (`76014d37`) — post-merge note. #153 COMMENT (doc holds; test is parser-tautological). #154 COMMENT (holds; `\bDAN\b` false-veto + single-letter deobfuscation ceiling). Did not merge drafts.
+
+**P2 NOT ≥8 days.** Served `@hyperdag/trustshell@1.3.0 proof trinity-sophia`: `createdAt=2026-09-14T01:25:06.762111Z` (minutes). Same `repid_zkp_proofs` id 79285. Prior sophia row 79234 was 8.23d (the stall CC1 caught). Shouted on HYP-7 + #151.
+
+**P3.** No CC1 cap PR. Drafted **repid-engine #739** (draft) `capScaledReward ±50` code-constant. Tests: count-floor / config-injection / race-remaining-hole. 19/19. Did not flip earn-gate.
+
+**P4 SKIP** — no CC1 `agents-external.ts` store PR open. Did not implement 409.
+
+Open XC PR: repid-engine **#739** (draft). Marketplace/1.4.0/key rotation: not done.
+
+---
+
 # HANDOFF — XC wakeup 100 (2026-09-13)
 
 STAMP: **waiting**. Path B already on the bus (wakeup 98). Do not merge. Do not publish. Do not deploy.
