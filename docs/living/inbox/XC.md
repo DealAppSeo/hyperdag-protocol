@@ -1,26 +1,16 @@
-# XC inbox — Grok/team refill 2026-09-13 16:20 PDT (queue was empty — resume)
+# XC inbox — dispatch #64 2026-09-13 18:20 PDT
 
-/loop 25m. Free only. Resume the cron. Queue is no longer empty.
-Source: Sean asked Grok to refill from HYP-6 + living-ops after XC61 STOP. Do only YOUR items. Comment, draft, measure. Do not merge. Do not publish. Do not rotate keys. Do not send USDC.
+NEW QUEUE. #151 and #736 are MERGED — do not review-for-merge those two. Resume /loop 25m. Free only. Comment, measure, red-team. Do not merge. Do not publish. Do not rotate keys. Do not send USDC.
 
-XC61_VERIFIER.md is DONE. Do not re-run Phase 1–3 of dispatch #61 unless a check fails.
-
-## NOW (do in order)
-1. **P1 Independent review of draft PRs (do not merge).**
-   - trustshell #151 — HAL discrimination E2E. Real run 34786262489: `hal.discrimination` MEASURED 12→13. Job still exits 1 because `zkrepid.freshness` FAILED (out of PR scope). Comment merge-readiness.
-   - repid-engine #736 — `cb_disable_onchain_writes` fail-closed guard on writeRepIDFeedback + postReputationSignal. Tests 2/2. Does not flip prod flag.
-   - repid-engine #737 — build-loop retired `claude-sonnet-5` → repo var `BUILD_LOOP_MODEL` default `claude-sonnet-4-6`.
-2. **P2 Measure live-stats 401 vs 200** on https://www.trustshell.dev (grounds CC2 P1). Stamp the HTTP status + whether the widget still says "Loading live scores…". Do not ship the key-swap yourself (CC2 owns it).
-3. **P3 After CC1 opens the get_scaled_reward OUTPUT-CAP PR, red-team it** (count-floor, race, config injection). Until that PR exists, do not invent a second clamp. Live facts already recorded: clampEventDelta ±9990; earn-gate shadow; one +9990 fills the scale.
-4. **P4 Confirm zkrepid.freshness** still stale (or closed) after CC1 diagnose. Re-probe last-write / served proof age. Comment on #151.
+## NOW
+1. **P0 Post-merge verify.** #151 on trustshell main + #736 on repid-engine main. Confirm heads contain the commits. After Railway recycle of #736: breaker still blocks on-chain writes while flag=true (no giveFeedback tx). Stamp pass/fail.
+2. **P1 Review the still-open drafts (comment only):** trustshell #152 #153 #154; repid-engine #737.
+3. **P2 Re-measure zkrepid.freshness** (proof age + `repid_zkp_proofs` last-write). Independent of CC1. If still ≥8 days, say so loudly on HYP-7 and the bus.
+4. **P3 Red-team get_scaled_reward output cap** once CC1 opens that PR (count-floor, race, config injection). If no CC1 branch exists after one wakeup, draft the cap PR yourself on repid-engine.
+5. **P4 Shared-store dedup review.** When CC1 opens the agents-external.ts store PR, attack it: two replicas, process restart, clock skew, same-name different IP. Comment. Do not implement 409.
 
 ## NOT YOURS
-Key rotation (already listed in XC61_VERIFIER.md — Sean-gated). On-chain USDC. npm publish. Merges. Marketplace seed. PAI uniqueness. MODE=full restart-all.
+Key rotation (XC61 already listed deployer 0xf6ee1768… and Nexus 0xdf6b8215… + enterprise_api_key). On-chain USDC. Merges. npm publish. Marketplace seed. Flipping cb_disable_onchain_writes or REPID_RUN_EARN_GATE.
 
-## LOOP PROTOCOL
-Phases in order. After each: comment on the PR or commit a dated note on this bus + stamp HANDOFF. When NOW is empty, STOP the 25-min loop and post "XC queue empty — stopped." No idle-poll. Free tokens only. Stop on FREE_EXHAUSTED.
-
----
-# PREVIOUS — overnight refill 2026-09-11 + dispatch #61 (DONE 2026-09-13)
-See XC61_VERIFIER.md for Phase 1–3 results.
-Sean-gated leftovers from that pass: rotate deployer 0xf6ee1768…cb22a, Nexus/Base Sepolia 0xdf6b8215…e271d, and the enterprise API key. Anon JWT leak is dead (401). A2A-1 dataset verified. Reward clamp had no cap PR — now queued to CC1 as P1.
+## LOOP
+After each phase: comment or dated doc + stamp HANDOFF. Empty NOW → STOP. Stop on FREE_EXHAUSTED.
