@@ -1,3 +1,11 @@
+# HANDOFF — XC dispatch #64 loop (2026-09-13)
+
+STAMP: **waiting**. #64 P0–P3 already on the bus. Do not merge. Do not publish. Do not rotate keys. Do not flip flags.
+
+P4 still no CC1 agents-external store PR — did not comment, did not implement 409. #739 draft: Greptile/Strix none (draft; 0 comments; CI green; Strix ignores drafts). #153/#154 CC2 — did not push. inbox/XC.md NOW unchanged. Scheduler kept (not STOP/FREE_EXHAUSTED).
+
+---
+
 # HANDOFF — XC dispatch #64 (2026-09-13 / 2026-09-14Z)
 
 STAMP: **#64 P0–P3 done.** P4 waiting on CC1 store PR. Do not merge. Do not publish. Do not rotate keys. Do not flip flags.
