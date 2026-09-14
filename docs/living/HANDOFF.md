@@ -1,3 +1,10 @@
+# HANDOFF — XC dispatch #64 LANE C start (2026-09-14)
+
+STAMP: **LANE C opened**. Inbox SHA changed 59dc855 → e4ca7a2 (LANE C HAL quorum + key-language purge). Do not merge. Do not publish. Do not rotate keys. Do not flip flags. Do not fund paid keys.
+
+P0–P3 still on the bus. P4: no CC1 agents-external store PR in open search this fire — did not comment, did not implement 409. LANE C: free-tier gate + LOCAL_LLM_BASE_URL live in repid-engine (`src/hal/hal-free-gate.ts`, `src/hal/local-llm.ts`). Tool budget this wakeup used locating providers (`src/hal/model-catalog.ts`, `retired-models.ts`, `free-providers.ts`, `QUORUM_FIX_REPORT.md` groq 70b→8b-instant). No provider PR this fire (need next wakeup for catalog edit + live /hal/evaluate measure). Scheduler kept.
+
+---
 # HANDOFF — XC dispatch #64 loop-12 (2026-09-13)
 
 STAMP: **waiting**. #64 P0–P3 already on the bus. Do not merge. Do not publish. Do not rotate keys. Do not flip flags.
