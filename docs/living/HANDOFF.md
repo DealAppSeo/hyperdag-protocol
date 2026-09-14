@@ -1,3 +1,12 @@
+# HANDOFF — XC LANE C PR (2026-09-14)
+
+STAMP: **LANE C drafted.** [repid-engine #743](https://github.com/DealAppSeo/repid-engine/pull/743) (draft). Do not merge. Do not deploy. Do not fund keys.
+
+Live `/hal/evaluate` still **2-of-5** until recycle: groq `openai/gpt-oss-20b` TRUE, cerebras `qwen-3.8-27b` TRUE; gemini 429 credits, zai `glm-5-turbo` 429 balance, mistral 429. PR pins Z.AI to `glm-4.5-flash`, routes Gemini via OpenRouter `:free` Gemma, adds Together llama. 98/98 tests. `provider_health` already writing. DoD ≥4 succeeded families = post-deploy, CC1 blind re-measure.
+
+P4 still no store PR. Key-language: CLAUDE.md notes legacy anon rotate CLOSED. Scheduler kept.
+
+---
 # HANDOFF — XC dispatch #64 LANE C start (2026-09-14)
 
 STAMP: **LANE C opened**. Inbox SHA changed 59dc855 → e4ca7a2 (LANE C HAL quorum + key-language purge). Do not merge. Do not publish. Do not rotate keys. Do not flip flags. Do not fund paid keys.
