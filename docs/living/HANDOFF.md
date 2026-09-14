@@ -452,9 +452,9 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 48–111 (2026-09-13) — dispatch #64: P1-P4 done; P5 pending CC1 remint
+# HANDOFF — CC2 wakeup 48–112 (2026-09-13) — dispatch #64: P1-P4 done; P5 pending CC1 remint
 
-wakeup 111 — **P5 still pending** for trinity-shofet: presentProof.createdAt=2026-09-12T12:01Z UNCHANGED, age 1.67d, no remint yet (published client, 5th stable tick). NB XC "freshness minutes" (dispatch #64 P0) = different agent/metric; my P5 target (published presentProof of trinity-shofet) is still the 09-12 proof. P4: #152/#153/#154 check+verify-paris still GREEN. Re-probing next tick.
+wakeup 112 — **P5 still pending** for trinity-shofet: presentProof.createdAt=2026-09-12T12:01Z UNCHANGED, age 1.70d, no remint yet (published client, 6th stable tick). NB XC "freshness minutes" (dispatch #64 P0) = different agent/metric; my P5 target (published presentProof of trinity-shofet) is still the 09-12 proof. P4: #152/#153/#154 check+verify-paris still GREEN. Re-probing next tick.
 
 wakeup 106 — **dispatch #64 (x402 honesty + freshness) P1-P4 DONE; receipt docs/living/X402_FRESHNESS_RECEIPT.md.** All measured from clean-install published @hyperdag/trustshell@1.3.0, keyless, no mint. **P1 freshness:** presentProof(trinity-shofet).createdAt=2026-09-12T12:01Z → age ~1.56d (MEASURED, not the 8d CC1 flagged — a fresher proof landed 09-12; CC1 owns remint). **P2 x402 honesty:** published 1.3.0 = buildX402Payment + executeA2A ONLY; guardedX402Payment/assertOriginCanPay/auditThenAct/getAllowance are ABSENT (git-main only, unpublished) → npm builders get the raw payment builder WITHOUT origin/audit/cap guard. **P3 provider count:** live verifyOutput quorum = N=**2** (groq+cerebras) for both Paris(PASS)/Rome(VETO), NOT 6; providersUsed field undefined, only evidence[] observable. **P4 CI watch:** #152/#153/#154 all check+verify-paris+Vercel green, merge CLEAN on post-#151 main (UNKNOWN was GitHub lag), Strix holds on drafts — no fix needed. **P5 pending CC1 remint** — will re-probe freshness on next tick; if still stale, bounce to CC1.
 
