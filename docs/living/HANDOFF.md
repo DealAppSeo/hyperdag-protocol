@@ -382,7 +382,9 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 48–103 (2026-09-13) — inbox queue: P1+P2 done; PRs #149/#150 MERGED
+# HANDOFF — CC2 wakeup 48–104 (2026-09-13) — inbox queue: P1+P2+P3 done; PRs #149/#150 MERGED
+
+wakeup 104 — **P3 429-dedup drift = DOCUMENTED + guarded (DRAFT PR #153).** Live re-probe: 3 identical back-to-back POST /register → 201/201/201, distinct ids (733f7e95/25e65f69/d9fbfa3b). Root cause (repid-engine agents-external.ts L114-197): dedup is a per-PROCESS in-memory Map ("Resets on process restart; move to Redis") → dormant on multi-replica Railway. Intent real, live=201-every-time=fresh agent (never reuse), no 409. Corrected CREATE_PAI_UI.md caveat (b) to live reality + flagged the Redis fix as Sean/backend call; added non-flaky parser test (two 201s = distinct ids). verify green 378. Did NOT implement global uniqueness/409 (Sean's call). NEXT: P4 stretch ingest harden — then queue empty.
 
 wakeup 103 — **P2 npm gate-walk = 5/5 PASS.** Clean temp dir + `npm i @hyperdag/trustshell@1.3.0` (registry current 1.3.0; git 1.4.0 unpublished, not used). Keyless vs prod: init/health ok; verifyOutput Paris→PASS, Rome→VETO; getRepID(trinity-shofet)→2177/ESTABLISHED; presentProof→proof bundle. No mint (Bearer-gated, out of scope). Receipt: docs/living/NPM_GATE_RECEIPT.md. NEXT: P3 429-dedup E2E, P4 ingest harden.
 
