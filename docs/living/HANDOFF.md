@@ -382,7 +382,9 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 48–102 (2026-09-13) — inbox refill: P1 live-stats done; PRs #149/#150 MERGED
+# HANDOFF — CC2 wakeup 48–103 (2026-09-13) — inbox queue: P1+P2 done; PRs #149/#150 MERGED
+
+wakeup 103 — **P2 npm gate-walk = 5/5 PASS.** Clean temp dir + `npm i @hyperdag/trustshell@1.3.0` (registry current 1.3.0; git 1.4.0 unpublished, not used). Keyless vs prod: init/health ok; verifyOutput Paris→PASS, Rome→VETO; getRepID(trinity-shofet)→2177/ESTABLISHED; presentProof→proof bundle. No mint (Bearer-gated, out of scope). Receipt: docs/living/NPM_GATE_RECEIPT.md. NEXT: P3 429-dedup E2E, P4 ingest harden.
 
 wakeup 102 (NEW inbox queue — idle-hold ended): **P1 (#58 live-stats) = NOT REPRODUCIBLE, stale premise.** Measured live www.trustshell.dev (Playwright+curl): homepage `LiveTrustScores` widget uses NO Supabase/NO key — fetches repid-engine `/api/v1/leaderboard/{models,agents}` client-side, all **200**, renders real numbers (gpt-4o 0.8979; trinity-shofet RepID 2177); zero 4xx, zero Supabase calls, not stuck, no error card, no "104"/2026-08-30. The inbox root cause (legacy anon Supabase JWT→401) does NOT apply; NO frontend reads `repid_leaderboard_public`; lib/supabase.ts already prefers PUBLISHABLE key. No key swap owed (key rotation NOT MINE). Shipped durable guard instead: **DRAFT PR #152** `tests/e2e/home-stats-walk.mjs` (6/6 OK, npm run verify green 377). NEXT: P2 npm@1.3.0 gate walk, P3 429-dedup E2E, P4 ingest harden. Path A #149/#150 stay merged.
 
