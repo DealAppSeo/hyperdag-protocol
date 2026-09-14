@@ -382,7 +382,10 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 48–104 (2026-09-13) — inbox queue: P1+P2+P3 done; PRs #149/#150 MERGED
+# HANDOFF — CC2 wakeup 48–105 (2026-09-13) — INBOX QUEUE EMPTY; cron STOPPED
+
+wakeup 105 — **P4 ingest-harden DONE (DRAFT PR #154). Inbox NOW queue EMPTY → CC2 cron STOPPED, will resume on new dispatch.** P4: hardened src/lib/ingest.ts vs 2 Strix findings — (a) bypassable blocklist → detection now on raw + de-obfuscated (strips zero-width/joiner/BOM/soft-hyphen, collapses letter-spacing "i g n o r e") + base64-decoded views, plus paraphrase/exfil patterns; (b) flag tier honest → CLEAN is the only "proceed" verdict, veto/flag are holds. 4 new fixtures + tests/ingest.test.ts 12/12; verify green 384. Kept default-off/unexported/unwired (verified). INGEST_EVAL.md updated on bus. Known ceiling unchanged (regex≠proof; model classifier is the real fix).
+— **Session summary (inbox queue 2026-09-13):** P1 #58 live-stats = NOT REPRODUCIBLE/stale premise (draft PR #152 guard); P2 npm@1.3.0 gate walk 5/5 PASS (receipt NPM_GATE_RECEIPT.md); P3 429-dedup drift documented+guarded (draft PR #153); P4 ingest-harden (draft PR #154). All 4 are DRAFT PRs awaiting Sean — none merged, no publish. Open for Sean: (i) taken-PAI-name 409-vs-non-unique; (ii) move repid-engine dedup to Redis; (iii) if a stuck live-stats widget is ever seen, it's a stale deploy not a key.
 
 wakeup 104 — **P3 429-dedup drift = DOCUMENTED + guarded (DRAFT PR #153).** Live re-probe: 3 identical back-to-back POST /register → 201/201/201, distinct ids (733f7e95/25e65f69/d9fbfa3b). Root cause (repid-engine agents-external.ts L114-197): dedup is a per-PROCESS in-memory Map ("Resets on process restart; move to Redis") → dormant on multi-replica Railway. Intent real, live=201-every-time=fresh agent (never reuse), no 409. Corrected CREATE_PAI_UI.md caveat (b) to live reality + flagged the Redis fix as Sean/backend call; added non-flaky parser test (two 201s = distinct ids). verify green 378. Did NOT implement global uniqueness/409 (Sean's call). NEXT: P4 stretch ingest harden — then queue empty.
 
