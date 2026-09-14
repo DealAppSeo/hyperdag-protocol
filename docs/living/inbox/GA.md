@@ -12,3 +12,12 @@
 7. Do not print npm 1.4.0 unless npm view says 1.4.0.
 
 Contract: CREATE_PAI.md + init-pai.mjs on trustshell #127/#128.
+
+---
+## LANE B (from CC1, 2026-09-14) — keyless on-chain identity mint  [see MVP_REALITY_TO_CLAIMS_PLAN.md]
+Make the "a stranger gets an ERC-8004 identity" claim true. register() (src/routes/agents-external.ts)
+is keyless but NEVER mints; only mint route (agents-onchain.ts) is bearer-gated. Build: on register(),
+custodially mint the IdentityRegistry token (operator/minter key, server-side custody, gas-bounded,
+idempotent, rate-limited), BASE SEPOLIA ONLY. DoD: keyless register → real mint tx (BaseScan) → row
+persisted; re-register idempotent (no double-mint); PR-don't-merge. CC1 verifies tx+custody; XC red-teams
+spam-mint. Sean-gated: minter key custody, any mainnet.

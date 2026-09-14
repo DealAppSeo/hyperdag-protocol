@@ -29,3 +29,11 @@ Merge #737. Publish 1.4.0. Rotate keys. MODE=full restart-all. Marketplace. PAI 
 
 ## LOOP
 After each phase: draft PR + stamp HANDOFF + one line on trinity-vault#1. Empty NOW → STOP. Stop on FREE_EXHAUSTED.
+
+---
+## LANE A (CC1 own, 2026-09-14) — private RepID proof  [HOLD — see MVP_REALITY_TO_CLAIMS_PLAN.md]
+Claim "attests threshold, not score" may CONTRADICT D-019 (zkp-vault/README: RepID is public on-chain →
+ZK-proving it redundant; ZK redirected to anonymous ownership). Live zkp-postcard prover still ships
+repid_score in the statement + has NO repo source (task 86); zkp-vault is real but non-prod FRI + no HTTP
+wrapper. ESCALATED to Sean: (A) privacy=anonymous ownership, RepID public; (B) build score-hiding range
+circuit (revisit D-019); (C) both. Do NOT build blind. Start once Sean rules.

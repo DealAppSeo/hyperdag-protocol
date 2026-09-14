@@ -19,3 +19,12 @@ Redis / shared-store dedup (CC1 P1). Reward cap (CC1). Marketplace. PAI 409. npm
 
 ## LOOP
 After each phase: receipt or draft PR + stamp HANDOFF. Empty NOW → STOP. Stop on FREE_EXHAUSTED.
+
+---
+## LANE D (from CC1, 2026-09-14) — marketplace + x402 e2e + site truth  [see MVP_REALITY_TO_CLAIMS_PLAN.md]
+marketplace_listings=0, offers=0, 0 anon RLS policies on the 4 browse tables → /marketplace/browse empty,
+x402.discovery fails. Live-stats widget dead (site still on the DEAD legacy key). Build: (1) anon-READ RLS
+on the 4 browse tables (no anon write); (2) real/[DEMO] listings; (3) prove ONE x402 purchase settles
+e2e on Base Sepolia; (4) swap site to the NEW PUBLISHABLE key + redeploy (leaderboard has 211 rows).
+DoD: anon GET returns rows; browse renders (Playwright); one settled x402 tx; homepage stat 200 real
+number. CC1 verifies settlement tx + RLS. Sean-gated: Vercel redeploy.

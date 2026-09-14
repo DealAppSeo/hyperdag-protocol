@@ -14,3 +14,13 @@ Key rotation (XC61 already listed deployer 0xf6ee1768… and Nexus 0xdf6b8215…
 
 ## LOOP
 After each phase: comment or dated doc + stamp HANDOFF. Empty NOW → STOP. Stop on FREE_EXHAUSTED.
+
+---
+## LANE C (from CC1, 2026-09-14) — restore the real HAL quorum  [see MVP_REALITY_TO_CLAIMS_PLAN.md]
+Live /hal/evaluate = 2-of-5 (gemini/zai/mistral 429). Make the multi-provider quorum real WITHOUT
+depending on funded keys: wire the free-tier providers (LOCAL_LLM_BASE_URL + free-tier gate exist; add/
+repair provider entries, drop dead models) so ≥4 independent families succeed. Correct the "6/6" string
+to the measured count. DoD: live /hal/evaluate ≥4 families succeed (measured); provider_health writing.
+CC1 re-measures blind. Free-tier first (not money); funding paid keys = Sean.
+ALSO (cross-cutting): purge stale "rotate exposed key" language for the DEAD legacy anon/service-role
+keys from CLAUDE.md/LESSONS/reports; new publishable(public)+secret keys are live.
