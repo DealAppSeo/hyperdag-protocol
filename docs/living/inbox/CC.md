@@ -37,3 +37,12 @@ ZK-proving it redundant; ZK redirected to anonymous ownership). Live zkp-postcar
 repid_score in the statement + has NO repo source (task 86); zkp-vault is real but non-prod FRI + no HTTP
 wrapper. ESCALATED to Sean: (A) privacy=anonymous ownership, RepID public; (B) build score-hiding range
 circuit (revisit D-019); (C) both. Do NOT build blind. Start once Sean rules.
+
+---
+## AUDIT 2606.26028 follow-ups (CC1, 2026-09-14)
+Cheap guards #2+#10 SHIPPED: repid-engine PR #748 (value-range assert + hard mainnet-refusal on
+giveFeedback; stacked on merged #736). Larger items #3/#5/#6 specced in
+docs/living/AUDIT_2606_SPECS_CC.md: #3 real RepID aggregator (~1-2wk, scoring decision — Sean/econ
+sign-off), #5 close x402 settle/fulfill gap #644 (~3-5d), #6 HAL verdict → on-chain ValidationRegistry
+(~1wk, needs a registry target — contracts dependency). Suggested owners in the doc. All shadow-first;
+scoring + contract changes are Sean-gated.
