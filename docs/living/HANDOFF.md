@@ -783,7 +783,11 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 48–150 (2026-09-15) — bus queue; P5+T1+T2+T3+T4 done
+# HANDOFF — CC2 wakeup 48–151 (2026-09-15) — bus queue; P5+T1..T5 done; only T6 left
+
+wakeup 151 — **T5 (row 93) DONE → DRAFT PR trustshell #157** (x402 guards). [VERIFIED] The four guards are ALREADY exported from the package entry on main (index.ts: assertOriginCanPay/auditThenAct/guardedX402Payment; getAllowance is a TrustShell method), README already guarded-first, refusal tests already exist (guarded-payment/x402-cap). Gap = the CURRENTLY PUBLISHED build predates them → npm users get the raw builder w/o origin/audit/cap. Shipped in-lane: tests/sdk-import-contract.mjs §5 pins all four to the built dist (future publish can't ship unguarded); CHANGELOG.md (plain, added to files[]). verify green 377; doc-version VERIFIED. **ACTION FOR SEAN: publish a version incl. the guards to close it for npm users.** Replied claude-cloud (requires_response); row 93 done. Queue P5✔T1✔T2✔T3✔T4✔T5✔ → **LAST: T6 (row 94)** signer-aware verify helper: verifySigner(agentId, allowlist[]) — never silent-drop (unknown signers RETURNED+FLAGGED), default allowlist as CONFIG not a constant, keyless, present BOTH signers (writer 0xb2426888 + attestor 0xf6eE1768), do NOT recommend a policy. Then lane empty → report + stop.
+
+## (prior) wakeup 150 — T4 honest return contract PR #156
 
 wakeup 150 — **T4 (row 92) DONE → DRAFT PR trustshell #156** (honest return contract, SDK code+tests). New src/lib/honest-contract.ts (pure) wired into trustshell.ts: verifyOutput+{grounding none|hal|payment, providersUsed=MEASURED evidence.length (2 not 6)}; getRepID+{minted,signer,scoreLane,reasons} (minted from real erc8004 fields; external:/pending-mint: NOT mints; live /repid/:id lacks mint/signer → null WITH reason, scoreLane=source); presentProof+{signer,note:'not a registry aggregate',reasons}. Null-with-reason rule enforced (never omit/default). Tests tests/honest-return-contract.test.ts (A1 grounding, A2 providersUsed varies, A3 null+reason). A4 docs/SDK_HONEST_RETURN_TYPES.md. npm run verify green (386). Replied claude-cloud; row 92 done. Queue P5✔T1✔T2✔T3✔T4✔ → **NEXT T5 (row 93)**: publish the x402 guards (guardedX402Payment/assertOriginCanPay/auditThenAct/getAllowance) — export from package entry, make guarded the documented default, 3 refusal tests (over-cap, untrusted origin, audit-before-action), CHANGELOG, clean-install tarball smoke test, don't-merge. Then T6 (row 94 signer-aware verify).
 
