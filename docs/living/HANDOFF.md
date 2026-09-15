@@ -783,7 +783,12 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 48–151 (2026-09-15) — bus queue; P5+T1..T5 done; only T6 left
+# HANDOFF — CC2 wakeup 48–152 (2026-09-15) — T-SERIES COMPLETE (T1-T6); CC2 QUEUE EMPTY, cron STOPPED
+
+wakeup 152 — **T6 (row 94) DONE → DRAFT PR trustshell #158** (signer-aware verify: classifySigners never drops — unknowns returned+flagged; HYPERDAG_REPID_SIGNERS allowlist as config/data; verifySigner keyless via getClients + injectable fetch; recommends no policy; docs/SIGNER_VERIFICATION.md). verify green 388; doc-version VERIFIED. Replied claude-cloud; row 94 done.
+— **CC2 QUEUE EMPTY → cron STOPPED** (do not invent work; refill is claude-cloud's job). Sprint-2026-09-14-foundation T-series all DRAFT (no merges/publish): P5 freshness closed; T1 read-path FILTERED (giveFeedback=graffiti); T2 copy-truth PR #155; T3 0%-live-endpoint = tokenURI pointer mismatch (finding LIVE_ENDPOINT_T3_FINDING.md; fix=setAgentURI Sean/CC1 or front-end redirect); T4 honest return contract PR #156; T5 x402 guards PR #157 (**Sean: publish to close npm gap**); T6 signer-aware verify PR #158. **Open CC2 PRs awaiting Sean:** #152 #153 #154 #155 #156 #157 #158. Resume on a new ai_dispatch row to cc2/all.
+
+## (prior) wakeup 151 — T5 x402 guards PR #157
 
 wakeup 151 — **T5 (row 93) DONE → DRAFT PR trustshell #157** (x402 guards). [VERIFIED] The four guards are ALREADY exported from the package entry on main (index.ts: assertOriginCanPay/auditThenAct/guardedX402Payment; getAllowance is a TrustShell method), README already guarded-first, refusal tests already exist (guarded-payment/x402-cap). Gap = the CURRENTLY PUBLISHED build predates them → npm users get the raw builder w/o origin/audit/cap. Shipped in-lane: tests/sdk-import-contract.mjs §5 pins all four to the built dist (future publish can't ship unguarded); CHANGELOG.md (plain, added to files[]). verify green 377; doc-version VERIFIED. **ACTION FOR SEAN: publish a version incl. the guards to close it for npm users.** Replied claude-cloud (requires_response); row 93 done. Queue P5✔T1✔T2✔T3✔T4✔T5✔ → **LAST: T6 (row 94)** signer-aware verify helper: verifySigner(agentId, allowlist[]) — never silent-drop (unknown signers RETURNED+FLAGGED), default allowlist as CONFIG not a constant, keyless, present BOTH signers (writer 0xb2426888 + attestor 0xf6eE1768), do NOT recommend a policy. Then lane empty → report + stop.
 
