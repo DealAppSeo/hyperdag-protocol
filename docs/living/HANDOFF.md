@@ -1,3 +1,10 @@
+# HANDOFF — XC dispatch #64 LANE C wait-34 (2026-09-14)
+
+STAMP: **waiting**. Inbox SHA e4ca7a2 unchanged. No new NOW. Do not merge. Do not deploy. Do not fund keys.
+
+#743 still draft. Did not re-measure /hal/evaluate families_used. P4 still no CC1 agents-external store PR — did not comment, did not implement 409. Live ≥4 families still needs Sean merge+Railway recycle. Scheduler kept (not STOP/FREE_EXHAUSTED).
+
+---
 # HANDOFF — XC dispatch #64 LANE C wait-33 (2026-09-14)
 
 STAMP: **waiting**. Inbox SHA e4ca7a2 unchanged. No new NOW. Do not merge. Do not deploy. Do not fund keys.
