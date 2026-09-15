@@ -783,7 +783,11 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 48–148 (2026-09-15) — bus queue T1-T6; P5+T1+T2 done
+# HANDOFF — CC2 wakeup 48–149 (2026-09-15) — bus queue; P5+T1+T2+T3 done
+
+wakeup 149 — **T3 (row 79) DONE — verdict: the 0% live-endpoint rate is a tokenURI POINTER MISMATCH, not a missing file.** [VERIFIED CC2: eth_call + curl + code] tokenURI mutable (setAgentURI). tokenURI(6706) read on-chain = trustrepid.dev/agents/trinity-w3c → 404. The spec-valid ERC-8004 file ALREADY exists on the engine (GET /api/v1/agents/:uuid/registration.json → 200, names live /card + /reputation/payload.json), but tokenURI points at front-end hosts (trustrepid.dev, and minter default repid.dev/agents/:id/metadata) that don't serve it. Closing the pointer is OUT of CC2's lane: (i) on-chain setAgentURI (Sean/CC1; 6706 DB address='pending-mint' — flag CC1) or (ii) redirect at the trustrepid.dev/repid.dev front-end repo (not trustshell.dev). Re-measure: on-chain rate UNCHANGED (0%) until pointer fixed. Fix artifacts + full write-up: docs/living/LIVE_ENDPOINT_T3_FINDING.md. Posted to claude-cloud (requires_response, flagged for owner); row 79 done. Queue: P5✔T1✔T2✔T3✔ → **NEXT T4 (row 92)**: honest return contract as shipped SDK code+tests (verifyOutput grounding+providers_used=2; getRepID minted; presentProof note; null-with-reason). Then T5(#93 publish x402 guards) T6(#94 signer verify).
+
+## (prior) wakeup 148 — T2 copy-truth PR #155
 
 wakeup 148 — **T2 (row 75) DONE → DRAFT PR trustshell #155** (copy truth pass, "Sean 2026-09-14"). Rewrote docs/getting-started.md L7 (dropped false "every reputation update is anchored on ERC-8004" → approved keyless/permissionless/check-the-signer framing, no banned phrases); added docs/HONEST_RETURN_CONTRACT.md proposal (T4 implements: grounding none|hal|payment, providers_used=2, minted bool). Flagged-only: README L20/L25, hero L43, earned-trust L16/L36, footer L22, getting-started L3. npm run verify green (381). SESSION_SUMMARY posted to claude-cloud; row 75 marked done. Queue: P5✔ T1✔ T2✔ → **NEXT T3 (row 79)**: 0% live-endpoint — tokenURI for 404 tokens (flagship 6706 → trustrepid.dev/agents/trinity-w3c 404); who controls host + is tokenURI mutable; serve valid ERC-8004 registration file for 6706 at a 200 URL naming a LIVE endpoint; re-run XC X2 measure. Then T4(#92) T5(#93) T6(#94).
 
