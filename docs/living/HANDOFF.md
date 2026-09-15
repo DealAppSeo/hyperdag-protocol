@@ -783,7 +783,11 @@ origin.ts NOT on main (GET 404). #132 MERGEABLE/clean vs main `e14a061`, Strix "
 
 ---
 
-# HANDOFF — CC2 wakeup 48–147 (2026-09-15) — new bus queue T1-T6; T1 done + P5 closed
+# HANDOFF — CC2 wakeup 48–148 (2026-09-15) — bus queue T1-T6; P5+T1+T2 done
+
+wakeup 148 — **T2 (row 75) DONE → DRAFT PR trustshell #155** (copy truth pass, "Sean 2026-09-14"). Rewrote docs/getting-started.md L7 (dropped false "every reputation update is anchored on ERC-8004" → approved keyless/permissionless/check-the-signer framing, no banned phrases); added docs/HONEST_RETURN_CONTRACT.md proposal (T4 implements: grounding none|hal|payment, providers_used=2, minted bool). Flagged-only: README L20/L25, hero L43, earned-trust L16/L36, footer L22, getting-started L3. npm run verify green (381). SESSION_SUMMARY posted to claude-cloud; row 75 marked done. Queue: P5✔ T1✔ T2✔ → **NEXT T3 (row 79)**: 0% live-endpoint — tokenURI for 404 tokens (flagship 6706 → trustrepid.dev/agents/trinity-w3c 404); who controls host + is tokenURI mutable; serve valid ERC-8004 registration file for 6706 at a 200 URL naming a LIVE endpoint; re-run XC X2 measure. Then T4(#92) T5(#93) T6(#94).
+
+## (prior) wakeup 147 — P5 closed + T1 verdict=GRAFFITI
 
 wakeup 147 — NEW CC2 queue from ai_dispatch (board #63): rows 74(T1) 75(T2) 79(T3) 92(T4) 93(T5) 94(T6). **P5 CLOSED** — CC1 reminted trinity-shofet (proof id 79290); published keyless client now shows createdAt=2026-09-15T07:12:42Z, age 0.30h, verified:true (was 2.77d). **T1 (row 74) DONE — verdict: A7 permissionless giveFeedback is bulletin-board GRAFFITI, not a shipped-package incident.** [VERIFIED code read] A: SDK src/lib/trustshell.ts read path is pure HTTP to engine (hal/evaluate L547, /repid/:id L664, /proof L925), never a chain RPC; only ethers use = lazy x402 signing (L1418). B: engine repid.ts read routes never call getSummary; current_repid=engine aggregation (board #3/#7); lastAnchorTx from erc8004_reputation_writes/EAS. C: both getSummary readers hardcode clientAddresses=[our own wallet] (erc8004-reputation.ts:148, repid-attestation.ts:189), never caller-supplied; only exposed via diagnostic route /api/v1/agents/:id/reputation/onchain, NOT the SDK path. FILTERED on A+B → per row 74, T2 is a docs sentence not a sprint; XC X1 need not outrank #5. Posted verdict to claude-cloud+grok (ai_dispatch #95/#96); marked rows 74,82 done. Stopped after T1 as instructed. NEXT: T2 (getting-started.md L7 copy fix) → T3 (0% live-endpoint / tokenURI 6706) → T4 honest return contract → T5 publish x402 guards → T6 signer-aware verify.
 
