@@ -21,14 +21,14 @@ F-GROUND-ENFORCE — only after a day of shadow logs.
 | ID | Lane | Work | Done-when |
 |---|---|---|---|
 | L1 | XC2 | Refresh `DealAppSeo/example-agent` onto TrustShell main API (1.4.0 unpublished). README: install → verify Paris/Rome → getRepID → presentProof. Depend on `github:DealAppSeo/trustshell` until F-PUBLISH, then flip to `@hyperdag/trustshell@1.4.0`. | Clone + those four commands work |
-| L2 | XC1 | Write `docs/living/VISITOR_E2E.md` — incognito script: trustshell.dev → copy install → CLI verify/getRepID/proof --verify → MCP present_proof. Sean runs it; you write the checklist. | File on main |
+| L2 | XC1 **claimed** | Write `docs/living/VISITOR_E2E.md` — incognito script: trustshell.dev → copy install → CLI verify/getRepID/proof --verify → MCP present_proof. Sean runs it; you write the checklist. | File on branch `feat/xc1-2026-09-15-l2-l9` |
 | L3 | XC2 | Honest STATUS block on trustshell README + site: npm 1.3.0 until F-PUBLISH; after publish 1.4.0; quorum 2 answering / 8 configured; Sepolia not mainnet; grounding shadow; no MVP-launched. | PR green, merge under policy |
 | L4 | XC2 | Issue templates on trustshell: `bug-stranger-install.yml`, `break-the-gate.yml`. | Templates in `.github/ISSUE_TEMPLATE` |
 | L5 | XC2 | `SECURITY.md` on trustshell if missing — one contact, no extra product claims. | File on main |
 | L6 | XC2 | Site footer shows live engine `/health` `deployed_commit` (today `987c8c17`). Fail-closed if fetch fails. | Visible on trustshell.dev preview |
-| L7 | XC1 | Draft pinned thread text in `docs/living/COMMONS_PIN.md` for trust-commons: "Attack the scoring assumptions." Code stays in trustshell/engine. | File on main |
-| L8 | XC1 | `AUTHORS.md` on hyperdag-protocol: created/maintained by Sean Goodwin; GitHub faces = commit counter not credit. Optional `.mailmap` note. | File on main |
-| L9 | XC1 | Ecosystem table in hyperdag-protocol README + same table snippet in `docs/living/ECOSYSTEM.md`. Include trust-commons as debate commons, not a download. | File on main |
+| L7 | XC1 **claimed** | Draft pinned thread text in `docs/living/COMMONS_PIN.md` for trust-commons: "Attack the scoring assumptions." Code stays in trustshell/engine. | File on branch `feat/xc1-2026-09-15-l2-l9` |
+| L8 | XC1 **claimed** | `AUTHORS.md` on hyperdag-protocol: created/maintained by Sean Goodwin; GitHub faces = commit counter not credit. Optional `.mailmap` note. | File on branch `feat/xc1-2026-09-15-l2-l9` |
+| L9 | XC1 **claimed** | Ecosystem table in hyperdag-protocol README + same table snippet in `docs/living/ECOSYSTEM.md`. Include trust-commons as debate commons, not a download. | File on branch `feat/xc1-2026-09-15-l2-l9` |
 | L10 | XC2 | Draft GitHub Release notes for `v1.4.0` in `docs/handoff/RELEASE_1_4_0.md` from CHANGELOG. Do not `gh release create`. | Draft only |
 
 ## Locks
