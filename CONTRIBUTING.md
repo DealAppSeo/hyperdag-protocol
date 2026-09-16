@@ -1,33 +1,28 @@
 # Contributing to HyperDAG Protocol
 
-Maintainer: Sean Goodwin. GitHub faces are a commit counter, not credit — see [AUTHORS.md](AUTHORS.md).
+**Maintainer: Sean Goodwin.** GitHub faces are a **commit counter**, not credit — see [AUTHORS.md](AUTHORS.md).
 
-We love your input! We want to make contributing to Trinity Symphony as easy and transparent as possible, whether it's:
+The stranger-facing product is [`@hyperdag/trustshell`](https://github.com/DealAppSeo/trustshell), not this repo. This repo is the interface kernel. `@hyperdag/protocol` is **not on npm**. Do not send “become a maintainer” mail; open a PR.
 
-- Reporting a bug
-- Discussing the current state of the code
-- Submitting a fix
-- Proposing new features
-- Becoming a maintainer
+## What to send here vs elsewhere
 
-## Vision: Help People Help People
-We are building a democratized, individual-owned agentic AI ecosystem. Our community keeps corporate gatekeepers accountable. 
+| Change | Where |
+|---|---|
+| Kernel / living docs / AUTHORS / ecosystem table | **this repo** |
+| Client, CLI, MCP, site copy | [trustshell](https://github.com/DealAppSeo/trustshell) |
+| Scoring / settle / grounding | [repid-engine](https://github.com/DealAppSeo/repid-engine) |
+| Attack the scoring *assumptions* | [trust-commons](https://github.com/DealAppSeo/trust-commons) (debate, not a download) |
 
-## Our Development Process
-1. Fork the repo and create your branch from `main`.
-2. If you've added code that should be tested, add tests.
-3. If you've changed APIs, update the documentation.
-4. Ensure the test suite passes.
-5. Issue that pull request!
+## PR path
 
-## Code Style
-* Use TypeScript for all logic.
-* Core cryptographic and consensus operations use [Rust](https://www.rust-lang.org/) (WASM bindings Q2 2026).
-* ZK proofs use [Plonky3](https://github.com/Plonky3/Plonky3) — no trusted setup, recursive composition, WASM-compatible.
-* Follow the [ERC-8004 spec](https://github.com/erc-8004/erc-8004-contracts) for all agent identity work.
-* Reference the [x402 protocol](https://github.com/x402-rs/x402-rs) for agent payment integration.
-- Follow the Trinity Constitution (Phil 4:8) in your logic and comments.
-- Keep components modular and extensible.
+1. Fork. Branch from `main`.
+2. Tests for code you add. `npm ci` then the jobs in `.github/workflows/ci.yml`.
+3. No `package.json` version bump unless Sean asked. No `npm publish`. No prod SQL.
+4. No “MVP launched.” Published npm is `@hyperdag/trustshell@1.3.0` until F-PUBLISH.
+5. Open the pull request. MERGE_POLICY: agents may squash-merge when checks are green and the PR is not publish / DDL / secrets.
+
+Security: [SECURITY.md](SECURITY.md). Ecosystem map: [`docs/living/ECOSYSTEM.md`](docs/living/ECOSYSTEM.md).
 
 ## License
-By contributing, you agree that your contributions will be licensed under the Apache License 2.0.
+
+By contributing, you agree your contributions are licensed under Apache 2.0.
