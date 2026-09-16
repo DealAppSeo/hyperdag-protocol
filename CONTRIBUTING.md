@@ -1,5 +1,7 @@
 # Contributing to HyperDAG Protocol
 
+Maintainer: Sean Goodwin. GitHub faces are a commit counter, not credit — see [AUTHORS.md](AUTHORS.md).
+
 We love your input! We want to make contributing to Trinity Symphony as easy and transparent as possible, whether it's:
 
 - Reporting a bug

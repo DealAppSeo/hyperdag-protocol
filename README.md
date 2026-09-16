@@ -250,15 +250,16 @@ See [GOVERNANCE_ROADMAP.md](GOVERNANCE_ROADMAP.md) for the bootstrap-to-communit
 
 ## Public ecosystem
 
-All Apache 2.0; all open:
+Same table as [`docs/living/ECOSYSTEM.md`](docs/living/ECOSYSTEM.md). **trust-commons is a debate commons, not a download.**
 
-| Repo | Role |
-|---|---|
-| **[hyperdag-protocol](https://github.com/DealAppSeo/hyperdag-protocol)** *(you are here)* | The interface kernel + curated defaults |
-| **[@hyperdag/trustshell](https://github.com/DealAppSeo/trustshell)** | Drop-in npm client: `shell.evaluate(...)` for HAL, ERC-8004 read helpers, x402 client SDK |
-| **[example-agent](https://github.com/DealAppSeo/example-agent)** | 60-second demo agent — keyless HAL fact-check + SDK mode |
-| **[trustrepid](https://github.com/DealAppSeo/trustrepid)** | Live RepID leaderboard + per-LLM trust scores |
-| **[trustchat-backend](https://github.com/DealAppSeo/trustchat-backend)** | HAL-aware chat backend (reference consumer) |
+| Repo | Role | Install? |
+|---|---|---|
+| **[hyperdag-protocol](https://github.com/DealAppSeo/hyperdag-protocol)** *(you are here)* | Interface kernel + curated defaults. `@hyperdag/protocol` is **not on npm**. | Clone / read. Not `npm i`. |
+| **[trustshell](https://github.com/DealAppSeo/trustshell)** | Drop-in client: HAL, ERC-8004 RepID, x402. Published `@hyperdag/trustshell` **1.3.0** until F-PUBLISH. | `npm i @hyperdag/trustshell` |
+| **[repid-engine](https://github.com/DealAppSeo/repid-engine)** | Scoring engine (private formula). Not an npm product. | No |
+| **[proof-verifier](https://github.com/DealAppSeo/proof-verifier)** | Client-side Plonky3 check; usually bundled inside trustshell. | Rarely direct |
+| **[example-agent](https://github.com/DealAppSeo/example-agent)** | 60-second demo agent. | Clone; follow its README |
+| **[trust-commons](https://github.com/DealAppSeo/trust-commons)** | **Debate commons** — conversation, not a package. | Open Discussions. Do not `npm i`. |
 
 ---
 
