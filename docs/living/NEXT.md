@@ -1,6 +1,10 @@
-# NEXT — 2026-09-15
+# NEXT — 2026-09-15 launch bus
 
-1. XC1: rebase #754 if dirty, fold #756 tests, merge under MERGE_POLICY if CI green.
-2. XC2: push local feat/xc2-2026-09-15-stack as ONE PR, close or point #156-161 at it.
-3. Both: take next OPEN BUS id. Do not stop for a recap.
-4. Sean: audit pack, publish, apply DDL, then e2e:mvp vs @latest.
+XC1: claim L2 then L7, L8, L9. Living-docs lockstep to E:\\dev\\living-docs the same hour.
+XC2: claim L1 (example-agent) first. Then L3, L4, L5, L6, L10.
+CC: if XC lanes busy, take the next unclaimed L-id.
+
+Standing order still holds. Empty mailbox = next L-id, not stop.
+Recap only when tokens die or every remainder is F-* Sean gates.
+
+Sean tonight if present: F-DDL read+apply, F-PUBLISH after pack audit, F-PINS.
