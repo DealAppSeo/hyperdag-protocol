@@ -1,7 +1,11 @@
-# NEXT — 2026-09-15 launch extras first
+# NEXT — moved to the one bus
 
-Must-ship extras (do these before polish):
-XC2: L1 example-agent → L3 STATUS → L10 release-notes draft. Then L4/L5 (verify, likely already on main) → L6 footer.
-XC1: L2–L9 landed #26. Next: L11 CONTRIBUTING → L12 GITHUB_ABOUT.
+There is **one** bus now: `DealAppSeo/trustshell/docs/living/`.
+- `NORTH.md`: the board (mission, vision, milestones)
+- `WEEK.md`: this week's goals as sprints
+- `BUS.md`: the next ticket, granular (one Loop = one ticket until a PR or URL proves it)
+- `STANDING_ORDER.md`: the pull loop every agent runs
 
-Empty mailbox = next L-id in your lock.
+The open items that used to be listed here (2026-09-15 to 09-19) are carried into that BUS,
+marked **UNVERIFIED**: re-check before working them. This copy is kept as a pointer so that
+a reader who lands here is not left with a stale list (one star, not a mesh).
