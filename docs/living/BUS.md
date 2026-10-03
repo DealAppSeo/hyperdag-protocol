@@ -1,37 +1,11 @@
-# BUS — launch prep after #754 + #161
-Updated 2026-09-16 (XC1 L11/L12 onto the bus).
+# BUS — moved to the one bus
 
-## Closed (code on main)
-Engine #754 merged `987c8c17` (harness E1/E2/E7–E9, settle fixtures, unique SQL written). TrustShell #161 merged `912360fc` (T4–T6, A7, evaluate alias, JWT refuse, packed e2e). MERGE_POLICY live.
-Protocol **#26** XC1 L2 `VISITOR_E2E.md` + L7 `COMMONS_PIN.md` + L8 `AUTHORS.md` + L9 `ECOSYSTEM.md` / README table (this PR).
+There is **one** bus now: `DealAppSeo/trustshell/docs/living/`.
+- `NORTH.md`: the board (mission, vision, milestones)
+- `WEEK.md`: this week's goals as sprints
+- `BUS.md`: the next ticket, granular (one Loop = one ticket until a PR or URL proves it)
+- `STANDING_ORDER.md`: the pull loop every agent runs
 
-## Sean-only (do not idle waiting — agents take L-ids)
-F-DDL — apply `migrations/2026-09-15_kind_custody.sql` after reading unique is `evidence_id` only.
-F-PUBLISH — `npm publish` `@hyperdag/trustshell@1.4.0` after pack audit. GitHub Release same hour.
-F-E2E-PUB — `e2e:mvp` vs `@latest` after publish.
-F-SITE-PIN — site badge = published number. No "MVP launched."
-F-PINS — profile pins: trustshell, repid-engine, hyperdag-protocol, trust-commons, proof-verifier, example-agent.
-F-DISCUSSIONS — enable Discussions on trust-commons; pin the L7 thread.
-F-FRIENDS — after visitor pass green.
-F-EXPERTS — Marco / Vitto / Leonard after friends.
-F-LIVE-SETTLE — one Sepolia `service_contracts` row `settled`, metadata `pre-mvp`.
-F-GROUND-ENFORCE — only after a day of shadow logs.
-
-## OPEN — agents start now. Empty mailbox = next L-id.
-
-| ID | Lane | Work | Done-when |
-|---|---|---|---|
-| L1 | XC2 | Refresh `DealAppSeo/example-agent` onto TrustShell main API (1.4.0 unpublished). README: install → verify Paris/Rome → getRepID → presentProof. Depend on `github:DealAppSeo/trustshell` until F-PUBLISH, then flip to `@hyperdag/trustshell@1.4.0`. | Clone + those four commands work |
-| L3 | XC2 | Honest STATUS block on trustshell README + site: npm 1.3.0 until F-PUBLISH; after publish 1.4.0; quorum 2 answering / 8 configured; Sepolia not mainnet; grounding shadow; no MVP-launched. | PR green, merge under policy |
-| L4 | XC2 | Issue templates on trustshell: `bug-stranger-install.yml`, `break-the-gate.yml`. **Verify** — both files already on trustshell main 2026-09-16. Do not rewrite if present. | Templates in `.github/ISSUE_TEMPLATE` |
-| L5 | XC2 | `SECURITY.md` on trustshell if missing — one contact, no extra product claims. **Verify** — file already on main (GitHub Advisories, Sepolia not mainnet). Do not rewrite if present. | File on main |
-| L6 | XC2 | Site footer shows live engine `/health` `deployed_commit` (today `987c8c17`). Fail-closed if fetch fails. | Visible on trustshell.dev preview |
-| L10 | XC2 | Draft GitHub Release notes for `v1.4.0` in `docs/handoff/RELEASE_1_4_0.md` from CHANGELOG. Do not `gh release create`. | Draft only |
-| L11 | XC1 **claimed** | Tighten protocol `CONTRIBUTING.md`: visitor PR path, AUTHORS, where-to-send-patches, no “become a maintainer,” no extra product claims. | File on branch `feat/xc1-2026-09-16-l11-l12` |
-| L12 | XC1 **claimed** | `docs/living/GITHUB_ABOUT.md` checklist for ECOSYSTEM repos. Apply **empty** About on `hyperdag-protocol` only. Do not invent homepages. Do not touch example-agent. Not F-PINS. | Checklist on main + protocol About filled |
-
-## Locks
-XC1 = hyperdag-protocol living docs + AUTHORS + commons pin + CONTRIBUTING + GITHUB_ABOUT. L2/L7/L8/L9 on main. **This lock: L11 → L12.** No trustshell package.json. No example-agent. No site.
-XC2 = example-agent + trustshell STATUS/templates/SECURITY/footer/release draft. No engine scoring.
-CC = same standing order; pick an unclaimed L-id.
-Do not open a new product surface. Do not say MVP launched.
+The open items that used to be listed here (2026-09-15 to 09-19) are carried into that BUS,
+marked **UNVERIFIED**: re-check before working them. This copy is kept as a pointer so that
+a reader who lands here is not left with a stale list (one star, not a mesh).
