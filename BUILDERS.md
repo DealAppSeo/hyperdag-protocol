@@ -18,12 +18,14 @@ publish X without touching this file.
 
 | Thing | State | How to check |
 |---|---|---|
-| **`@hyperdag/trustshell`** | **PUBLISHED — `1.3.0`.** The one package to install. | `npm view @hyperdag/trustshell version` |
+| **`@hyperdag/trustshell`** | **PUBLISHED — `1.4.0`** (measured 2026-10-04; was `1.3.0` on 2026-09-08). The one package to install. | `npm view @hyperdag/trustshell version` |
 | `@hyperdag/protocol` | **NOT published** (404) | `npm view @hyperdag/protocol version` |
 | `@hyperdag/identity-erc8004`, `@hyperdag/reputation-zkp` | **NOT published** (404) | same |
 | `IdentityRegistry` on Base Sepolia (84532) | **LIVE** — `0x8004A818BFB912233c491871b3d84c89A494BD9e` | any RPC client, or basescan |
 | `ReputationRegistry` on Base Sepolia (84532) | **LIVE** — `0x8004B663056A597Dffe9eCcC1965A193B7388713` | same |
 | The six-interface kernel (`IIdentity`, `IReputation`, `IValidation`, `IPayment`, `ILinkage`, `IHallucination`) | source is on a feature branch, **not on `main`** | `git log origin/main -- packages/interfaces` |
+
+| **The check: `POST /api/v1/classify`** | **LIVE**, public, keyless (measured 2026-10-04). See §1a. | the `curl` in §1a |
 
 **So: `npm i @hyperdag/trustshell`. Not `@hyperdag/protocol`.** The badge at the
 top of this repo's README links a package that does not exist yet. That badge
@@ -34,6 +36,39 @@ anything here.** It is unusually honest — it names a live event-signature defe
 in `ReputationRegistry` that makes a spec-compliant indexer see zero feedback
 events. That is the kind of thing most projects omit. We publish it because a
 builder who discovers it in production has been failed by us.
+
+### 1a. The one check every door calls
+
+`POST https://repid-engine-production.up.railway.app/api/v1/classify` is what the Chrome
+extension calls, and the CLI and phone bot use it too as they ship. It is public and needs
+no key; CORS is `*`. It stores nothing: no text, no user id.
+
+```bash
+curl -s -X POST https://repid-engine-production.up.railway.app/api/v1/classify \
+  -H 'content-type: application/json' \
+  -d '{"text":"Paris is the capital of France.","labels":["pass","veto","not-checked"]}'
+# {"label":"pass","latency_ms":187}     (measured 2026-10-04)
+```
+
+- **In:** `{text, labels}`. `labels` is optional; if present it must be exactly the three.
+- **Out:** `{label, latency_ms}`, where `label` is `pass`, `veto` or `not-checked`.
+- **What decides:** a whole-text arithmetic equation is evaluated locally. Prose up to
+  1,500 characters goes to **two independent free models, which must agree**: both true
+  gives `pass`, both false gives `veto`. Anything else gives `not-checked`: an opinion, a
+  prediction, a split vote, a timeout, a rate limit, or text that is too long.
+- **Treat `not-checked` as "unknown", never as true.** This is the §2 rule, applied to the
+  thing we ship.
+- **Your text leaves us:** it is sent to the model hosts that vote (Groq, and Cerebras when
+  configured). Do not send secrets or personal data.
+- **Limits:** 30 requests a minute per IP (`ratelimit-*` headers). Over the limit you get
+  `429` with `label: not-checked`.
+- **Health:** `GET /api/v1/classify/stats` (keyless) gives label counts, the share that came
+  back `not-checked`, and a daily self-test result for each model. It returns counts only,
+  never text, and resets on restart (`since` says when).
+
+**Stability:** the three labels and the "a miss is never `pass`" rule are the contract and
+will not change. Which models vote, the length cap and the rate limit are tuning and will
+move. Read `label`, nothing else.
 
 ---
 
