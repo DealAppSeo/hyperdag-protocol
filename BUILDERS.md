@@ -18,7 +18,7 @@ publish X without touching this file.
 
 | Thing | State | How to check |
 |---|---|---|
-| **`@hyperdag/trustshell`** | **PUBLISHED — `1.4.0`** (measured 2026-10-04; was `1.3.0` on 2026-09-08). The one package to install. | `npm view @hyperdag/trustshell version` |
+| **`@hyperdag/trustshell`** | **PUBLISHED — `1.6.0`** (measured 2026-10-05; was `1.4.0` on 2026-10-04). The one package to install. | `npm view @hyperdag/trustshell version` |
 | `@hyperdag/protocol` | **NOT published** (404) | `npm view @hyperdag/protocol version` |
 | `@hyperdag/identity-erc8004`, `@hyperdag/reputation-zkp` | **NOT published** (404) | same |
 | `IdentityRegistry` on Base Sepolia (84532) | **LIVE** — `0x8004A818BFB912233c491871b3d84c89A494BD9e` | any RPC client, or basescan |
@@ -30,6 +30,12 @@ publish X without touching this file.
 **So: `npm i @hyperdag/trustshell`. Not `@hyperdag/protocol`.** The badge at the
 top of this repo's README links a package that does not exist yet. That badge
 misled one of our own agents on 2026-09-08; it can mislead you the same way.
+
+**Published 1.6.0, measured from the tarball on 2026-10-05.** `trustshell verify`
+exits 0 on PASS or FLAG, 1 on VETO, and 2 when HAL did not decide (NOT_CHECKED, never a pass).
+`ethers` (`^6`) is an optional peer: a plain install does not include it. The package uses it
+to sign an x402 payment (`buildX402Payment`, `guardedX402Payment`) and for the keyless
+on-chain read behind `verifySigner`.
 
 **Read `README.md`'s "Known broken / not live" table before you design against
 anything here.** It is unusually honest — it names a live event-signature defect
