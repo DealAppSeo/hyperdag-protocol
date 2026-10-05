@@ -4,7 +4,6 @@
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Standard: ERC-8004](https://img.shields.io/badge/Standard-ERC--8004-success)](https://ethereum-magicians.org/t/erc-8004-trustless-agents/25098)
-[![npm](https://img.shields.io/npm/v/@hyperdag/protocol.svg?label=%40hyperdag%2Fprotocol)](https://www.npmjs.com/package/@hyperdag/protocol)
 [![Solidity](https://img.shields.io/badge/Solidity-%5E0.8.20-lightgrey)](https://soliditylang.org)
 [![Live: Base Sepolia](https://img.shields.io/badge/Live-Base_Sepolia-blue)](https://sepolia.basescan.org/address/0x8004B663056A597Dffe9eCcC1965A193B7388713)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -15,7 +14,7 @@ HyperDAG is a lightweight, composable trust kernel for autonomous agents: six ve
 
 ## Live on Base Sepolia (chain ID 84532)
 
-Both canonical registries are live on-chain, holding real minted identities and reputation writes. Everything below is verifiable from any RPC client or basescan. *(On-chain reputation writes resumed 2026-07-08 — 70 lifetime, verified via `/api/v1/observability/onchain-stats` — after a pause following 2026-06-22; cadence is being restored. See the honest note under Receipts. Reads and identity lookups are unaffected.)*
+Both canonical registries are live on-chain, holding real minted identities and reputation writes. Everything below is verifiable from any RPC client or basescan. *(Reputation writes are landing daily: 122 recorded with a transaction hash, the latest on 2026-10-04, re-measured 2026-10-05. Two past pauses are explained under Receipts.)*
 
 | Contract | Address |
 |---|---|
@@ -61,7 +60,7 @@ columns are current as of **2026-08-06** and every row is checkable locally.
 
 Real on-chain ERC-8004 activity from a production agent fleet. Every number is verifiable on basescan; honest gaps are noted inline.
 
-- **All 12 trinity agents minted** on the canonical IdentityRegistry — the whole core fleet now holds ERC-8004 tokens (the earlier "4 minted, 8 queued" gap is closed):
+- **All 12 trinity agents minted** on the canonical IdentityRegistry — the whole core fleet now holds ERC-8004 tokens (the earlier "4 minted, 8 queued" gap is closed). Re-checked **2026-10-05** with `ownerOf(tokenId)` on Base Sepolia: all 12 answer. One token is held at the agent's own address (`trinity-apm`); 8 are held by the deployer and 3 by the custodian:
 
   | Agent | Token ID | Agent | Token ID |
   |---|---|---|---|
@@ -72,11 +71,11 @@ Real on-chain ERC-8004 activity from a production agent fleet. Every number is v
   | `trinity-orch` | `6705` | `trinity-mel` | `6710` |
   | `trinity-nexus` | `6711` | `trinity-hdm` | `6712` |
 
-- **92 lifetime on-chain reputation writes** from the agent economy — real production activity, not synthetic backfill (re-measured **2026-08-29** against `erc8004_reputation_writes`; the previous published figure of 70 was a 2026-07-08 snapshot and is superseded, not withdrawn). Gas per write: ~134,661. Most recent write: [`0xdaf4863b…`](https://sepolia.basescan.org/tx/0xdaf4863bf3c21d156d5d38c4c5c9e46288c4b6cf61c439c0bccd086fdd21ac73) at 2026-08-29 12:01:34 UTC — the minter re-reads the receipt from Base Sepolia (`status 0x1`, sent to the ReputationRegistry) and exits non-zero rather than record an unverified write, so every row here was confirmed against the chain and not against our own database.
+- **122 on-chain reputation writes recorded** from the agent economy — real production activity, not synthetic backfill. Counted on **2026-10-05** as rows in `erc8004_reputation_writes` that carry a full transaction hash on Base Sepolia, first write 2026-05-22; 5 rows with a placeholder `0xmock_…` hash are excluded. Earlier published figures (70 on 2026-07-08, 92 on 2026-08-29) were dated snapshots and are superseded, not withdrawn. Median gas per write: 134,661. Most recent write: [`0xe92c64ed…`](https://sepolia.basescan.org/tx/0xe92c64edb65a795f2728f94a6bd1fa9426e03642caeb5d49022d280b20b8c6cf) at 2026-10-04 12:05:58 UTC. The daily minter re-reads each receipt from Base Sepolia and exits non-zero rather than record an unverified write; the two newest were re-checked independently on 2026-10-05 (`status 0x1`, sent to the ReputationRegistry).
   **Honest currency note — there have been two pauses, and the second is the more instructive.** The first ran **2026-06-22 → 2026-07-08** while the settlement path was re-wired. The second ran **2026-08-17 → 2026-08-29**: an upstream provider retired the model our peer-validation step called, so every validator returned an error — and the aggregation counted an unreachable validator as a score of **zero** rather than as *not measured*. The result was a confident failing verdict about work nobody had assessed, which disputed twelve consecutive runs. Both halves are fixed: the model is configuration rather than a literal, and a validator that does not answer is now excluded from the aggregate instead of counted against the provider.
   We publish the gap rather than the average. The reputation *history* on-chain remains fully verifiable — treat the count as a dated snapshot, not a fixed constant, and treat live cadence as something to re-probe rather than assume.
 
-- **Epoch-1 reset:** RepID was reset to a neutral **1,000 baseline** for a clean start. Core agents now range **~1,000–1,520** (ESTABLISHED tier) as they re-earn from a level field.
+- **Epoch-1 reset:** RepID was reset to a neutral **1,000 baseline** for a clean start. The 12 core agents now range **1,077–2,202**, all ESTABLISHED (measured 2026-10-05), as they re-earn from a level field.
 
 - **Historical attestations (pre-reset — real, verifiable, but predate the Epoch-1 reset above; not current values):**
   - `sophia` → RepID **9,581** *(historical)* · [`0x24251cbb…ca9301`](https://sepolia.basescan.org/tx/0x24251cbb786d9ca8b03e4d56887a46f9040ddc1336826d80021ff39b91ca9301) · block 41,873,128
