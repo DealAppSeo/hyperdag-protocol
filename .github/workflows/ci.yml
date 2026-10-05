@@ -45,6 +45,18 @@ jobs:
             exit 1
           fi
 
+  # The published contract. Blocking: BUILDERS.md is what an outside developer
+  # is told to trust, and a version or an exit code that drifted is a lie.
+  builders:
+    name: BUILDERS.md matches published trustshell
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm run check:builders
+
   # Marco's ERC-8004 contract tests. NON-BLOCKING and reported honestly:
   # 26 of 61 currently fail on a drift between the tests and the contract ABI
   # ("Event NewFeedback with argument count 11 not found in the contract ABI").
