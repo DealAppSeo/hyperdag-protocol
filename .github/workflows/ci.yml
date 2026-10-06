@@ -58,16 +58,17 @@ jobs:
       - run: npm run check:builders
 
   # Marco's ERC-8004 contract tests. NON-BLOCKING and reported honestly.
-  # 2026-10-06, measured from this job: test/core.ts passes 35 of 61 and test/upgradeable.ts
-  # 16 of 18. Every one of the 28 failures is giveFeedback: our copy of the ReputationRegistry
-  # adds x402PaymentProof, so it takes 9 arguments where the ERC-8004 team's own tests pass 8.
-  # Both test files are byte-identical to erc-8004/erc-8004-contracts. Surfaced, not fixed: packages/contracts is
-  # owned elsewhere, and restoring that file is Sean's decision.
-  # From 2026-08-06 to 2026-10-06 all 61 failed before any assertion (HHE1000, artifact not
-  # found): our root lockfile resolved OpenZeppelin 5.6.1, which removed
-  # __UUPSUpgradeable_init, so nothing compiled. The team's lockfile pins 5.4.0; ours does now.
+  # 2026-10-06, measured from this job: test/core.ts 61 of 61 and test/upgradeable.ts 18 of 18.
+  # Every contract and both test files are byte-identical to erc-8004/erc-8004-contracts at
+  # b9e466c. Until that day our ReputationRegistry carried an unshipped experiment
+  # (x402PaymentProof, a 9th giveFeedback argument), which failed 28 of the team's tests;
+  # Sean approved restoring their file.
+  # From 2026-08-06 to 2026-10-06 nothing compiled (HHE1000, artifact not found): our root
+  # lockfile resolved OpenZeppelin 5.6.1, which removed __UUPSUpgradeable_init. The team's
+  # lockfile pins 5.4.0; ours does now.
+  # Still continue-on-error: making it gating is a separate decision.
   contracts:
-    name: contracts tests (28 of 79 fail, all giveFeedback in our modified ReputationRegistry — reported, not gating)
+    name: contracts tests (79 of 79 pass against the ERC-8004 team's unmodified contracts — reported, not gating)
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
@@ -112,11 +113,11 @@ jobs:
               continue
             fi
             echo "### Contract tests, $suite: $pass passing, $fail failing" >> "$GITHUB_STEP_SUMMARY"
-            if { [ "$suite" = core ] && [ "$fail" -gt 26 ]; } || { [ "$suite" = upgradeable ] && [ "$fail" -gt 2 ]; }; then
-              echo "::warning::$suite failures increased beyond those measured on 2026-10-06 (now $fail)"
+            if [ "$fail" -gt 0 ]; then
+              echo "::warning::$suite has $fail failing; it passed in full on 2026-10-06"
             fi
           done
-          echo "Measured 2026-10-06: core 35 passing, 26 failing; upgradeable 16 passing, 2 failing; every failure is giveFeedback in our modified ReputationRegistry." >> "$GITHUB_STEP_SUMMARY"
+          echo "Measured 2026-10-06: core 61 passing, upgradeable 18 passing, against contracts byte-identical to erc-8004/erc-8004-contracts." >> "$GITHUB_STEP_SUMMARY"
 
   # Makes absence of tests VISIBLE. An unwired safeguard is worse than an absent
   # one because it converts a known gap into false coverage; the same is true of
