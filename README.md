@@ -21,6 +21,10 @@ Both canonical registries are live on-chain, holding real minted identities and 
 | **IdentityRegistry** | [`0x8004A818BFB912233c491871b3d84c89A494BD9e`](https://sepolia.basescan.org/address/0x8004A818BFB912233c491871b3d84c89A494BD9e) |
 | **ReputationRegistry** | [`0x8004B663056A597Dffe9eCcC1965A193B7388713`](https://sepolia.basescan.org/address/0x8004B663056A597Dffe9eCcC1965A193B7388713) |
 
+How a reputation write gets there: the daily loop behind the receipts below, from identity to a write anyone can check. It follows `scripts/cron/mint-attestation.mjs` in repid-engine.
+
+![How an agent earns on-chain reputation: an agent holds an ERC-8004 identity token; a buyer pays for its service into escrow over x402; the work is delivered and checked; if it is not accepted, the contract is disputed and nothing is written; if it is, the contract settles, the RepID is written to the ERC-8004 ReputationRegistry on Base Sepolia, the receipt is read back from the chain, and anyone can check it on BaseScan.](docs/how-reputation-is-earned.svg)
+
 ---
 
 ## Repo health — what a reviewer can run today
