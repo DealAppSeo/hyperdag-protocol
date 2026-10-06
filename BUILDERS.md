@@ -43,8 +43,9 @@ anything here.** One correction it now carries: the two registries above are the
 ERC-8004 team's canonical deployments
 ([erc-8004/erc-8004-contracts](https://github.com/erc-8004/erc-8004-contracts)), and
 they emit the standard events. This file used to say they had an event-signature
-defect. They do not: the 12-field event exists only in this repo's own copy of
-`ReputationRegistryUpgradeable.sol`, an experiment that was never deployed.
+defect. They do not. The 12-field event came from an experiment in this repo's own copy
+of `ReputationRegistryUpgradeable.sol` that was never deployed, and that copy has since
+been replaced with the team's file unchanged (2026-10-06).
 
 ### 1a. The one check every door calls
 

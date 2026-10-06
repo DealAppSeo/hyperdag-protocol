@@ -38,12 +38,11 @@ columns are current as of **2026-08-06** and every row is checkable locally.
 | Clean install from the lockfile | `npm ci` | exits 0 |
 | CI | `.github/workflows/ci.yml` | 4 jobs: install · builders · contracts · coverage-map |
 | HAL parity against production | `cd packages/defaults/hallucination-hal-local && npm test` | **11/11** — golden vectors captured from the upstream extractor |
-| Contract test suites run | `cd packages/contracts && npm run test:core` and `npm run test:upgradeable` | 79 tests execute; 51 pass (see the known failure below) |
+| Contract test suites run | `cd packages/contracts && npm run test:core` and `npm run test:upgradeable` | **79/79 pass** — `test/core.ts` 61/61, `test/upgradeable.ts` 18/18 (measured in CI 2026-10-06) |
+| Contracts match the ERC-8004 team's | `cmp` each file against [erc-8004/erc-8004-contracts](https://github.com/erc-8004/erc-8004-contracts) at `b9e466c` | all eight contracts and both test files byte-identical (2026-10-06) |
 
 | Known broken / not live | Actual state |
 |---|---|
-| **Contract tests: 28 of 79 fail, every one from the one argument we added** | With OpenZeppelin pinned to 5.4.0, as the ERC-8004 team's own lockfile pins it, the contracts compile and both suites run: `test/core.ts` passes 35 of 61 and `test/upgradeable.ts` passes 16 of 18. Every failure is the same call: the team's tests pass `giveFeedback` 8 arguments and our copy of `ReputationRegistryUpgradeable.sol` takes 9 (see the next row). The Identity and Validation registries pass in full. From 2026-08-06 until this fix all 61 core tests failed before any assertion (`HHE1000`), because our root lockfile had resolved OpenZeppelin 5.6.1, which removed `__UUPSUpgradeable_init`. The job is non-gating, which is why CI still shows green. Measured 2026-10-06. |
-| **Our copy of `ReputationRegistryUpgradeable.sol` differs from the ERC-8004 team's** | It is the only one of the eight contracts that does. Ours adds a `bytes x402PaymentProof` field to feedback and to the `NewFeedback` event (12 fields, where the spec and the upstream contract have 11), and counts feedback that carries a payment proof twice in `getSummary`. **This copy is not deployed.** The registries at the addresses above are the ERC-8004 team's canonical deployments, listed in their repository for every chain, and their event is the standard one. Our change is an unshipped experiment, kept here as a question for the spec's authors, not as a defect in their contracts. Measured 2026-10-06 by diffing against upstream. |
 | `@hyperdag/protocol` on npm | **not published** — `npm view` returns 404 |
 | The six default packages (`@hyperdag/identity-erc8004`, `reputation-zkp`, `validation-trinity`, `payment-x402`, `linkage-registry`, `hallucination-hal`) | **not published** — 404 for all six |
 | Six-interface kernel source | on `feat/modular-kernel-interfaces-2026-05-04`, **not on `main`** |
@@ -58,6 +57,13 @@ columns are current as of **2026-08-06** and every row is checkable locally.
 > 2026-08-05 the HAL copy asserted byte-equivalence with production while being
 > blind to prompt injection for three months; that is fixed and now held by the
 > parity test in the table.
+>
+> The ERC-8004 contract suites did not pass here from 2026-08-06 to 2026-10-06. Our
+> lockfile had resolved OpenZeppelin 5.6.1, so nothing compiled; once that was pinned to
+> 5.4.0, as the ERC-8004 team pins it, 28 of 79 still failed because our copy of
+> `ReputationRegistryUpgradeable.sol` carried an unshipped experiment (an extra
+> `x402PaymentProof` argument to `giveFeedback`). That copy was never deployed. It has been
+> replaced with the team's file unchanged, and all 79 pass.
 
 ---
 
