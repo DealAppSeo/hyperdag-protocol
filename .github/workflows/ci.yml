@@ -58,16 +58,16 @@ jobs:
       - run: npm run check:builders
 
   # Marco's ERC-8004 contract tests. NON-BLOCKING and reported honestly.
-  # 2026-10-06, measured from this job: test/core.ts passes 35 of 61. All 26 failures are in
-  # the ReputationRegistry suite, the one contract our copy changed: it adds x402PaymentProof,
-  # so giveFeedback takes 9 arguments where the ERC-8004 team's own test passes 8. test/core.ts
-  # is byte-identical to erc-8004/erc-8004-contracts. Surfaced, not fixed: packages/contracts is
+  # 2026-10-06, measured from this job: test/core.ts passes 35 of 61 and test/upgradeable.ts
+  # 16 of 18. Every one of the 28 failures is giveFeedback: our copy of the ReputationRegistry
+  # adds x402PaymentProof, so it takes 9 arguments where the ERC-8004 team's own tests pass 8.
+  # Both test files are byte-identical to erc-8004/erc-8004-contracts. Surfaced, not fixed: packages/contracts is
   # owned elsewhere, and restoring that file is Sean's decision.
   # From 2026-08-06 to 2026-10-06 all 61 failed before any assertion (HHE1000, artifact not
   # found): our root lockfile resolved OpenZeppelin 5.6.1, which removed
   # __UUPSUpgradeable_init, so nothing compiled. The team's lockfile pins 5.4.0; ours does now.
   contracts:
-    name: contracts tests (26 of 61 fail, all in our modified ReputationRegistry — reported, not gating)
+    name: contracts tests (28 of 79 fail, all giveFeedback in our modified ReputationRegistry — reported, not gating)
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
@@ -112,11 +112,11 @@ jobs:
               continue
             fi
             echo "### Contract tests, $suite: $pass passing, $fail failing" >> "$GITHUB_STEP_SUMMARY"
-            if [ "$suite" = core ] && [ "$fail" -gt 26 ]; then
-              echo "::warning::core failures increased beyond the 26 measured on 2026-10-06 (now $fail)"
+            if { [ "$suite" = core ] && [ "$fail" -gt 26 ]; } || { [ "$suite" = upgradeable ] && [ "$fail" -gt 2 ]; }; then
+              echo "::warning::$suite failures increased beyond those measured on 2026-10-06 (now $fail)"
             fi
           done
-          echo "Measured 2026-10-06, core: 35 passing, 26 failing, all in ReputationRegistry." >> "$GITHUB_STEP_SUMMARY"
+          echo "Measured 2026-10-06: core 35 passing, 26 failing; upgradeable 16 passing, 2 failing; every failure is giveFeedback in our modified ReputationRegistry." >> "$GITHUB_STEP_SUMMARY"
 
   # Makes absence of tests VISIBLE. An unwired safeguard is worse than an absent
   # one because it converts a known gap into false coverage; the same is true of
