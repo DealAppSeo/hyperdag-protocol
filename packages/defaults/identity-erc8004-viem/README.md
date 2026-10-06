@@ -1,8 +1,13 @@
 # @hyperdag/identity-erc8004-viem
 
+> **Not published to npm** (and neither are `@hyperdag/protocol` or `@hyperdag/identity-erc8004`,
+> which this README names; `npm view` returns 404 for all three, measured 2026-10-06). The code
+> here is source in this repo. To use the trust layer today, install `@hyperdag/trustshell`; see
+> [`BUILDERS.md`](../../../BUILDERS.md).
+
 Zero-config viem-backed ERC-8004 identity provider. Designed to be the
-**local primary** behind the `identity` slot of `createHDP()`, with the
-existing `@hyperdag/identity-erc8004` (the thin wrapper that requires a
+**local primary** behind the `identity` slot of `createHDP()`, with
+`@hyperdag/identity-erc8004` (a planned thin wrapper, not published, that requires a
 caller-supplied client) usable as a remote-fallback / power-user surface.
 
 ## Defaults (Base Sepolia)

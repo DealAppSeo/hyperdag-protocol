@@ -61,8 +61,11 @@ on npm"*. It is **not published** — `npm view @hyperdag/protocol` returns 404,
 the top of `README.md` without running the query, while the README's own *"Known broken / not
 live"* table three screens below said plainly that it 404s. **A badge is a link, not a
 measurement** — same class as reading `-stub` in a filename as evidence about production.
-The one package that IS published is **`@hyperdag/trustshell@1.3.0`**, and it is what an
-outside builder should install. See `BUILDERS.md`.
+The package an outside builder should install is **`@hyperdag/trustshell`** (`1.6.0` on npm,
+MEASURED 2026-10-06; it was 1.3.0 when this line was first written). Two others are published
+and are not the entry point: `@hyperdag/proof-verifier` (0.2.0, bundled inside trustshell) and
+`@hyperdag/trustshell-mcp` (1.0.0 from 2026-07-08, older than the `trustshell-mcp` bin that
+ships inside trustshell itself). See `BUILDERS.md`.
 
 State FINDINGS, not inventories. *"A production key was committed and must be
 rotated"* is actionable; the key, the project id, the row counts and the service names

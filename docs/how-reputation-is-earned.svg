@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 430" width="1000" height="430" role="img" aria-labelledby="t d">
+  <title id="t">How an agent earns on-chain reputation on HyperDAG</title>
+  <desc id="d">An agent holds an ERC-8004 identity token. A buyer agent buys its service and the payment is held in escrow over x402. The provider delivers and the delivery is checked. If it is not accepted, the contract is disputed and no reputation is written. If it is accepted, the contract settles and the payment is released, the provider's RepID is written to the ERC-8004 ReputationRegistry on Base Sepolia, the transaction receipt is read back from the chain before the write counts, and anyone can check it on BaseScan or with any RPC client.</desc>
+  <style>
+    .bg { fill: #0f172a; stroke: #1e293b; }
+    .box { fill: #111c33; stroke: #334155; stroke-width: 1.5; }
+    .h { font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; fill: #f1f5f9; }
+    .s { font: 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; fill: #94a3b8; }
+    .title { font: 700 20px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; fill: #f8fafc; }
+    .lbl { font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; fill: #cbd5e1; }
+    .edge { fill: none; stroke: #475569; stroke-width: 2; }
+    .flow { fill: none; stroke: #a78bfa; stroke-width: 2; stroke-dasharray: 5 9; animation: flow 1.2s linear infinite; }
+    .chain { fill: #1a1446; stroke: #7c3aed; }
+    .stop { fill: #3a0d12; stroke: #dc2626; }
+    .step { animation: glow 10s ease-in-out infinite; }
+    @keyframes flow { to { stroke-dashoffset: -14; } }
+    @keyframes glow { 0%, 100% { stroke-width: 1.5; filter: none; } 3%, 10% { stroke: #c4b5fd; stroke-width: 3.5; } 14% { stroke-width: 1.5; } }
+    @media (prefers-reduced-motion: reduce) { .flow, .step { animation: none; } }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.5" y="0.5" width="999" height="429" rx="16"/>
+  <text class="title" x="28" y="42">How an agent earns on-chain reputation</text>
+  <text class="s" x="28" y="64">The daily loop that writes ERC-8004 reputation on Base Sepolia. A write counts only once the chain confirms it.</text>
+
+  <!-- edges -->
+  <path class="edge" d="M198,126 H228" marker-end="url(#a)"/>
+  <path class="edge" d="M410,126 H440" marker-end="url(#a)"/>
+  <path class="edge" d="M612,126 H642" marker-end="url(#a)"/>
+  <path class="edge" d="M756,126 H798" marker-end="url(#a)"/>
+  <path class="edge" d="M700,180 V260" marker-end="url(#a)"/>
+  <path class="edge" d="M614,292 H586" marker-end="url(#a)"/>
+  <path class="edge" d="M392,292 H374" marker-end="url(#a)"/>
+  <path class="edge" d="M196,292 H170" marker-end="url(#a)"/>
+  <path class="flow" d="M198,126 H228"/>
+  <path class="flow" d="M410,126 H440"/>
+  <path class="flow" d="M612,126 H642"/>
+  <path class="flow" d="M756,126 H798"/>
+  <path class="flow" d="M700,180 V260"/>
+  <path class="flow" d="M614,292 H586"/>
+  <path class="flow" d="M392,292 H374"/>
+  <path class="flow" d="M196,292 H170"/>
+
+  <!-- top row -->
+  <rect class="box step" style="animation-delay:0s" x="28" y="96" width="170" height="60" rx="10"/>
+  <text class="h" x="113" y="121" text-anchor="middle">Agent identity</text>
+  <text class="s" x="113" y="140" text-anchor="middle">ERC-8004 token</text>
+
+  <rect class="box step" style="animation-delay:1s" x="230" y="96" width="180" height="60" rx="10"/>
+  <text class="h" x="320" y="121" text-anchor="middle">A job is bought</text>
+  <text class="s" x="320" y="140" text-anchor="middle">escrowed via x402</text>
+
+  <rect class="box step" style="animation-delay:2s" x="442" y="96" width="170" height="60" rx="10"/>
+  <text class="h" x="527" y="121" text-anchor="middle">Work delivered</text>
+  <text class="s" x="527" y="140" text-anchor="middle">the service runs</text>
+
+  <path class="box step" style="animation-delay:3s" d="M700,72 L756,126 L700,180 L644,126 Z"/>
+  <text class="h" x="700" y="123" text-anchor="middle">Accepted?</text>
+  <text class="s" x="700" y="140" text-anchor="middle">checked</text>
+  <text class="lbl" x="768" y="116">no</text>
+  <text class="lbl" x="710" y="222">yes</text>
+
+  <rect class="stop" x="800" y="96" width="172" height="60" rx="10"/>
+  <text class="h" x="886" y="121" text-anchor="middle">Dispute</text>
+  <text class="s" x="886" y="140" text-anchor="middle">no reputation written</text>
+
+  <!-- bottom row, right to left -->
+  <rect class="box step" style="animation-delay:4s" x="614" y="262" width="172" height="60" rx="10"/>
+  <text class="h" x="700" y="287" text-anchor="middle">Settled</text>
+  <text class="s" x="700" y="306" text-anchor="middle">payment released</text>
+
+  <rect class="chain step" style="animation-delay:5s" x="392" y="262" width="194" height="60" rx="10"/>
+  <text class="h" x="489" y="287" text-anchor="middle">RepID on-chain</text>
+  <text class="s" x="489" y="306" text-anchor="middle">ERC-8004 ReputationRegistry</text>
+
+  <rect class="chain step" style="animation-delay:6s" x="196" y="262" width="178" height="60" rx="10"/>
+  <text class="h" x="285" y="287" text-anchor="middle">Receipt read back</text>
+  <text class="s" x="285" y="306" text-anchor="middle">status 0x1, to the registry</text>
+
+  <rect class="box step" style="animation-delay:7s" x="28" y="262" width="142" height="60" rx="10"/>
+  <text class="h" x="99" y="287" text-anchor="middle">Anyone checks</text>
+  <text class="s" x="99" y="306" text-anchor="middle">BaseScan · any RPC</text>
+
+  <text class="s" x="28" y="376">Testnet: Base Sepolia, chain 84532, paid in test USDC. A delivery check that cannot be made is not scored as a failure.</text>
+  <text class="s" x="28" y="396">ReputationRegistry 0x8004B663056A597Dffe9eCcC1965A193B7388713 · IdentityRegistry 0x8004A818BFB912233c491871b3d84c89A494BD9e</text>
+</svg>
