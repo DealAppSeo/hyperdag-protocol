@@ -65,7 +65,9 @@ jobs:
   # It is surfaced, not fixed: packages/contracts is owned elsewhere.
   # Since 2026-08-06 all 61 fail before any assertion: HHE1000, the artifact for
   # HardhatMinimalUUPS is not found when test/core.ts deploys the registry proxy
-  # (measured 2026-10-06 from this job's log). Also not ours to fix.
+  # (measured 2026-10-06 from this job's log). test/core.ts is byte-identical to
+  # erc-8004/erc-8004-contracts, so the cause is this workflow, not their code: the
+  # build step below tests that.
   contracts:
     name: contracts tests (all 61 failing since 2026-08-06, HHE1000 — reported, not gating)
     runs-on: ubuntu-latest
@@ -77,6 +79,16 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
+      - name: build the contracts first
+        # 2026-10-06: every test since 2026-08-06 failed with HHE1000 (artifact for
+        # HardhatMinimalUUPS not found) while test/core.ts is byte-identical to the
+        # ERC-8004 team's. Building before testing tells us whether that was the
+        # missing step. Same env as the tests: the config needs it to load.
+        env:
+          SEPOLIA_RPC_URL: https://ethereum-sepolia-rpc.publicnode.com
+          MAINNET_RPC_URL: https://ethereum-rpc.publicnode.com
+        working-directory: packages/contracts
+        run: npx hardhat build 2>&1 | tail -20 || true
       - name: run contract tests
         # hardhat.config.ts requires these to be present or the config itself is
         # rejected (HHE15) before a single test runs. Public read-only endpoints:

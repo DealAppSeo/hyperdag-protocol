@@ -39,10 +39,12 @@ to sign an x402 payment (`buildX402Payment`, `guardedX402Payment`) and for the k
 on-chain read behind `verifySigner`.
 
 **Read `README.md`'s "Known broken / not live" table before you design against
-anything here.** It is unusually honest — it names a live event-signature defect
-in `ReputationRegistry` that makes a spec-compliant indexer see zero feedback
-events. That is the kind of thing most projects omit. We publish it because a
-builder who discovers it in production has been failed by us.
+anything here.** One correction it now carries: the two registries above are the
+ERC-8004 team's canonical deployments
+([erc-8004/erc-8004-contracts](https://github.com/erc-8004/erc-8004-contracts)), and
+they emit the standard events. This file used to say they had an event-signature
+defect. They do not: the 12-field event exists only in this repo's own copy of
+`ReputationRegistryUpgradeable.sol`, an experiment that was never deployed.
 
 ### 1a. The one check every door calls
 
