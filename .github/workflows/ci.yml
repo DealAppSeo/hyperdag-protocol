@@ -57,19 +57,17 @@ jobs:
           node-version: '22'
       - run: npm run check:builders
 
-  # Marco's ERC-8004 contract tests. NON-BLOCKING and reported honestly:
-  # When this job was added, 26 of 61 failed on a drift between the tests and the contract ABI
-  # ("Event NewFeedback with argument count 11 not found in the contract ABI").
-  # That failure PRE-DATES this workflow — verified by running the suite against
-  # the original committed dependency tree, which produces the identical 35/26.
-  # It is surfaced, not fixed: packages/contracts is owned elsewhere.
-  # Since 2026-08-06 all 61 fail before any assertion: HHE1000, the artifact for
-  # HardhatMinimalUUPS is not found when test/core.ts deploys the registry proxy
-  # (measured 2026-10-06 from this job's log). test/core.ts is byte-identical to
-  # erc-8004/erc-8004-contracts, so the cause is this workflow, not their code: the
-  # build step below tests that.
+  # Marco's ERC-8004 contract tests. NON-BLOCKING and reported honestly.
+  # 2026-10-06, measured from this job: test/core.ts passes 35 of 61 and test/upgradeable.ts
+  # 16 of 18. Every one of the 28 failures is giveFeedback: our copy of the ReputationRegistry
+  # adds x402PaymentProof, so it takes 9 arguments where the ERC-8004 team's own tests pass 8.
+  # Both test files are byte-identical to erc-8004/erc-8004-contracts. Surfaced, not fixed: packages/contracts is
+  # owned elsewhere, and restoring that file is Sean's decision.
+  # From 2026-08-06 to 2026-10-06 all 61 failed before any assertion (HHE1000, artifact not
+  # found): our root lockfile resolved OpenZeppelin 5.6.1, which removed
+  # __UUPSUpgradeable_init, so nothing compiled. The team's lockfile pins 5.4.0; ours does now.
   contracts:
-    name: contracts tests (all 61 failing since 2026-08-06, HHE1000 — reported, not gating)
+    name: contracts tests (28 of 79 fail, all giveFeedback in our modified ReputationRegistry — reported, not gating)
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
@@ -80,10 +78,9 @@ jobs:
           cache: npm
       - run: npm ci
       - name: build the contracts first
-        # 2026-10-06: every test since 2026-08-06 failed with HHE1000 (artifact for
-        # HardhatMinimalUUPS not found) while test/core.ts is byte-identical to the
-        # ERC-8004 team's. Building before testing tells us whether that was the
-        # missing step. Same env as the tests: the config needs it to load.
+        # A compile error is printed here, instead of surfacing as HHE1000 (artifact not
+        # found) in every test, which is how OpenZeppelin 5.6.1 hid for two months.
+        # Same env as the tests: the config needs it to load.
         env:
           SEPOLIA_RPC_URL: https://ethereum-sepolia-rpc.publicnode.com
           MAINNET_RPC_URL: https://ethereum-rpc.publicnode.com
@@ -94,20 +91,32 @@ jobs:
         # rejected (HHE15) before a single test runs. Public read-only endpoints:
         # the suite under test is local, so this makes an ENV failure impossible
         # to mistake for a TEST failure.
+        # Each suite runs on its own: packages/contracts' `npm test` is core && upgradeable,
+        # so a core failure meant the upgradeable suite never ran and was never reported.
         env:
           SEPOLIA_RPC_URL: https://ethereum-sepolia-rpc.publicnode.com
           MAINNET_RPC_URL: https://ethereum-rpc.publicnode.com
         working-directory: packages/contracts
-        run: npm test 2>&1 | tee ../../contracts-test.log || true
-      - name: report the real tally
         run: |
-          pass=$(grep -oP '^# pass \K\d+' contracts-test.log | head -1 || echo "?")
-          fail=$(grep -oP '^# fail \K\d+' contracts-test.log | head -1 || echo "?")
-          echo "### Contract tests: $pass passing, $fail failing" >> "$GITHUB_STEP_SUMMARY"
-          echo "Baseline at the time this workflow was added: 35 passing, 26 failing." >> "$GITHUB_STEP_SUMMARY"
-          if [ "$fail" != "?" ] && [ "$fail" -gt 26 ]; then
-            echo "::warning::contract failures increased beyond the 26 baseline (now $fail)"
-          fi
+          npm run test:core 2>&1 | tee ../../contracts-core.log || true
+          npm run test:upgradeable 2>&1 | tee ../../contracts-upgradeable.log || true
+      - name: report the real tally
+        # A suite with no tally line did not run to the end: NOT CHECKED, never zero.
+        run: |
+          for suite in core upgradeable; do
+            pass=$(grep -oP '^# pass \K\d+' "contracts-$suite.log" | head -1 || true)
+            fail=$(grep -oP '^# fail \K\d+' "contracts-$suite.log" | head -1 || true)
+            if [ -z "$pass" ] || [ -z "$fail" ]; then
+              echo "### Contract tests, $suite: NOT CHECKED (no tally line)" >> "$GITHUB_STEP_SUMMARY"
+              echo "::warning::contract suite $suite produced no tally"
+              continue
+            fi
+            echo "### Contract tests, $suite: $pass passing, $fail failing" >> "$GITHUB_STEP_SUMMARY"
+            if { [ "$suite" = core ] && [ "$fail" -gt 26 ]; } || { [ "$suite" = upgradeable ] && [ "$fail" -gt 2 ]; }; then
+              echo "::warning::$suite failures increased beyond those measured on 2026-10-06 (now $fail)"
+            fi
+          done
+          echo "Measured 2026-10-06: core 35 passing, 26 failing; upgradeable 16 passing, 2 failing; every failure is giveFeedback in our modified ReputationRegistry." >> "$GITHUB_STEP_SUMMARY"
 
   # Makes absence of tests VISIBLE. An unwired safeguard is worse than an absent
   # one because it converts a known gap into false coverage; the same is true of
