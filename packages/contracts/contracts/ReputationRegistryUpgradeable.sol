@@ -23,8 +23,7 @@ contract ReputationRegistryUpgradeable is OwnableUpgradeable, UUPSUpgradeable {
         string tag2,
         string endpoint,
         string feedbackURI,
-        bytes32 feedbackHash,
-        bytes x402PaymentProof
+        bytes32 feedbackHash
     );
 
     event FeedbackRevoked(
@@ -48,7 +47,6 @@ contract ReputationRegistryUpgradeable is OwnableUpgradeable, UUPSUpgradeable {
         bool isRevoked;        // 1 byte  (packed with value + valueDecimals)
         string tag1;
         string tag2;
-        bytes x402PaymentProof;
     }
 
     /// @dev Identity registry address stored at slot 0 (matches MinimalUUPS)
@@ -102,8 +100,7 @@ contract ReputationRegistryUpgradeable is OwnableUpgradeable, UUPSUpgradeable {
         string calldata tag2,
         string calldata endpoint,
         string calldata feedbackURI,
-        bytes32 feedbackHash,
-        bytes calldata x402PaymentProof
+        bytes32 feedbackHash
     ) external {
         require(valueDecimals <= 18, "too many decimals");
         require(value >= -MAX_ABS_VALUE && value <= MAX_ABS_VALUE, "value too large");
@@ -123,8 +120,7 @@ contract ReputationRegistryUpgradeable is OwnableUpgradeable, UUPSUpgradeable {
             valueDecimals: valueDecimals,
             tag1: tag1,
             tag2: tag2,
-            isRevoked: false,
-            x402PaymentProof: x402PaymentProof
+            isRevoked: false
         });
 
         // track new client
@@ -133,7 +129,7 @@ contract ReputationRegistryUpgradeable is OwnableUpgradeable, UUPSUpgradeable {
             $._clientExists[agentId][msg.sender] = true;
         }
 
-        emit NewFeedback(agentId, msg.sender, currentIndex, value, valueDecimals, tag1, tag1, tag2, endpoint, feedbackURI, feedbackHash, x402PaymentProof);
+        emit NewFeedback(agentId, msg.sender, currentIndex, value, valueDecimals, tag1, tag1, tag2, endpoint, feedbackURI, feedbackHash);
     }
 
     function revokeFeedback(uint256 agentId, uint64 feedbackIndex) external {
@@ -223,18 +219,13 @@ contract ReputationRegistryUpgradeable is OwnableUpgradeable, UUPSUpgradeable {
                     tag2Hash != keccak256(bytes(fb.tag2))) continue;
 
                 // Normalize to 18 decimals (WAD)
+                // `valueDecimals` is bounded to <= 18 on write; keep math signed.
                 int256 factor = int256(10 ** uint256(18 - fb.valueDecimals));
                 int256 normalized = fb.value * factor;
-                uint64 weight = 1;
-                
-                // x402 Payment Verified Feedback carries 2x weight
-                if (fb.x402PaymentProof.length > 0) {
-                    weight = 2;
-                }
-                
-                decimalCounts[fb.valueDecimals] += weight;
-                sum += (normalized * int256(uint256(weight)));
-                count += weight;
+                decimalCounts[fb.valueDecimals]++;
+
+                sum += normalized;
+                count++;
             }
         }
 
