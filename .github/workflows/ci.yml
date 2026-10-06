@@ -58,13 +58,16 @@ jobs:
       - run: npm run check:builders
 
   # Marco's ERC-8004 contract tests. NON-BLOCKING and reported honestly:
-  # 26 of 61 currently fail on a drift between the tests and the contract ABI
+  # When this job was added, 26 of 61 failed on a drift between the tests and the contract ABI
   # ("Event NewFeedback with argument count 11 not found in the contract ABI").
   # That failure PRE-DATES this workflow — verified by running the suite against
   # the original committed dependency tree, which produces the identical 35/26.
   # It is surfaced, not fixed: packages/contracts is owned elsewhere.
+  # Since 2026-08-06 all 61 fail before any assertion: HHE1000, the artifact for
+  # HardhatMinimalUUPS is not found when test/core.ts deploys the registry proxy
+  # (measured 2026-10-06 from this job's log). Also not ours to fix.
   contracts:
-    name: contracts tests (known 26/61 failing — reported, not gating)
+    name: contracts tests (all 61 failing since 2026-08-06, HHE1000 — reported, not gating)
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:

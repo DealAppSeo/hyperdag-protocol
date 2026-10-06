@@ -11,7 +11,7 @@ it is not a promise we keep to you. This file is.
 
 ## 1. What is actually usable today
 
-Everything in this section was measured on **2026-09-08**, not read off a badge.
+Each row carries the date it was measured, not read off a badge (the oldest is 2026-09-08).
 Re-run the commands before relying on any of it; a dated fact decays, and a
 *negative* fact ("X is not published") decays fastest of all, because anyone can
 publish X without touching this file.
@@ -27,12 +27,13 @@ publish X without touching this file.
 
 | **The check: `POST /api/v1/classify`** | **LIVE**, public, keyless (measured 2026-10-04). See §1a. | the `curl` in §1a |
 
-**So: `npm i @hyperdag/trustshell`. Not `@hyperdag/protocol`.** The badge at the
-top of this repo's README links a package that does not exist yet. That badge
-misled one of our own agents on 2026-09-08; it can mislead you the same way.
+**So: `npm i @hyperdag/trustshell`. Not `@hyperdag/protocol`.** The README used to carry an
+npm badge for `@hyperdag/protocol`, a package that does not exist; it misled one of our own
+agents on 2026-09-08 and was removed on 2026-10-04.
 
 **Published 1.6.0, measured from the tarball on 2026-10-05.** `trustshell verify`
 exits 0 on PASS or FLAG, 1 on VETO, and 2 when HAL did not decide (NOT_CHECKED, never a pass).
+Exit 3 is a runtime error and 4 means the command is waiting for a person to answer (ASK).
 `ethers` (`^6`) is an optional peer: a plain install does not include it. The package uses it
 to sign an x402 payment (`buildX402Payment`, `guardedX402Payment`) and for the keyless
 on-chain read behind `verifySigner`.
@@ -57,17 +58,25 @@ curl -s -X POST https://repid-engine-production.up.railway.app/api/v1/classify \
 ```
 
 - **In:** `{text, labels}`. `labels` is optional; if present it must be exactly the three.
-- **Out:** `{label, latency_ms}`, where `label` is `pass`, `veto` or `not-checked`.
+- **Out:** `{label, latency_ms, by}`, where `label` is `pass`, `veto` or `not-checked` and `by`
+  says what decided (`arithmetic`, `votes`, or `skipped` when nothing was sent). When models voted
+  it also carries `voters` (every host the text reached) and `deciders` (the two whose answers made
+  the label), and, only when the operator has questions switched on, a `question`. Read `label`;
+  the other fields are for showing your user who checked.
 - **What decides:** a whole-text arithmetic equation is evaluated locally. Prose up to
   1,500 characters goes to **two independent free models, which must agree**: both true
   gives `pass`, both false gives `veto`. Anything else gives `not-checked`: an opinion, a
   prediction, a split vote, a timeout, a rate limit, or text that is too long.
 - **Treat `not-checked` as "unknown", never as true.** This is the §2 rule, applied to the
   thing we ship.
-- **Your text leaves us:** it is sent to the model hosts that vote (Groq, and Cerebras when
-  configured). Do not send secrets or personal data.
-- **Limits:** 30 requests a minute per IP (`ratelimit-*` headers). Over the limit you get
-  `429` with `label: not-checked`.
+- **Your text leaves us:** it is sent to the model hosts that vote: Groq and Cerebras first.
+  When one of them gives no answer, a stand-in from another model family takes its place, but
+  only one that passed its self-test: Cloudflare Workers AI or OpenRouter, and Mistral, Together
+  or Fireworks only if the operator's paid switch is on. `voters` in the reply names exactly
+  which hosts received your text. Do not send secrets or personal data.
+- **Limits:** 30 requests a minute per IP (`ratelimit-*` headers), and 100 checks per IP per
+  UTC day by default. Over either you get `429` with `label: not-checked`; the daily one also
+  says `error: "daily_limit"` and `resets_at`.
 - **Health:** `GET /api/v1/classify/stats` (keyless) gives label counts, the share that came
   back `not-checked`, and a daily self-test result for each model. It returns counts only,
   never text, and resets on restart (`since` says when).
@@ -115,7 +124,7 @@ Until you have done that you do not know it is wired.
 | Surface | Stability |
 |---|---|
 | The two registry addresses above, on Base Sepolia | stable — they are the canonical deployment |
-| ERC-8004 identity + reputation read paths (`getRepID`, `getReputationHistory`, `getAttestation`) | stable — standard-defined, not ours to change |
+| ERC-8004 reputation read paths (`getSummary`, `readFeedback`, `readAllFeedback`) | stable — defined by the ERC-8004 spec (`packages/contracts/ERC8004SPEC.md`), not ours to change. `getRepID` is a TrustShell SDK method that reads the engine, not a registry function. |
 | RepID **range** (10 floor, 10,000 cap) and the five tier names | stable |
 | RepID **tier thresholds** and the scoring weights behind them | **will move.** Tuning is deliberate and not published. Do not hardcode a threshold; read the tier. |
 | The six-interface kernel | pre-release, on a branch. Design against `@hyperdag/trustshell` instead. |
