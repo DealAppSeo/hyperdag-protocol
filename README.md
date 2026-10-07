@@ -14,7 +14,7 @@ HyperDAG is a lightweight, composable trust kernel for autonomous agents: six ve
 
 ## Live on Base Sepolia (chain ID 84532)
 
-Both canonical registries are live on-chain, holding real minted identities and reputation writes. Everything below is verifiable from any RPC client or basescan. *(Reputation writes are landing daily: 122 recorded with a transaction hash, the latest on 2026-10-04, re-measured 2026-10-05. Two past pauses are explained under Receipts.)*
+Both canonical registries are live on-chain, holding real minted identities and reputation writes. They are the ERC-8004 team's deployments; this repo documents and uses them. Everything below is verifiable from any RPC client or basescan. *(For the live count of reputation writes, ask the engine: `GET https://repid-engine-production.up.railway.app/api/v1/observability/onchain-stats`, public and keyless, returns `lifetime_onchain_writes`. Two past pauses are explained under Receipts.)*
 
 | Contract | Address |
 |---|---|
@@ -24,6 +24,17 @@ Both canonical registries are live on-chain, holding real minted identities and 
 How a reputation write gets there: the daily loop behind the receipts below, from identity to a write anyone can check. It follows `scripts/cron/mint-attestation.mjs` in repid-engine.
 
 ![How an agent earns on-chain reputation: an agent holds an ERC-8004 identity token; a buyer pays for its service into escrow over x402; the work is delivered and checked; if it is not accepted, the contract is disputed and nothing is written; if it is, the contract settles, the RepID is written to the ERC-8004 ReputationRegistry on Base Sepolia, the receipt is read back from the chain, and anyone can check it on BaseScan.](docs/how-reputation-is-earned.svg)
+
+*Where the picture simplifies:* it draws the reputation write after settlement. In the engine's code the write is queued earlier, when the delivered work passes its check (`applyServiceFulfilledDeltas` in repid-engine's `src/services/validation-repid-delta.ts`), not when the payment is released.
+
+---
+
+## Where this sits
+
+- **Calls:** nothing at runtime. This repository runs no service. Its CI reads the version of `@hyperdag/trustshell` that npm serves (`npm run check:builders`), and checks out the public engine, trustshell, HyperDAG-core and house-agent repositories, read-only, to compare the map with their code (`npm run check:map`).
+- **Copies:** `packages/defaults/hallucination-hal-local` is a port of the engine's HAL extractor and scorer (`repid-engine/src/hal/lib`), held to it by golden vectors in its own `tests/parity.test.mjs`.
+- **Called by / read by:** outside builders, who read the spec, the interfaces and [`BUILDERS.md`](BUILDERS.md). No other repository imports a package from here; trustshell.dev links people here.
+- **The whole map:** [`BUILDERS.md#how-the-pieces-fit`](BUILDERS.md#how-the-pieces-fit).
 
 ---
 
@@ -82,9 +93,9 @@ Real on-chain ERC-8004 activity from a production agent fleet. Every number is v
   | `trinity-orch` | `6705` | `trinity-mel` | `6710` |
   | `trinity-nexus` | `6711` | `trinity-hdm` | `6712` |
 
-- **122 on-chain reputation writes recorded** from the agent economy — real production activity, not synthetic backfill. Counted on **2026-10-05** as rows in `erc8004_reputation_writes` that carry a full transaction hash on Base Sepolia, first write 2026-05-22; 5 rows with a placeholder `0xmock_…` hash are excluded. Earlier published figures (70 on 2026-07-08, 92 on 2026-08-29) were dated snapshots and are superseded, not withdrawn. Median gas per write: 134,661. Most recent write: [`0xe92c64ed…`](https://sepolia.basescan.org/tx/0xe92c64edb65a795f2728f94a6bd1fa9426e03642caeb5d49022d280b20b8c6cf) at 2026-10-04 12:05:58 UTC. The daily minter re-reads each receipt from Base Sepolia and exits non-zero rather than record an unverified write; the two newest were re-checked independently on 2026-10-05 (`status 0x1`, sent to the ReputationRegistry).
+- **On-chain reputation writes from the agent economy** — real production activity, not synthetic backfill, first write 2026-05-22. **For the count, ask the engine, not this README:** `GET https://repid-engine-production.up.railway.app/api/v1/observability/onchain-stats` (public, no key) returns `lifetime_onchain_writes`, which counts only writes with a real transaction hash sent to the canonical ReputationRegistry, and `onchain_writes_excluded_unverifiable` for the rest. This README used to print a hand count here. It counted every row with a real transaction hash, including writes sent to a different contract, so it disagreed with the engine's counter; it was removed on 2026-10-07. One write you can check: [`0xe92c64ed…`](https://sepolia.basescan.org/tx/0xe92c64edb65a795f2728f94a6bd1fa9426e03642caeb5d49022d280b20b8c6cf) at 2026-10-04 12:05:58 UTC (`status 0x1`, sent to the ReputationRegistry, re-checked 2026-10-05). The daily minter re-reads each receipt from Base Sepolia and exits non-zero rather than report a write it could not confirm on-chain.
   **Honest currency note — there have been two pauses, and the second is the more instructive.** The first ran **2026-06-22 → 2026-07-08** while the settlement path was re-wired. The second ran **2026-08-17 → 2026-08-29**: an upstream provider retired the model our peer-validation step called, so every validator returned an error — and the aggregation counted an unreachable validator as a score of **zero** rather than as *not measured*. The result was a confident failing verdict about work nobody had assessed, which disputed twelve consecutive runs. Both halves are fixed: the model is configuration rather than a literal, and a validator that does not answer is now excluded from the aggregate instead of counted against the provider.
-  We publish the gap rather than the average. The reputation *history* on-chain remains fully verifiable — treat the count as a dated snapshot, not a fixed constant, and treat live cadence as something to re-probe rather than assume.
+  We publish the gap rather than the average. The reputation *history* on-chain remains fully verifiable — read the count from the engine's counter above rather than from any copy of it, and treat live cadence as something to re-probe rather than assume.
 
 - **Epoch-1 reset:** the 12 core agents' RepID was reset to **1,000** for a clean start (a one-off for that fleet; a newly registered agent starts at 200). The 12 core agents now range **1,077–2,202**, all ESTABLISHED (measured 2026-10-05), as they re-earn from a level field.
 
@@ -98,18 +109,19 @@ Real on-chain ERC-8004 activity from a production agent fleet. Every number is v
 
 ## Three Trust Models — ERC-8004 → HyperDAG mapping
 
-The trust promise is one flow across three protocols — **HAL** verifies behavior, **ERC-8004** anchors the earned reputation on-chain, **x402** settles agent-to-agent value — so trust is delivered as verifiable evidence, not a claim:
+The trust promise is one flow across three protocols — **x402** puts the agent-to-agent payment into escrow first, **HAL** checks the delivered work, and **ERC-8004** anchors the earned reputation on-chain once the work passes — so trust is delivered as verifiable evidence, not a claim:
 
 ```mermaid
 graph LR
-    A([Agent output]) --> HAL[["HAL<br/>hallucination / behavioral<br/>integrity check"]]
+    PAY[["x402<br/>buyer's payment<br/>into escrow first"]] --> A([Agent delivers<br/>the work])
+    A --> HAL[["HAL<br/>hallucination / behavioral<br/>integrity check"]]
+    HAL -->|veto or fail| STOP([Disputed · no write])
     HAL -->|pass| REP[["ERC-8004<br/>RepID reputation<br/>write on-chain"]]
-    HAL -->|veto| STOP([Blocked · no write])
     REP --> LEDGER[("Base Sepolia<br/>Identity + Reputation<br/>registries")]
-    REP --> PAY[["x402<br/>agent-to-agent<br/>payment"]]
     LEDGER --> EV([Trust as verifiable<br/>evidence, not claim])
-    PAY --> EV
 ```
+
+*(This diagram used to draw the payment after the reputation write. The engine takes the payment into escrow before any work is done.)*
 
 ERC-8004 defines three composable trust mechanisms; HyperDAG ships one curated default for each, all swappable via the corresponding interfaces:
 
@@ -147,8 +159,8 @@ npm install @hyperdag/trustshell
 ```
 
 That bundles HAL hallucination filtering, portable ERC-8004 RepID, and x402 payments in one
-install — see **[`@hyperdag/trustshell`](https://github.com/DealAppSeo/trustshell)** and the
-[Public ecosystem](#public-ecosystem) table below.
+install — see **[`@hyperdag/trustshell`](https://github.com/DealAppSeo/trustshell)**, and
+[How the pieces fit](BUILDERS.md#how-the-pieces-fit) for where it sits.
 
 **For an AI tool (Claude Desktop, Cursor, Claude Code).** The checks are also an MCP server: the `trustshell-mcp` bin inside `@hyperdag/trustshell`. Install the package globally, then point the tool's config at the bin:
 
@@ -232,16 +244,17 @@ Replace any default at install time: `createHDP({ overrides: { ... } })`.
 
 ```mermaid
 graph TD
-    Node1((Initial State)) --> Node2((Agent Action))
-    Node1 --> Node3((Agent Action))
-    Node2 & Node3 --> Node4{Merkle Hash}
-    Node4 -->|ERC-8004| Chain[(HyperDAG Ledger)]
+    Node1((Agent action)) --> Node2{Checked and scored<br/>by the engine}
+    Node2 -->|ERC-8004 write| Chain[(Base Sepolia<br/>ReputationRegistry)]
 
     subgraph "Privacy Layer (V1: range-check today; V2: bound to RepID transcript)"
-    Chain --> ZKP[Plonky3 STARK Circuit]
-    ZKP --> Creds[Selective-disclosure proofs]
+    ZKP[Plonky3 STARK range check<br/>RepID above a threshold] --> Creds[Proof anyone can check<br/>with @hyperdag/proof-verifier]
     end
+
+    Node2 -->|score sent to the prover| ZKP
 ```
+
+*(This diagram used to send a Merkle hash into a "HyperDAG Ledger". There is no such ledger, and no Merkle hash goes into the write: reputation is written to the ERC-8004 ReputationRegistry on Base Sepolia, and the proof is made by the prover from the engine's score, not read from a chain. The map of which service does what is in [`BUILDERS.md#how-the-pieces-fit`](BUILDERS.md#how-the-pieces-fit).)*
 
 ### Core building blocks
 - **Merkle DAG** — content-addressed, append-only verifiable state.
@@ -256,7 +269,7 @@ graph TD
 
 | Phase | Target | Highlights |
 |---|---|---|
-| **V1 — Live today (Base Sepolia)** | shipping now | IdentityRegistry + ReputationRegistry live on Base Sepolia (all 12 core agents minted, 122 reputation writes with a transaction hash as of 2026-10-05) · HAL pipeline + cross-LLM agreement · x402 settlements · all reachable today through **[`@hyperdag/trustshell`](https://www.npmjs.com/package/@hyperdag/trustshell)**, which is published. The six-interface kernel is **designed and branch-only**; `@hyperdag/protocol` is **not on npm** (this row previously claimed `@hyperdag/protocol@0.1.0-alpha` was published). |
+| **V1 — Live today (Base Sepolia)** | shipping now | IdentityRegistry + ReputationRegistry live on Base Sepolia (all 12 core agents minted; reputation writes counted live by the engine, see Receipts) · HAL pipeline + cross-LLM agreement · x402 settlements · all reachable today through **[`@hyperdag/trustshell`](https://www.npmjs.com/package/@hyperdag/trustshell)**, which is published. The six-interface kernel is **designed and branch-only**; `@hyperdag/protocol` is **not on npm** (this row previously claimed `@hyperdag/protocol@0.1.0-alpha` was published). |
 | **V1.5 — User-managed permission guardrails** | 1–2 weeks | Telegram (and later email/discord/webhook) alerts when an agent attempts an action outside its lane. Five RepID-derived permission tiers (PROBATIONARY → VETERAN) map score to capability. Substrate is live; client SDK lands at install. |
 | **V2 — Mainnet** | not scheduled (the Q2 2026 target passed) | Canonical registries on Base mainnet · TEE-backed ValidationRegistry path · **ZKP RepID circuit bound to agent decision + HAL signals + RepID-delta transcript (extension of today's Plonky3 range-check)** · ZKP-federated learning (bilateral benefit) · expanded validator-set diversity. |
 
@@ -264,18 +277,12 @@ See [GOVERNANCE_ROADMAP.md](GOVERNANCE_ROADMAP.md) for the bootstrap-to-communit
 
 ---
 
-## Public ecosystem
+## The other repositories
 
-See also [`docs/living/ECOSYSTEM.md`](docs/living/ECOSYSTEM.md). **trust-commons is a debate commons, not a download.**
-
-| Repo | Role | Install? |
-|---|---|---|
-| **[hyperdag-protocol](https://github.com/DealAppSeo/hyperdag-protocol)** *(you are here)* | Interface kernel + curated defaults. `@hyperdag/protocol` is **not on npm**. | Clone / read. Not `npm i`. |
-| **[trustshell](https://github.com/DealAppSeo/trustshell)** | Drop-in client: HAL, ERC-8004 RepID, x402. Published `@hyperdag/trustshell` **1.6.0** (npm, 2026-10-05). | `npm i @hyperdag/trustshell` |
-| **[repid-engine](https://github.com/DealAppSeo/repid-engine)** | Scoring engine (private formula). Not an npm product. | No |
-| **[proof-verifier](https://github.com/DealAppSeo/hyperdag-proof-verifier)** | Client-side Plonky3 check; usually bundled inside trustshell. | Rarely direct |
-| **[example-agent](https://github.com/DealAppSeo/example-agent)** | 60-second demo agent. | Clone; follow its README |
-| **[trust-commons](https://github.com/DealAppSeo/trust-commons)** | **Debate commons** — conversation, not a package. | Open Discussions. Do not `npm i`. |
+How this repository fits with the engine, trustshell, the prover, the proof verifier and the
+house agents is in one place: **[BUILDERS.md → How the pieces fit](BUILDERS.md#how-the-pieces-fit)**.
+This README names only its own edges (see "Where this sits"), so the list of repositories is kept
+in that one map instead of being repeated here.
 
 ---
 

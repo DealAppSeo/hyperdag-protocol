@@ -4,7 +4,7 @@ Checklist for GitHub **About** (description, website, topics). Not F-PINS (profi
 
 Measured **2026-09-16** via `gh api`. Fill empty fields from this table. Do **not** invent a homepage. Do **not** overwrite a good description. Do not say “MVP launched.”
 
-Public surface = the [ECOSYSTEM.md](./ECOSYSTEM.md) table. Frozen folders (TrustMarket UI, new landings, etc.) stay empty on purpose.
+Public surface = the one map, [BUILDERS.md → How the pieces fit](../../BUILDERS.md#how-the-pieces-fit). Frozen folders (TrustMarket UI, new landings, etc.) stay empty on purpose.
 
 | Repo | Description now | Website now | Topics now | Do |
 |---|---|---|---|---|

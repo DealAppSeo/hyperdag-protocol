@@ -21,7 +21,7 @@ The stranger-facing product is [`@hyperdag/trustshell`](https://github.com/DealA
 4. No “MVP launched.” Published npm is `@hyperdag/trustshell@1.6.0` (2026-10-05).
 5. Open the pull request. MERGE_POLICY: agents may squash-merge when checks are green and the PR is not publish / DDL / secrets.
 
-Security: [SECURITY.md](SECURITY.md). Ecosystem map: [`docs/living/ECOSYSTEM.md`](docs/living/ECOSYSTEM.md).
+Security: [SECURITY.md](SECURITY.md). Ecosystem map: [BUILDERS.md → How the pieces fit](BUILDERS.md#how-the-pieces-fit).
 
 ## License
 

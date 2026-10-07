@@ -4,7 +4,8 @@
     "license": "Apache-2.0",
     "scripts": {
         "check:sdk-claims": "node scripts/check-sdk-claims.mjs",
-        "check:builders": "node scripts/check-builders.mjs"
+        "check:builders": "node scripts/check-builders.mjs",
+        "check:map": "node scripts/check-map.mjs"
     },
     "private": true,
     "dependencies": {},

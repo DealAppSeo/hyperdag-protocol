@@ -90,6 +90,56 @@ move. Read `label`, nothing else.
 
 ---
 
+## How the pieces fit
+
+This is the one map of which repository calls which. Each repository's README names only
+its own edges and links here. **When an edge changes, change it here and in that
+repository's README in the same pull request.** `npm run check:map` in this repository
+compares the addresses and package names below with the code that uses them, and fails
+when the two disagree.
+
+**The harness: what runs**
+
+- **[DealAppSeo/repid-engine](https://github.com/DealAppSeo/repid-engine)**: the engine.
+  Its API is `https://repid-engine-production.up.railway.app`. The same repository also
+  runs the attestation minter, the proof-drain worker and the receipt indexer. It is not
+  an npm package.
+- **[DealAppSeo/trustshell](https://github.com/DealAppSeo/trustshell)**: `@hyperdag/trustshell`
+  on npm (the SDK, the CLI and the MCP server are all in that one package), the site at
+  trustshell.dev, and the Chrome extension.
+- **[DealAppSeo/hyperdag-proof-verifier](https://github.com/DealAppSeo/hyperdag-proof-verifier)**:
+  `@hyperdag/proof-verifier` on npm. It checks a zero-knowledge proof without trusting
+  whoever made it.
+- **[DealAppSeo/HyperDAG-core](https://github.com/DealAppSeo/HyperDAG-core)**:
+  `services/zkp-postcard` is the prover the engine calls, at
+  `https://zkp-postcard-production.up.railway.app`.
+
+**The contract: what is agreed**
+
+- **This repository**: the ERC-8004 spec, the interface designs and this file. No running
+  code depends on it.
+- **The ERC-8004 registries on Base Sepolia (chain 84532)**: the ERC-8004 team's
+  deployments ([erc-8004/erc-8004-contracts](https://github.com/erc-8004/erc-8004-contracts)).
+  We use them; we do not operate them. Their addresses are in §1.
+
+**On the harness: what uses it**
+
+- **[DealAppSeo/trinity-symphony-shared](https://github.com/DealAppSeo/trinity-symphony-shared)**:
+  the house agents. They call the engine. Nothing else calls them.
+- **DealAppSeo/trinity-ecosystem** (a private repository): the site at aitrinitysymphony.com.
+
+**Who calls whom**
+
+- trustshell → the engine; proof-verifier; the ReputationRegistry (reads only).
+- the engine → the prover; proof-verifier; the registries (it mints identities, and writes
+  reputation, for example once paid work passes its check); and a person, by a link to
+  `https://controller.aitrinitysymphony.com`, when a decision needs a human.
+- the house agents → the engine (and a health check of the prover).
+- nothing else → the house agents.
+- this repository → nothing at runtime.
+
+---
+
 ## 2. The one rule that is not optional
 
 The ecosystem's entire product is **trust as verifiable evidence rather than

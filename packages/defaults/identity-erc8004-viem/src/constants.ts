@@ -2,8 +2,12 @@
  * ERC-8004 canonical addresses — Base Sepolia (chainId 84532).
  *
  * Pulled from CLAUDE.md / XC functional audit 2026-05-28. These are the
- * upgradeable UUPS deployments operated by the HyperDAG team and are the
- * "canonical" addresses external consumers should target.
+ * ERC-8004 team's canonical upgradeable UUPS deployments
+ * (https://github.com/erc-8004/erc-8004-contracts), and the addresses external
+ * consumers should target. This repo documents and uses them; it does not
+ * operate them. Until 2026-10-07 this comment credited them to our own team,
+ * which was wrong; BUILDERS.md §1 has the correct account.
+ * `npm run check:map` fails if that claim comes back.
  */
 
 export const BASE_SEPOLIA_CHAIN_ID = 84532;

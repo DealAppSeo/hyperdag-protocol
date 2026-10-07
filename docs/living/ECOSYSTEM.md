@@ -1,16 +1,11 @@
-# ECOSYSTEM — public table (L9)
+# ECOSYSTEM — retired (2026-10-07)
 
-Single snippet. The protocol README includes this table; do not let the two drift.
+This file used to hold a table of repositories that the README repeated. It is retired: a list of
+every sibling repeated in more than one place drifts the day it merges (it still said
+proof-verifier was "usually bundled inside trustshell"; it is a runtime dependency).
 
-All Apache 2.0 unless noted. **trust-commons is a debate commons, not a download.**
+**The one map is [BUILDERS.md → How the pieces fit](../../BUILDERS.md#how-the-pieces-fit).**
+Each repository's README names only what it calls and what calls it, and links there.
+`npm run check:map` checks the map's edges against the code.
 
-| Repo | Role | Install? |
-|---|---|---|
-| **[hyperdag-protocol](https://github.com/DealAppSeo/hyperdag-protocol)** | Interface kernel + curated defaults. `@hyperdag/protocol` is **not on npm**. | Clone / read. Not `npm i`. |
-| **[trustshell](https://github.com/DealAppSeo/trustshell)** | Drop-in client: HAL, ERC-8004 RepID, x402. Published `@hyperdag/trustshell` **1.6.0** (npm, 2026-10-05). | `npm i @hyperdag/trustshell` |
-| **[repid-engine](https://github.com/DealAppSeo/repid-engine)** | Scoring engine (private formula). Not an npm product. | No |
-| **[proof-verifier](https://github.com/DealAppSeo/hyperdag-proof-verifier)** | Client-side Plonky3 check; usually bundled inside trustshell. | Rarely direct |
-| **[example-agent](https://github.com/DealAppSeo/example-agent)** | 60-second demo agent. | Clone; follow its README |
-| **[trust-commons](https://github.com/DealAppSeo/trust-commons)** | **Debate commons** — conversation and attack-the-assumptions threads. Not a package, not a SDK, not a binary. | Open Discussions (F-DISCUSSIONS). Do not `npm i trust-commons`. |
-
-Pinned debate text: [`COMMONS_PIN.md`](./COMMONS_PIN.md).
+**trust-commons is a debate commons, not a download:** https://github.com/DealAppSeo/trust-commons
