@@ -47,6 +47,11 @@ jobs:
 
   # The published contract. Blocking: BUILDERS.md is what an outside developer
   # is told to trust, and a version or an exit code that drifted is a lie.
+  # check:map pins the map ("How the pieces fit") to the code that makes each
+  # edge, so the four public repositories it names are checked out read-only,
+  # sparse, beside it. Without them the map half is NOT_CHECKED (exit 2), which
+  # fails this step rather than passing it.
+  # (Job name unchanged on purpose: a ruleset may require it by name.)
   builders:
     name: BUILDERS.md matches published trustshell
     runs-on: ubuntu-latest
@@ -56,6 +61,36 @@ jobs:
         with:
           node-version: '22'
       - run: npm run check:builders
+      - uses: actions/checkout@v4
+        with:
+          repository: DealAppSeo/repid-engine
+          path: .siblings/repid-engine
+          persist-credentials: false
+          sparse-checkout: src
+      - uses: actions/checkout@v4
+        with:
+          repository: DealAppSeo/trustshell
+          path: .siblings/trustshell
+          persist-credentials: false
+          sparse-checkout: |
+            src
+            extension
+      - uses: actions/checkout@v4
+        with:
+          repository: DealAppSeo/HyperDAG-core
+          path: .siblings/HyperDAG-core
+          persist-credentials: false
+          sparse-checkout: services/zkp-postcard
+      - uses: actions/checkout@v4
+        with:
+          repository: DealAppSeo/trinity-symphony-shared
+          path: .siblings/trinity-symphony-shared
+          persist-credentials: false
+          sparse-checkout: lib
+      - name: the map matches the code it describes
+        env:
+          HYPERDAG_SIBLINGS_DIR: ${{ github.workspace }}/.siblings
+        run: npm run check:map
 
   # Marco's ERC-8004 contract tests. NON-BLOCKING and reported honestly.
   # 2026-10-06, measured from this job: test/core.ts 61 of 61 and test/upgradeable.ts 18 of 18.
