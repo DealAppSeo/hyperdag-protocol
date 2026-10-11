@@ -42,7 +42,7 @@
     "ethers": "^6.15.0",
     "forge-std": "github:foundry-rs/forge-std#v1.9.4",
     "hardhat": "^3.0.6",
-    "typescript": "~5.8.0",
+    "typescript": "~7.0.2",
     "viem": "^2.38.0"
   },
   "type": "module",
