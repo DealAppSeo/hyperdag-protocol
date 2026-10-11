@@ -38,7 +38,7 @@
     "@nomicfoundation/hardhat-viem-assertions": "^3.0.2",
     "@nomicfoundation/ignition-core": "^3.0.3",
     "@openzeppelin/contracts-upgradeable": "^5.4.0",
-    "@types/node": "^22.18.8",
+    "@types/node": "^26.6.4",
     "ethers": "^6.15.0",
     "forge-std": "github:foundry-rs/forge-std#v1.9.4",
     "hardhat": "^3.0.6",
