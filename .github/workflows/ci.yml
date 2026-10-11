@@ -27,7 +27,7 @@ jobs:
     name: clean install from lockfile
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -56,18 +56,18 @@ jobs:
     name: BUILDERS.md matches published trustshell
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - run: npm run check:builders
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           repository: DealAppSeo/repid-engine
           path: .siblings/repid-engine
           persist-credentials: false
           sparse-checkout: src
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           repository: DealAppSeo/trustshell
           path: .siblings/trustshell
@@ -75,13 +75,13 @@ jobs:
           sparse-checkout: |
             src
             extension
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           repository: DealAppSeo/HyperDAG-core
           path: .siblings/HyperDAG-core
           persist-credentials: false
           sparse-checkout: services/zkp-postcard
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           repository: DealAppSeo/trinity-symphony-shared
           path: .siblings/trinity-symphony-shared
@@ -107,7 +107,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -161,7 +161,7 @@ jobs:
     name: per-package test coverage map
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: enumerate
         run: |
           {
