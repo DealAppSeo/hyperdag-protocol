@@ -1,0 +1,35 @@
+# ADVISORY - version-update PRs only; nothing here is a required check.
+# Weekly, with minor and patch bumps grouped into one PR per ecosystem so the queue stays
+# reviewable. Major bumps arrive as their own PRs on purpose: they are the ones that break.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directories:
+      - "/"
+      - "/packages/contracts"
+      - "/packages/defaults/hallucination-hal-local"
+      - "/packages/defaults/identity-erc8004-viem"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:37"
+      timezone: Etc/UTC
+    open-pull-requests-limit: 5
+    groups:
+      npm-minor-patch:
+        update-types:
+          - minor
+          - patch
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:37"
+      timezone: Etc/UTC
+    open-pull-requests-limit: 5
+    groups:
+      actions-minor-patch:
+        update-types:
+          - minor
+          - patch

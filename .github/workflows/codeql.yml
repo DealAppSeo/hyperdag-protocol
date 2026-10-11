@@ -1,0 +1,53 @@
+name: CodeQL
+
+# ADVISORY - not a required check. Static analysis of the JavaScript/TypeScript in this repo;
+# findings land in Security -> Code scanning. CodeQL is free on public repositories.
+#
+# Scope, stated plainly: only `javascript-typescript` is analysed. Any Rust, Solidity or Python
+# in this repository is NOT covered by this workflow.
+#
+# `build-mode: none` - JS/TS needs no build, so this cannot go red on a toolchain problem.
+#
+# `pull_request` has no `branches:` filter on purpose: a stacked PR (base is another feature
+# branch, not `main`) would otherwise never run this workflow at all, and a check that does not
+# run looks identical to a check that passed.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '17 8 * * 3' # weekly; off the hour so it does not queue with every other schedule
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  analyze:
+    name: Analyze (javascript-typescript)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
+        with:
+          languages: javascript-typescript
+          build-mode: none
+
+      - name: Analyze
+        uses: github/codeql-action/analyze@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
+        with:
+          category: /language:javascript-typescript
