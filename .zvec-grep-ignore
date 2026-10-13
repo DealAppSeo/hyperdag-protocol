@@ -1,0 +1,15 @@
+# zvec-grep index exclusions, passed with --ignore-file by `npm run search:index`.
+# .git/ and .zvec-grep/ are always excluded; node_modules/ and .gitignore'd paths are excluded by default.
+reports/
+node_modules/
+dist/
+build/
+coverage/
+.next/
+*.log
+*.jsonl
+*.ndjson
+*.csv
+*.map
+*.min.js
+package-lock.json

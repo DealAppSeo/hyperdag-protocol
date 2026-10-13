@@ -5,7 +5,8 @@
     "scripts": {
         "check:sdk-claims": "node scripts/check-sdk-claims.mjs",
         "check:builders": "node scripts/check-builders.mjs",
-        "check:map": "node scripts/check-map.mjs"
+        "check:map": "node scripts/check-map.mjs",
+        "search:index": "zg index . --embedding local/potion-retrieval-32m --ignore-file .zvec-grep-ignore"
     },
     "private": true,
     "dependencies": {},

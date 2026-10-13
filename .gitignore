@@ -47,3 +47,6 @@ yarn-error.log*
 # The tool ships its own .codegraph/.gitignore covering the DB, but pin the
 # directory here too so a `git add -A` cannot stage even the stub.
 .codegraph/
+
+# zvec-grep local semantic index (rebuild: npm run search:index)
+.zvec-grep/
