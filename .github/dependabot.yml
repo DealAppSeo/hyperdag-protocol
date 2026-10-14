@@ -1,6 +1,9 @@
 # ADVISORY - version-update PRs only; nothing here is a required check.
 # Weekly, with minor and patch bumps grouped into one PR per ecosystem so the queue stays
 # reviewable. Major bumps arrive as their own PRs on purpose: they are the ones that break.
+# The exception is the npm majors below: each was reviewed on 2026-10-14 and recommended
+# for close unmerged, so Dependabot is told not to re-raise it. Delete an entry when the
+# repo is ready to take that major. github-actions has no ignores.
 version: 2
 updates:
   - package-ecosystem: npm
@@ -20,6 +23,24 @@ updates:
         update-types:
           - minor
           - patch
+    ignore:
+      # typescript 5 -> 7 (PRs #42, #46, #48, #49). TypeScript 7 is the native-compiler
+      # rewrite; it must not land in a published-SDK repo ahead of a release.
+      - dependency-name: "typescript"
+        update-types:
+          - "version-update:semver-major"
+      # @types/node 22 -> 26 (PRs #43, #47). CI runs Node 22; types should match the runtime.
+      - dependency-name: "@types/node"
+        update-types:
+          - "version-update:semver-major"
+      # nx 22 -> 23 (PR #44).
+      - dependency-name: "nx"
+        update-types:
+          - "version-update:semver-major"
+      # dotenv 17 -> 18 (PRs #45, #50).
+      - dependency-name: "dotenv"
+        update-types:
+          - "version-update:semver-major"
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
