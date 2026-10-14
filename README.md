@@ -165,7 +165,7 @@ install — see **[`@hyperdag/trustshell`](https://github.com/DealAppSeo/trustsh
 **For an AI tool (Claude Desktop, Cursor, Claude Code).** The checks are also an MCP server: the `trustshell-mcp` bin inside `@hyperdag/trustshell`. Install the package globally, then point the tool's config at the bin:
 
 ```bash
-npm i -g @hyperdag/trustshell@1.6.0
+npm i -g @hyperdag/trustshell
 ```
 
 ```json
@@ -181,7 +181,7 @@ The separate npm package `@hyperdag/trustshell-mcp` is older (1.0.0, 2026-07-08)
 | If you're… | Install | What you get |
 |---|---|---|
 | A developer building an agent/app **in code** | `npm install @hyperdag/trustshell` | The SDK — HAL verification + ERC-8004 RepID + x402 payments, in your TypeScript/JS |
-| Using an **AI tool** (Claude Desktop, Cursor, Claude Code), **no code** | `npm i -g @hyperdag/trustshell@1.6.0`, then the `trustshell-mcp` bin (above) | The checks as AI-callable tools |
+| Using an **AI tool** (Claude Desktop, Cursor, Claude Code), **no code** | `npm i -g @hyperdag/trustshell`, then the `trustshell-mcp` bin (above) | The checks as AI-callable tools |
 | Only verifying **ZK proofs** client-side | `npm install @hyperdag/proof-verifier` | Standalone Plonky3 proof checking (usually bundled with trustshell — rarely installed directly) |
 
 **Most people want `@hyperdag/trustshell`. The SDK, the CLI and the MCP server are all in that one package. `proof-verifier` is a building block that ships inside trustshell.**
