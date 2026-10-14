@@ -27,7 +27,7 @@
     "@hyperdag/hallucination-hal": "*"
   },
   "devDependencies": {
-    "typescript": "^5.5.0",
+    "typescript": "^7.0.2",
     "tsx": "^4.0.0"
   },
   "keywords": [
