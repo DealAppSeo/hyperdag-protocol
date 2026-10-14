@@ -18,7 +18,7 @@ publish X without touching this file.
 
 | Thing | State | How to check |
 |---|---|---|
-| **`@hyperdag/trustshell`** | **PUBLISHED — `1.6.0`** (measured 2026-10-05; was `1.4.0` on 2026-10-04). The one package to install. | `npm view @hyperdag/trustshell version` |
+| **`@hyperdag/trustshell`** | **PUBLISHED — `1.6.1`** (measured 2026-10-14; was 1.6.0 on 2026-10-05 and 1.4.0 on 2026-10-04). The one package to install. | `npm view @hyperdag/trustshell version` |
 | `@hyperdag/protocol` | **NOT published** (404) | `npm view @hyperdag/protocol version` |
 | `@hyperdag/identity-erc8004`, `@hyperdag/reputation-zkp` | **NOT published** (404) | same |
 | `IdentityRegistry` on Base Sepolia (84532) | **LIVE** — `0x8004A818BFB912233c491871b3d84c89A494BD9e` | any RPC client, or basescan |
@@ -31,7 +31,7 @@ publish X without touching this file.
 npm badge for `@hyperdag/protocol`, a package that does not exist; it misled one of our own
 agents on 2026-09-08 and was removed on 2026-10-04.
 
-**Published 1.6.0, measured from the tarball on 2026-10-05.** `trustshell verify`
+**Published 1.6.1, re-measured 2026-10-14 (first measured on the 1.6.0 tarball, 2026-10-05).** `trustshell verify`
 exits 0 on PASS or FLAG, 1 on VETO, and 2 when HAL did not decide (NOT_CHECKED, never a pass).
 Exit 3 is a runtime error and 4 means the command is waiting for a person to answer (ASK).
 `ethers` (`^6`) is an optional peer: a plain install does not include it. The package uses it
@@ -63,8 +63,9 @@ curl -s -X POST https://repid-engine-production.up.railway.app/api/v1/classify \
 - **In:** `{text, labels}`. `labels` is optional; if present it must be exactly the three.
 - **Out:** `{label, latency_ms, by}`, where `label` is `pass`, `veto` or `not-checked` and `by`
   says what decided (`arithmetic`, `votes`, or `skipped` when nothing was sent). When models voted
-  it also carries `voters` (every host the text reached) and `deciders` (the two whose answers made
-  the label), and, only when the operator has questions switched on, a `question`. Read `label`;
+  it also carries `voters` (every host the text reached), `deciders` (the two whose answers made
+  the label), `votes` (one `{voter, family, verdict}` per host that answered, measured
+  2026-10-14), and, only when the operator has questions switched on, a `question`. Read `label`;
   the other fields are for showing your user who checked.
 - **What decides:** a whole-text arithmetic equation is evaluated locally. Prose up to
   1,500 characters goes to **two independent free models, which must agree**: both true

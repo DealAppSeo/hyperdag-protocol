@@ -27,12 +27,15 @@ function notChecked(why) {
   process.exit(2);
 }
 
-if (!builders.includes('PUBLISHED — `1.6.0`')) {
-  fail('BUILDERS.md does not name published @hyperdag/trustshell 1.6.0');
+// The version is read FROM the doc, not written here. This file used to hardcode `1.6.0` twice,
+// so publishing 1.6.1 turned every PR in this repo red until someone edited the CHECKER, which is
+// the wrong file: the doc is what an outsider reads. Now a publish still turns CI red until
+// BUILDERS.md names the new version, and the check itself never needs touching.
+const named = [...builders.matchAll(/PUBLISHED — `(\d+\.\d+\.\d+)`/g)].map((m) => m[1]);
+if (named.length !== 1) {
+  fail(`BUILDERS.md must name exactly one published @hyperdag/trustshell version; it names ${named.length}`);
 }
-if (/PUBLISHED — `1\.4\.0`/.test(builders)) {
-  fail('BUILDERS.md still names 1.4.0 as the published package');
-}
+const documented = named[0];
 if (!builders.includes('exits 0 on PASS or FLAG, 1 on VETO, and 2 when HAL did not decide (NOT_CHECKED, never a pass)')) {
   fail('BUILDERS.md does not say NOT_CHECKED exits 2 and is never a pass');
 }
@@ -57,9 +60,9 @@ try {
 } catch (err) {
   notChecked(`npm view did not answer: ${String(err?.message ?? err).split('\n')[0]}`);
 }
-if (version !== '1.6.0') {
-  fail(`npm view @hyperdag/trustshell version is ${version}, and BUILDERS.md says 1.6.0`);
+if (version !== documented) {
+  fail(`npm view @hyperdag/trustshell version is ${version}, and BUILDERS.md says ${documented}`);
 }
 
 console.log('check:builders — VERIFIED');
-console.log('  BUILDERS.md names 1.6.0, exit 2 on NOT_CHECKED, and the optional ethers peer');
+console.log(`  BUILDERS.md names ${documented} (= npm), exit 2 on NOT_CHECKED, and the optional ethers peer`);
