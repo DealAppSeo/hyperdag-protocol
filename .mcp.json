@@ -10,6 +10,16 @@
       "env": {
         "CODEGRAPH_TELEMETRY": "0"
       }
+    },
+    "zvec-grep": {
+      "type": "stdio",
+      "command": "zg",
+      "args": [
+        "server",
+        "--stdio",
+        "--mcp-toolset",
+        "agent"
+      ]
     }
   }
 }
