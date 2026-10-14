@@ -14,7 +14,7 @@
         "packages/*"
     ],
     "devDependencies": {
-        "nx": "22.5.1"
+        "nx": "22.7.12"
     },
     "nx": {}
 }
