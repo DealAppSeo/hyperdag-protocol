@@ -57,7 +57,15 @@ if (claimed.length === 0) {
 const work = mkdtempSync(join(tmpdir(), 'sdk-claims-'));
 let dts;
 try {
-  execFileSync('npm', ['pack', PKG, '--silent'], { cwd: work, stdio: ['ignore', 'pipe', 'pipe'] });
+  // npm is npm.cmd on Windows and needs a shell there; without this the check was NOT_CHECKED on every
+  // Windows run (spawnSync npm ENOENT). Same handling as check-builders.mjs.
+  const win = process.platform === 'win32';
+  execFileSync(win ? 'npm.cmd' : 'npm', ['pack', PKG, '--silent'], {
+    cwd: work,
+    stdio: ['ignore', 'pipe', 'pipe'],
+    shell: win,
+    windowsHide: true,
+  });
   const tgz = readdirSync(work).find((f) => f.endsWith('.tgz'));
   if (!tgz) throw new Error('npm pack produced no tarball');
   execFileSync('tar', ['-xzf', tgz], { cwd: work });
