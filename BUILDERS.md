@@ -18,7 +18,7 @@ publish X without touching this file.
 
 | Thing | State | How to check |
 |---|---|---|
-| **`@hyperdag/trustshell`** | **PUBLISHED — `1.6.1`** (measured 2026-10-14; was 1.6.0 on 2026-10-05 and 1.4.0 on 2026-10-04). The one package to install. | `npm view @hyperdag/trustshell version` |
+| **`@hyperdag/trustshell`** | **PUBLISHED — `1.7.0`** (set when `npm view` returned 1.7.0; it was 1.6.1 on 2026-10-14, 1.6.0 on 2026-10-05 and 1.4.0 on 2026-10-04). The one package to install. | `npm view @hyperdag/trustshell version` |
 | `@hyperdag/protocol` | **NOT published** (404) | `npm view @hyperdag/protocol version` |
 | `@hyperdag/identity-erc8004`, `@hyperdag/reputation-zkp` | **NOT published** (404) | same |
 | `IdentityRegistry` on Base Sepolia (84532) | **LIVE** — `0x8004A818BFB912233c491871b3d84c89A494BD9e` | any RPC client, or basescan |
@@ -31,7 +31,7 @@ publish X without touching this file.
 npm badge for `@hyperdag/protocol`, a package that does not exist; it misled one of our own
 agents on 2026-09-08 and was removed on 2026-10-04.
 
-**Published 1.6.1, re-measured 2026-10-14 (first measured on the 1.6.0 tarball, 2026-10-05).** `trustshell verify`
+**Published 1.7.0. The same contract was measured on 1.6.1 (2026-10-14) and first on the 1.6.0 tarball (2026-10-05).** `trustshell verify`
 exits 0 on PASS or FLAG, 1 on VETO, and 2 when HAL did not decide (NOT_CHECKED, never a pass).
 Exit 3 is a runtime error and 4 means the command is waiting for a person to answer (ASK).
 `ethers` (`^6`) is an optional peer: a plain install does not include it. The package uses it

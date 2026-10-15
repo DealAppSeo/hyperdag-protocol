@@ -18,7 +18,7 @@ The stranger-facing product is [`@hyperdag/trustshell`](https://github.com/DealA
 1. Fork. Branch from `main`.
 2. Tests for code you add. `npm ci` then the jobs in `.github/workflows/ci.yml`.
 3. No `package.json` version bump unless Sean asked. No `npm publish`. No prod SQL.
-4. No “MVP launched.” Published npm is `@hyperdag/trustshell@1.6.1` (measured 2026-10-14; `BUILDERS.md` is where this is checked).
+4. No “MVP launched.” Published npm is `@hyperdag/trustshell@1.7.0` (`BUILDERS.md` is where this is checked; 1.6.1 was measured 2026-10-14).
 5. Open the pull request. MERGE_POLICY: agents may squash-merge when checks are green and the PR is not publish / DDL / secrets.
 
 Security: [SECURITY.md](SECURITY.md). Ecosystem map: [BUILDERS.md → How the pieces fit](BUILDERS.md#how-the-pieces-fit).
