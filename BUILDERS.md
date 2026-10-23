@@ -7,6 +7,8 @@ log — capped, dated, full of retractions and corrections aimed at people who
 already know the system. It is the wrong first thing for a stranger to meet, and
 it is not a promise we keep to you. This file is.
 
+Why we build any of this, and the research for and against it: [docs/WHY.md](docs/WHY.md). Whose work it stands on: [ACKNOWLEDGEMENTS.md](ACKNOWLEDGEMENTS.md).
+
 ---
 
 ## 1. What is actually usable today
@@ -18,7 +20,7 @@ publish X without touching this file.
 
 | Thing | State | How to check |
 |---|---|---|
-| **`@hyperdag/trustshell`** | **PUBLISHED — `1.6.1`** (measured 2026-10-14; was 1.6.0 on 2026-10-05 and 1.4.0 on 2026-10-04). The one package to install. | `npm view @hyperdag/trustshell version` |
+| **`@hyperdag/trustshell`** | **PUBLISHED — `1.8.0`** (measured 2026-10-23, with npm provenance; was 1.6.1 on 2026-10-14). The one package to install. | `npm view @hyperdag/trustshell version` |
 | `@hyperdag/protocol` | **NOT published** (404) | `npm view @hyperdag/protocol version` |
 | `@hyperdag/identity-erc8004`, `@hyperdag/reputation-zkp` | **NOT published** (404) | same |
 | `IdentityRegistry` on Base Sepolia (84532) | **LIVE** — `0x8004A818BFB912233c491871b3d84c89A494BD9e` | any RPC client, or basescan |
@@ -31,7 +33,7 @@ publish X without touching this file.
 npm badge for `@hyperdag/protocol`, a package that does not exist; it misled one of our own
 agents on 2026-09-08 and was removed on 2026-10-04.
 
-**Published 1.6.1, re-measured 2026-10-14 (first measured on the 1.6.0 tarball, 2026-10-05).** `trustshell verify`
+**Published 1.8.0, measured 2026-10-23.** New in 1.8.0, Inspect: `trustshell check <run-url> --claims-file <file>` reads GitHub's own record of a GitHub Actions run and marks each sentence an agent wrote about it supported, contradicted or not checked. It exits 0 when every claim is supported, 1 when one is contradicted, and 3 when something was not checked; not checked never exits 0. Its only network call is to api.github.com. `trustshell verify`
 exits 0 on PASS or FLAG, 1 on VETO, and 2 when HAL did not decide (NOT_CHECKED, never a pass).
 Exit 3 is a runtime error and 4 means the command is waiting for a person to answer (ASK).
 `ethers` (`^6`) is an optional peer: a plain install does not include it. The package uses it
@@ -128,6 +130,8 @@ when the two disagree.
 - **[DealAppSeo/trinity-symphony-shared](https://github.com/DealAppSeo/trinity-symphony-shared)**:
   the house agents. They call the engine. Nothing else calls them.
 - **DealAppSeo/trinity-ecosystem** (a private repository): the site at aitrinitysymphony.com.
+- **[DealAppSeo/trustrepid](https://github.com/DealAppSeo/trustrepid)**: a RepID dashboard site, at trustrepid.vercel.app. It reads the engine.
+- **DealAppSeo/trustmarket** (a private repository): the agent-marketplace sandbox. It calls the engine; its payments are mocked.
 
 **Who calls whom**
 
@@ -136,6 +140,7 @@ when the two disagree.
   reputation, for example once paid work passes its check); and a person, by a link to
   `https://controller.aitrinitysymphony.com`, when a decision needs a human.
 - the house agents → the engine (and a health check of the prover).
+- trustrepid and trustmarket → the engine.
 - nothing else → the house agents.
 - this repository → nothing at runtime.
 

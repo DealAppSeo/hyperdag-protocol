@@ -1,0 +1,58 @@
+ERC-8004: Trustless Agents — registry contracts, specification and ABIs
+
+This directory contains the work of the ERC-8004 team, taken from
+https://github.com/erc-8004/erc-8004-contracts with its commit history.
+
+ERC-8004 is a community effort coordinated by Marco De Rossi (MetaMask) and
+Davide Crapis (Ethereum Foundation), with the co-authorship of Jordan Ellis
+(Google) and Erik Reppel (Coinbase). The core team is joined by Leonard Tan
+(MetaMask), Vitto Rivabella (Ethereum Foundation) and Isha Sangani
+(Ethereum Foundation). Specification: https://eips.ethereum.org/EIPS/eip-8004
+
+Byte-identical to erc-8004/erc-8004-contracts at commit b9e466c
+(checked 2026-10-23 with git hash-object against the upstream blobs):
+
+  contracts/ERC1967Proxy.sol
+  contracts/HardhatMinimalUUPS.sol
+  contracts/IdentityRegistryUpgradeable.sol
+  contracts/MinimalUUPS.sol
+  contracts/MinimalUUPSMainnet.sol
+  contracts/ReputationRegistryUpgradeable.sol
+  contracts/SingletonFactory.sol
+  contracts/ValidationRegistryUpgradeable.sol
+  test/core.ts
+  test/upgradeable.ts
+  ERC8004SPEC.md
+  UPGRADEABLE_IMPLEMENTATION.md
+  VANITY_DEPLOYMENT_GUIDE.md
+  abis/IdentityRegistry.json
+  abis/ReputationRegistry.json
+  abis/ValidationRegistry.json
+  ignition/modules/ERC8004.ts
+  scripts/deploy-create2-factory.ts
+  scripts/fund-local-owner.ts
+  triple-presigned-upgrade-chain-31337.json
+
+From the same upstream repository, but not identical to b9e466c (a different
+upstream version, local edits, or both):
+
+  README.md, hardhat.config.ts, package.json, tsconfig.json, test/local.ts,
+  scripts/deploy-vanity.ts, scripts/find-vanity-salts-parallel.ts,
+  scripts/generate-triple-presigned-upgrade.ts,
+  scripts/upgrade-vanity-presigned.ts, scripts/upgrade-vanity.ts,
+  scripts/verify-vanity.ts
+
+Licences, as the upstream files declare them:
+  - Solidity sources: MIT (SPDX headers), except contracts/SingletonFactory.sol,
+    which is CC0-1.0.
+  - The upstream package: ISC (package.json). The upstream repository has no
+    LICENSE file of its own.
+
+HyperDAG's own work in this directory, not from upstream: everything under
+src/ (governance, identity, legacy, reputation). Those files are Apache-2.0
+with the rest of this repository.
+
+The registries these contracts describe are deployed and operated by the
+ERC-8004 team. HyperDAG uses them; it does not operate them.
+
+Thank you to everyone above.

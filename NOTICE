@@ -1,0 +1,10 @@
+HyperDAG Protocol
+Copyright 2026 Sean Goodwin
+
+This repository includes the ERC-8004 registry contracts, specification and
+ABIs by the ERC-8004 team (Marco De Rossi, Davide Crapis, Jordan Ellis,
+Erik Reppel, with Leonard Tan, Vitto Rivabella and Isha Sangani), from
+https://github.com/erc-8004/erc-8004-contracts. Those files keep their own
+licences (MIT, CC0-1.0, ISC). Details: packages/contracts/NOTICE.
+
+Full credits: ACKNOWLEDGEMENTS.md.
