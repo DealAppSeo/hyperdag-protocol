@@ -8,7 +8,7 @@ Public surface = the one map, [BUILDERS.md → How the pieces fit](../../BUILDER
 
 | Repo | Description now | Website now | Topics now | Do |
 |---|---|---|---|---|
-| [hyperdag-protocol](https://github.com/DealAppSeo/hyperdag-protocol) | *(empty)* | *(empty)* | none | Set description from row below. Leave website empty (no product site for the kernel). Add topics. |
+| [hyperdag-protocol](https://github.com/DealAppSeo/hyperdag-protocol) | *(empty)* | *(empty)* | none | Set description from row below. Leave website empty (nothing installs from this repo). Add topics. |
 | [trustshell](https://github.com/DealAppSeo/trustshell) | Safe and Ethical Trust Layer for Agentic AI | https://trustshell.dev | none | Keep description + website. Add topics. XC2 may do this; XC1 does not rewrite the site. |
 | [example-agent](https://github.com/DealAppSeo/example-agent) | Example AI agent integrating TrustShell — HAL fact-check before responding (keyless demo + RepID SDK mode) | *(empty)* | none | Keep description. Leave website empty until L1 ships a URL. Topics optional. XC2 owns this repo. |
 | [trust-commons](https://github.com/DealAppSeo/trust-commons) | The Trust Commons — conversation / debate (already set) | *(empty)* | present | Keep. Leave website empty. Debate, not a download. |
@@ -18,7 +18,7 @@ Public surface = the one map, [BUILDERS.md → How the pieces fit](../../BUILDER
 ## Proposed protocol About (apply this hour)
 
 ```
-description: Interface kernel + curated defaults (ERC-8004 / HAL / x402). @hyperdag/protocol is not on npm — install @hyperdag/trustshell.
+description: The builder's map for the HyperDAG trust stack, and the ERC-8004 registry contracts it builds on. To use it, install @hyperdag/trustshell.
 topics: erc-8004, x402, agents, reputation
 homepage: (none)
 ```

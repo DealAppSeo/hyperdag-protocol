@@ -146,12 +146,6 @@ function walk(dir, keep, out = []) {
 for (const file of walk(ROOT, (p) => TEXT.test(p) && resolve(p) !== SELF)) {
   if (OPERATED.test(read(file))) failures.push(`${relative(ROOT, file)} says the registries are operated by HyperDAG; they are the ERC-8004 team's`);
 }
-const constantsFile = join(ROOT, 'packages/defaults/identity-erc8004-viem/src/constants.ts');
-if (!existsSync(constantsFile)) {
-  failures.push(`${relative(ROOT, constantsFile)} is gone; point this check at wherever the registry constants moved`);
-} else if (!/ERC-8004 team's canonical/.test(read(constantsFile))) {
-  failures.push(`${relative(ROOT, constantsFile)} no longer says the registries are the ERC-8004 team's canonical deployments`);
-}
 
 // --------------------------------------------------------- the siblings ----
 function sibling(...names) {

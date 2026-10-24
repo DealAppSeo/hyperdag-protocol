@@ -10,8 +10,6 @@ updates:
     directories:
       - "/"
       - "/packages/contracts"
-      - "/packages/defaults/hallucination-hal-local"
-      - "/packages/defaults/identity-erc8004-viem"
     schedule:
       interval: weekly
       day: monday

@@ -2,7 +2,7 @@
 
 **Maintainer: Sean Goodwin.** GitHub faces are a **commit counter**, not credit — see [AUTHORS.md](AUTHORS.md).
 
-The stranger-facing product is [`@hyperdag/trustshell`](https://github.com/DealAppSeo/trustshell), not this repo. This repo is the interface kernel. `@hyperdag/protocol` is **not on npm**. Do not send “become a maintainer” mail; open a PR.
+The stranger-facing product is [`@hyperdag/trustshell`](https://github.com/DealAppSeo/trustshell), not this repo. This repo is the builder's map (`BUILDERS.md`) and the ERC-8004 team's contracts we build on; nothing installs from it. Do not send “become a maintainer” mail; open a PR.
 
 ## What to send here vs elsewhere
 
