@@ -67,6 +67,12 @@ and are not the entry point: `@hyperdag/proof-verifier` (0.2.0, bundled inside t
 `@hyperdag/trustshell-mcp` (1.0.0 from 2026-07-08, older than the `trustshell-mcp` bin that
 ships inside trustshell itself). See `BUILDERS.md`.
 
+**2026-10-24 (Sean):** the six-interface kernel and its two default packages
+(`packages/defaults/*`) were removed from `main`. They never shipped, nothing imported them,
+and `@hyperdag/protocol` was never published. The May source is kept at the tag
+`archive/modular-kernel-interfaces-2026-05-04`. Do not describe a kernel, `@hyperdag/protocol`
+or `createHDP` as part of this repository.
+
 State FINDINGS, not inventories. *"A production key was committed and must be
 rotated"* is actionable; the key, the project id, the row counts and the service names
 are an incident. A published secret cannot be withdrawn, and a secret in git history
@@ -113,8 +119,8 @@ complete pasteable block at a time and say what a correct result looks like.
 
 ## What is actually here
 
-An Nx monorepo, three packages: `packages/contracts` (Solidity + ABIs + the ERC-8004
-spec), `packages/circuits`, `packages/defaults`. Registries are live on Base Sepolia
+An Nx monorepo, two packages: `packages/contracts` (Solidity + ABIs + the ERC-8004
+spec) and `packages/circuits`. Registries are live on Base Sepolia
 (chain ID 84532) per the README — read `README.md` for the addresses rather than
 copying them into new files.
 

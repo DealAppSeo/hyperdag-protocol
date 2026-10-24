@@ -21,17 +21,12 @@ publish X without touching this file.
 | Thing | State | How to check |
 |---|---|---|
 | **`@hyperdag/trustshell`** | **PUBLISHED — `1.8.0`** (measured 2026-10-23, with npm provenance; was 1.6.1 on 2026-10-14). The one package to install. | `npm view @hyperdag/trustshell version` |
-| `@hyperdag/protocol` | **NOT published** (404) | `npm view @hyperdag/protocol version` |
-| `@hyperdag/identity-erc8004`, `@hyperdag/reputation-zkp` | **NOT published** (404) | same |
 | `IdentityRegistry` on Base Sepolia (84532) | **LIVE** — `0x8004A818BFB912233c491871b3d84c89A494BD9e` | any RPC client, or basescan |
 | `ReputationRegistry` on Base Sepolia (84532) | **LIVE** — `0x8004B663056A597Dffe9eCcC1965A193B7388713` | same |
-| The six-interface kernel (`IIdentity`, `IReputation`, `IValidation`, `IPayment`, `ILinkage`, `IHallucination`) | source is on a feature branch, **not on `main`** | `git log origin/main -- packages/interfaces` |
 
 | **The check: `POST /api/v1/classify`** | **LIVE**, public, keyless (measured 2026-10-04). See §1a. | the `curl` in §1a |
 
-**So: `npm i @hyperdag/trustshell`. Not `@hyperdag/protocol`.** The README used to carry an
-npm badge for `@hyperdag/protocol`, a package that does not exist; it misled one of our own
-agents on 2026-09-08 and was removed on 2026-10-04.
+**So: `npm i @hyperdag/trustshell`.** Its CLI, MCP server and SDK are one package, and nothing installs from this repository.
 
 **Published 1.8.0, measured 2026-10-23.** New in 1.8.0, Inspect: `trustshell check <run-url> --claims-file <file>` reads GitHub's own record of a GitHub Actions run and marks each sentence an agent wrote about it supported, contradicted or not checked. It exits 0 when every claim is supported, 1 when one is contradicted, and 3 when something was not checked; not checked never exits 0. Its only network call is to api.github.com. `trustshell verify`
 exits 0 on PASS or FLAG, 1 on VETO, and 2 when HAL did not decide (NOT_CHECKED, never a pass).
@@ -119,8 +114,8 @@ when the two disagree.
 
 **The contract: what is agreed**
 
-- **This repository**: the ERC-8004 spec, the interface designs and this file. No running
-  code depends on it.
+- **This repository**: the ERC-8004 spec and contracts, and this file. No running code
+  depends on it.
 - **The ERC-8004 registries on Base Sepolia (chain 84532)**: the ERC-8004 team's
   deployments ([erc-8004/erc-8004-contracts](https://github.com/erc-8004/erc-8004-contracts)).
   We use them; we do not operate them. Their addresses are in §1.
@@ -186,7 +181,6 @@ Until you have done that you do not know it is wired.
 | ERC-8004 reputation read paths (`getSummary`, `readFeedback`, `readAllFeedback`) | stable — defined by the ERC-8004 spec (`packages/contracts/ERC8004SPEC.md`), not ours to change. `getRepID` is a TrustShell SDK method that reads the engine, not a registry function. |
 | RepID **range** (10 floor, 10,000 cap) and the five tier names | stable |
 | RepID **tier thresholds** and the scoring weights behind them | **will move.** Tuning is deliberate and not published. Do not hardcode a threshold; read the tier. |
-| The six-interface kernel | pre-release, on a branch. Design against `@hyperdag/trustshell` instead. |
 | ZK proof shape | the live proof is a narrow range check (`repid > threshold`). Binding a proof to the full RepID derivation is roadmap, not shipped. Do not describe it as shipped. |
 
 **Two things you will not find here, deliberately:** the RepID scoring formula

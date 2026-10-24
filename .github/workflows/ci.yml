@@ -5,7 +5,7 @@
 # and until now that failed — so the most valuable check here is the boring one:
 # `npm ci` from the committed lockfile has to work.
 #
-# DESIGN RULE: no vacuous green. Four of five packages have no tests. A single
+# DESIGN RULE: no vacuous green. Not every directory has tests. A single
 # green tick across the repo would claim coverage that does not exist, so the
 # `coverage-map` job prints the real per-package state and the contract tests
 # report their true tally rather than being hidden.
@@ -190,9 +190,8 @@ jobs:
                   script=$(node -e "try{const s=require('./$manifest').scripts||{};process.stdout.write(s.test||'')}catch(e){}" 2>/dev/null)
                   if [ -n "$script" ]; then
                     has="\`$script\`"
-                    # A declared script proves nothing if its glob matches no file.
-                    # hallucination-hal-local declares `node --test tests/*.test.ts`
-                    # and ships only .mjs smoke files, so it greens over an empty set.
+                    # A declared script proves nothing if its glob matches no file
+                    # (a package once declared tests/*.test.ts and shipped only .mjs files).
                     pattern=$(echo "$script" | grep -oE '[A-Za-z0-9_./*-]+\.(test|spec)\.[a-z]+' | head -1)
                     if [ -n "$pattern" ]; then
                       # shellcheck disable=SC2086
