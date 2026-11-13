@@ -20,7 +20,7 @@ publish X without touching this file.
 
 | Thing | State | How to check |
 |---|---|---|
-| **`@hyperdag/trustshell`** | **PUBLISHED — `1.8.0`** (measured 2026-10-23, with npm provenance; was 1.6.1 on 2026-10-14). The one package to install. | `npm view @hyperdag/trustshell version` |
+| **`@hyperdag/trustshell`** | **PUBLISHED — `1.9.2`** (measured 2026-11-13, with npm provenance; was 1.8.0 on 2026-10-23). The one package to install. | `npm view @hyperdag/trustshell version` |
 | `IdentityRegistry` on Base Sepolia (84532) | **LIVE** — `0x8004A818BFB912233c491871b3d84c89A494BD9e` | any RPC client, or basescan |
 | `ReputationRegistry` on Base Sepolia (84532) | **LIVE** — `0x8004B663056A597Dffe9eCcC1965A193B7388713` | same |
 
@@ -28,7 +28,7 @@ publish X without touching this file.
 
 **So: `npm i @hyperdag/trustshell`.** Its CLI, MCP server and SDK are one package, and nothing installs from this repository.
 
-**Published 1.8.0, measured 2026-10-23.** New in 1.8.0, Inspect: `trustshell check <run-url> --claims-file <file>` reads GitHub's own record of a GitHub Actions run and marks each sentence an agent wrote about it supported, contradicted or not checked. It exits 0 when every claim is supported, 1 when one is contradicted, and 3 when something was not checked; not checked never exits 0. Its only network call is to api.github.com. `trustshell verify`
+**Published 1.9.2, measured 2026-11-13.** Inspect, new in 1.8.0: `trustshell check <run-url> --claims-file <file>` reads GitHub's own record of a GitHub Actions run and marks each sentence an agent wrote about it supported, contradicted or not checked. It exits 0 when every claim is supported, 1 when one is contradicted, and 3 when something was not checked; not checked never exits 0. Its only network call is to api.github.com. `trustshell verify`
 exits 0 on PASS or FLAG, 1 on VETO, and 2 when HAL did not decide (NOT_CHECKED, never a pass).
 Exit 3 is a runtime error and 4 means the command is waiting for a person to answer (ASK).
 `ethers` (`^6`) is an optional peer: a plain install does not include it. The package uses it
